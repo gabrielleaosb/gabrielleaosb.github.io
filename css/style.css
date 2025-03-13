@@ -7,6 +7,10 @@
     font-family: 'Poppins', 'sans-serif';
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 a {
     color: #fff;
     text-decoration: none;
@@ -73,14 +77,38 @@ a {
     animation-delay: 1.6s;
 }
 
+
+
 .home-info h1{
     font-size: 55px;
+    animation-delay: .2s;
 }
 
 .home-info h2 {
     display: inline-block;
     font-size: 32px;
     margin-top: -10px;
+    animation-delay: .4s;
+}
+
+@keyframes fade-slide-in {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.home-info h1,
+.home-info h2,
+.home-info p,
+.home-info .btn-sci,
+.home-img {
+    opacity: 0;
+    animation: fade-slide-in 2.2s ease-in-out forwards;
 }
 
 .home-info h2 span {
@@ -125,11 +153,31 @@ a {
 .home-info p {
     font-size: 16px;
     margin: 10px 0 25px;
+    animation-delay: .6s;
+}
+
+.sobre, .contato {
+    padding: 100px 9%;
+    min-height: 100vh;
+    background: #1f242d;
+    color: white;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fade-in 1.5s ease-in-out forwards;
+    animation-delay: .8s;
+}
+
+@keyframes fade-in {
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .home-info .btn-sci {
     display: flex;
     align-items: center;
+    animation-delay: .8s;
 }
 
 .btn {
@@ -170,6 +218,10 @@ a {
     background: #7cf03d;
     color: #1f242d;
     box-shadow: 0 0 10px #7cf03d;
+}
+
+.home-img {
+    animation-delay: 1s;
 }
 
 .home-img .img-box {
