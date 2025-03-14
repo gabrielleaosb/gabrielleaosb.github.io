@@ -75,6 +75,7 @@ a {
     opacity: 0;
     animation: show-content 1.5s linear forwards;
     animation-delay: 1.6s;
+    justify-content: space-between;
 }
 
 
@@ -178,6 +179,7 @@ a {
     display: flex;
     align-items: center;
     animation-delay: .8s;
+    margin-top: 20px;
 }
 
 .btn {
@@ -226,8 +228,8 @@ a {
 
 .home-img .img-box {
     position: relative;
-    width: 32vw;
-    height: 32dvw;
+    width: 28vw;
+    height: 28dvw;
     border-radius: 50%;
     padding: 5px;
     display: flex;
@@ -300,4 +302,25 @@ a {
     100% {
         transform: translateY(0%);
     }
+}
+
+.sobre {
+    padding: 6rem 2rem;
+}
+
+.sobre-titulo {
+    font-size: 3rem;
+    color: white;
+}
+
+.sobre-caixa {
+    padding: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 16px;
+    border: 1px solid gray;
+}
+
+.sobre-paragrafo {
+
 }
