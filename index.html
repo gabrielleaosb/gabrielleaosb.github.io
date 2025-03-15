@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
@@ -10,65 +11,82 @@
 </head>
 
 <body>
+    <div class="particulas"></div>
 
     <nav class="navbar">
-        <a href="#" class="logo">Portfolio.</a>
-        <ul>
-            <li class="active"><a href="#">Início</a></li>
+        <ul class="menu">
+            <li><a href="#inicio">Início</a></li>
             <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#projetos">Projetos</a></li>
             <li><a href="#contato">Contato</a></li>
         </ul>
     </nav>
-    
-    <div class="bars-animation">
-        <div class="bar" style="--i:6;"></div>
-        <div class="bar" style="--i:5;"></div>
-        <div class="bar" style="--i:4;"></div>
-        <div class="bar" style="--i:3;"></div>
-        <div class="bar" style="--i:2;"></div>
-        <div class="bar" style="--i:1;"></div>
-    </div>
-    <section class="home">
-        <div class="home-info">
+
+    <div class="container">
+        <main class="home" id="inicio">
+            <img src="assets/image-removebg-preview.png" alt="Foto de Gabriel Leão" class="home-img">
             <h1>Gabriel Leão</h1>
-            <h2>Sou um
-                <span style="--i:4;" data-text="Futuro Dev Full Stack">Futuro Dev Full Stack</span>
-                <span style="--i:3;" data-text="Desenvolvedor de Software">Desenvolvedor de Software</span>
-                <span style="--i:2;" data-text="Desenvolvedor Python">Desenvolvedor Python</span>
-                <span style="--i:1;" data-text="Aprendendo Django">Aprendendo Django</span>
-            </h2>
+            <p>Futuro Desenvolvedor FullStack</p>
             <div class="btn-sci">
                 <a href="#" class="btn">Download CV</a>
                 <div class="sci">
-                    <a href="https://github.com/rArtistaa" target="_blank" rel="noopener noreferrer"><i class='bx bxl-github'></i></a>
-                    <a href="https://www.linkedin.com/in/gabriel-le%C3%A3o-a56461268/" target="_blank" rel="noopener noreferrer"><i class='bx bxl-linkedin' ></i></a>
-                    <a href="https://x.com/calvojrs" target="_blank" rel="noopener noreferrer"><i class='bx bxl-twitter' ></i></a>
-                    <a href="https://www.instagram.com/gabrielleaooo/" target="_blank" rel="noopener noreferrer"><i class='bx bxl-instagram' ></i></a>
+                    <a href="https://github.com/gabrielleaosb" target="_blank" rel="noopener noreferrer"><i
+                            class='bx bxl-github'></i></a>
+                    <a href="https://www.linkedin.com/in/gabriel-le%C3%A3o-a56461268/" target="_blank"
+                        rel="noopener noreferrer"><i class='bx bxl-linkedin'></i></a>
+                    <a href="https://x.com/calvojrs" target="_blank" rel="noopener noreferrer"><i
+                            class='bx bxl-twitter'></i></a>
+                    <a href="https://www.instagram.com/gabrielleaooo/" target="_blank" rel="noopener noreferrer"><i
+                            class='bx bxl-instagram'></i></a>
                 </div>
             </div>
-        </div>
+        </main>
 
-        <div class="home-img">
-            <div class="img-box">
-                <div class="img-item">
-                    <img src="assets/image-removebg-preview.png" alt="">
-                </div>
+        <section id="sobre" class="sobre">
+            <h2 class="sobre-titulo">Sobre Mim</h2>
+            <div class="sobre-caixa">
+                <p class="sobre-paragrafo">Sou apaixonado por tecnologia e desenvolvimento de software. Atualmente,
+                    estou
+                    estudando Django, HTML, CSS e pretendo aprofundar meus conhecimentos em JavaScript, TypeScript,
+                    React e
+                    Tailwind.</p>
             </div>
-        </div>
-    </section>
-    
-    <section id="sobre" class="sobre">
-        <h2 class="sobre-titulo">Sobre Mim</h2>
-        <div class="sobre-caixa">
-             <p class="sobre-paragrafo">Sou apaixonado por tecnologia e desenvolvimento de software. Atualmente, estou estudando Django, HTML, CSS e pretendo aprofundar meus conhecimentos em JavaScript, TypeScript, React e Tailwind.</p>
-        </div>
-    </section>
+        </section>
 
-    <section id="contato" class="contato">
-        <h2>Contato</h2>
-        <p>Entre em contato comigo pelas redes sociais ou envie um e-mail para <b>gabriellsbagetti@gmail.com</b></p>
-    </section>
+        <section id="projetos" class="projetos">
 
+        </section>
+
+        <section id="contato" class="contato">
+            <h2 class="contato-titulo">Entre em Contato</h2>
+            <form class="formulario-contato" id="formulario" onsubmit="enviarWhats(event)">
+                <div class="grupo-form">
+                    <input placeholder="Nome" class="campo-form" id="nome">
+                </div>
+                <div class="grupo-form">
+                    <textarea class="campo-form" placeholder="Digite sua Mensagem" rows="6" id="mensagem"></textarea>
+                </div>
+                <button type="submit" class="botao-form">Enviar Whatsapp</button>
+            </form>
+        </section>
+    </div>
+
+    <script>
+        function enviarWhats(event){
+            event.preventDefault()
+
+            const nome = document.getElementById('nome').value;
+            const mensagem = document.getElementById('mensagem').value;
+            const telefone ='5582991487729'
+
+            const texto = `Olá! Me chamo ${nome}, ${mensagem}`
+            const msgFormatada = encodeURIComponent(texto)
+
+            const url = `https://whatsa.me/${telefone}/?t=${msgFormatada}`
+
+            window.open(url, '_blank')
+        }
+    </script>
 </body>
 
 </html>
