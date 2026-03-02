@@ -30,35 +30,38 @@
     cursor: none;
   }
 
-/* ══ CURSOR ══ */
-#cursor-center {
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  top: 0; left: 0;
-  width: 6px; height: 6px;
-  background: #00ff88;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 6px #00ff88;
-}
-#cursor-ring1, #cursor-ring2, #cursor-ring3 {
-  position: fixed;
-  pointer-events: none;
-  z-index: 9998;
-  top: 0; left: 0;
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-#cursor-ring1 { border: 1px solid rgba(0,255,136,0.6); animation: sonarPing 1.8s ease-out infinite; }
-#cursor-ring2 { border: 1px solid rgba(0,255,136,0.4); animation: sonarPing 1.8s ease-out infinite 0.6s; }
-#cursor-ring3 { border: 1px solid rgba(0,255,136,0.2); animation: sonarPing 1.8s ease-out infinite 1.2s; }
-
-@keyframes sonarPing {
-  0%   { width: 6px;  height: 6px;  opacity: 1; }
-  100% { width: 70px; height: 70px; opacity: 0; }
-}
+  /* ══ CURSOR: pulsing circle ══ */
+  #cursor-ring {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    top: 0; left: 0;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent);
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease, border-color 0.2s, opacity 0.2s;
+    animation: cursorPulse 2.4s ease-in-out infinite;
+  }
+  #cursor-ring.hovered {
+    width: 44px; height: 44px;
+    border-color: var(--accent);
+    animation: none;
+  }
+  #cursor-dot {
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    top: 0; left: 0;
+    transform: translate(-50%, -50%);
+  }
+  @keyframes cursorPulse {
+    0%, 100% { opacity: 1;    transform: translate(-50%, -50%) scale(1); }
+    50%       { opacity: 0.4; transform: translate(-50%, -50%) scale(1.5); }
+  }
 
   /* NOISE OVERLAY */
   body::before {
@@ -78,26 +81,6 @@
     pointer-events: none; z-index: 0;
   }
 
-  /* ══ LANGUAGE TOGGLE ══ */
-  .lang-toggle {
-    display: flex; align-items: center; gap: 0;
-    border: 1px solid var(--border);
-    overflow: hidden;
-  }
-  .lang-btn {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem; letter-spacing: 2px;
-    padding: 8px 14px; background: transparent;
-    border: none; color: var(--muted);
-    cursor: none; text-transform: uppercase;
-    transition: background 0.2s, color 0.2s;
-    position: relative;
-  }
-  .lang-btn.active {
-    background: var(--accent); color: var(--bg); font-weight: 700;
-  }
-  .lang-btn:not(.active):hover { color: var(--text); background: rgba(255,255,255,0.04); }
-
   /* ══ NAV ══ */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -112,7 +95,6 @@
     font-size: 1.6rem; letter-spacing: 3px;
     color: var(--accent); text-decoration: none;
   }
-  .nav-right { display: flex; align-items: center; gap: 36px; }
   .nav-links { display: flex; gap: 36px; }
   .nav-links a {
     font-family: 'Space Mono', monospace;
@@ -129,6 +111,55 @@
   .nav-links a:hover { color: var(--text); }
   .nav-links a:hover::after { transform: scaleX(1); }
 
+  /* ══ LANG TOGGLE ══ */
+  .lang-toggle {
+    display: flex; align-items: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 2px;
+    background: none; border: 1px solid var(--border);
+    color: var(--muted); cursor: pointer;
+    padding: 6px 12px; gap: 6px;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    white-space: nowrap;
+  }
+  .lang-toggle:hover { border-color: rgba(0,255,136,0.4); color: var(--accent); background: rgba(0,255,136,0.04); }
+  .lang-toggle .lang-flag { font-size: 0.9rem; line-height: 1; }
+  .lang-toggle .lang-label { text-transform: uppercase; }
+
+  /* Nav right cluster: hamburger + lang */
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-hamburger {
+    display: none;
+    flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 4px;
+  }
+  .nav-hamburger span {
+    display: block; width: 24px; height: 1px;
+    background: var(--accent); transition: all 0.3s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+
+  /* Mobile nav drawer */
+  .nav-mobile-drawer {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(5,5,7,0.97);
+    z-index: 99;
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 40px;
+    backdrop-filter: blur(20px);
+  }
+  .nav-mobile-drawer.open { display: flex; }
+  .nav-mobile-drawer a {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 3rem; letter-spacing: 4px;
+    color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-mobile-drawer a:hover { color: var(--accent); }
+
   /* ══ HERO ══ */
   #hero {
     min-height: 100vh;
@@ -139,7 +170,7 @@
   .hero-bg-text {
     position: absolute;
     font-family: 'Bebas Neue', cursive;
-    font-size: clamp(120px, 20vw, 280px);
+    font-size: clamp(80px, 20vw, 280px);
     color: transparent;
     -webkit-text-stroke: 1px rgba(0,255,136,0.06);
     top: 50%; left: 50%;
@@ -179,13 +210,13 @@
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
   .hero-name {
     font-family: 'Bebas Neue', cursive;
-    font-size: clamp(72px, 12vw, 160px);
+    font-size: clamp(56px, 12vw, 160px);
     line-height: 0.9; letter-spacing: -2px; margin-bottom: 32px;
   }
   .hero-name .line1 { display: block; color: var(--text); }
   .hero-name .line2 { display: block; color: transparent; -webkit-text-stroke: 2px var(--accent); }
   .hero-desc {
-    font-size: 1.1rem; line-height: 1.8;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem); line-height: 1.8;
     color: var(--muted); max-width: 520px;
     margin-bottom: 48px; font-weight: 300;
   }
@@ -236,10 +267,12 @@
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     display: flex; overflow: hidden; background: var(--surface);
+    flex-wrap: wrap;
   }
   .stat-item {
-    flex: 1; padding: 32px 48px;
+    flex: 1; min-width: 150px; padding: 32px 48px;
     border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
     transition: background 0.3s;
   }
   .stat-item:last-child { border-right: none; }
@@ -269,79 +302,150 @@
   }
   .section-title {
     font-family: 'Bebas Neue', cursive;
-    font-size: clamp(48px, 6vw, 80px);
+    font-size: clamp(40px, 6vw, 80px);
     line-height: 1; letter-spacing: -1px; margin-bottom: 60px;
   }
 
   /* ══ ABOUT ══ */
   #about { background: var(--surface); }
-  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  /* Left: text */
   .about-text p { font-size: 1.05rem; line-height: 1.9; color: var(--muted); margin-bottom: 20px; }
   .about-text p span   { color: var(--text); font-weight: 500; }
   .about-text p strong { color: var(--accent); font-weight: 400; }
 
-  /* ── NEW about-details card grid ── */
-  .about-details {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    align-content: start;
+  /* Right: refactored profile card */
+  .about-profile-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
   }
-  .detail-card {
-    background: var(--bg);
+
+  /* Top colored band */
+  .profile-header {
+    background: linear-gradient(135deg, rgba(0,255,136,0.08), rgba(123,94,167,0.12));
     border: 1px solid var(--border);
-    padding: 22px 20px;
-    transition: border-color 0.3s, background 0.3s;
+    border-bottom: none;
+    padding: 32px 32px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
     position: relative;
     overflow: hidden;
   }
-  .detail-card::before {
+  .profile-header::before {
     content: '';
-    position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--accent), transparent);
-    transform: scaleX(0); transform-origin: left;
-    transition: transform 0.35s ease;
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
   }
-  .detail-card:hover {
-    border-color: rgba(0,255,136,0.2);
-    background: rgba(0,255,136,0.02);
+
+  /* Avatar placeholder — initials circle */
+  .profile-avatar {
+    width: 64px; height: 64px; flex-shrink: 0;
+    border-radius: 0;
+    background: linear-gradient(135deg, rgba(0,255,136,0.15), rgba(123,94,167,0.15));
+    border: 1px solid rgba(0,255,136,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.6rem; color: var(--accent);
+    letter-spacing: 2px;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
   }
-  .detail-card:hover::before { transform: scaleX(1); }
-  /* span full width for status */
-  .detail-card.full { grid-column: span 2; }
-  .detail-key {
+  .profile-header-info {}
+  .profile-name {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.5rem; letter-spacing: 2px;
+    color: var(--text); line-height: 1;
+  }
+  .profile-role {
     font-family: 'Space Mono', monospace;
-    font-size: 0.55rem; letter-spacing: 2.5px;
-    text-transform: uppercase; color: var(--muted);
-    margin-bottom: 8px; display: block;
+    font-size: 0.62rem; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--accent);
+    margin-top: 6px;
   }
-  .detail-val {
-    font-size: 0.92rem; color: var(--text);
-    font-weight: 500; line-height: 1.4;
+  .profile-status {
+    margin-left: auto; flex-shrink: 0;
+    display: flex; align-items: center; gap: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem; letter-spacing: 2px;
+    color: var(--accent); text-transform: uppercase;
+    padding: 6px 12px;
+    border: 1px solid rgba(0,255,136,0.25);
+    background: rgba(0,255,136,0.04);
+    align-self: flex-start;
   }
-  .detail-val a { color: var(--text); text-decoration: none; }
-  .detail-val a:hover { color: var(--accent); }
-  .detail-val.status-online {
-    color: var(--accent);
-    display: flex; align-items: center; gap: 8px;
-  }
-  .status-pulse {
-    width: 8px; height: 8px; border-radius: 50%;
+  .status-dot {
+    width: 6px; height: 6px; border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 6px var(--accent);
-    animation: pulseDot 2s ease-in-out infinite;
+    animation: blink 2s ease-in-out infinite;
     flex-shrink: 0;
   }
-  @keyframes pulseDot {
-    0%,100%{ box-shadow: 0 0 4px var(--accent); transform: scale(1); }
-    50%{ box-shadow: 0 0 12px var(--accent); transform: scale(1.3); }
+
+  /* Info grid */
+  .profile-body {
+    border: 1px solid var(--border);
+    background: rgba(0,0,0,0.2);
   }
+  .profile-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .profile-info-item {
+    padding: 20px 24px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.25s;
+  }
+  .profile-info-item:nth-child(even) { border-right: none; }
+  .profile-info-item:nth-last-child(-n+2) { border-bottom: none; }
+  .profile-info-item:hover { background: rgba(0,255,136,0.03); }
+  .info-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.56rem; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .info-value {
+    font-size: 0.88rem; color: var(--text); font-weight: 500;
+    line-height: 1.4;
+  }
+  .info-value a {
+    color: var(--accent); text-decoration: none;
+  }
+  .info-value a:hover { text-decoration: underline; }
+  .info-value.accent { color: var(--accent); }
+
+  /* Social row */
+  .profile-socials {
+    display: flex; gap: 0;
+    border-top: none;
+  }
+  .social-link {
+    flex: 1;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 16px 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
+    text-decoration: none; border: 1px solid var(--border);
+    border-top: none;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .social-link:not(:last-child) { border-right: none; }
+  .social-link:hover { color: var(--accent); background: rgba(0,255,136,0.04); border-color: rgba(0,255,136,0.25); }
 
   /* ══ SKILLS ══ */
   #skills { background: var(--bg); }
   .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 2px;
   }
   .skill-card {
@@ -416,7 +520,7 @@
   }
   .project-logo {
     font-family: 'Bebas Neue', cursive;
-    font-size: 4.5rem; color: var(--accent);
+    font-size: clamp(3rem, 5vw, 4.5rem); color: var(--accent);
     text-shadow: 0 0 60px rgba(0,255,136,0.4);
     animation: glowPulse 3s ease-in-out infinite;
     line-height: 1; text-align: center;
@@ -465,7 +569,7 @@
     66%{transform:translateY(-7px) rotate(-12deg)}
   }
 
-  /* ── AI ANALYST: matrix / circuit decoration ── */
+  /* ── AI ANALYST decoration ── */
   .ai-decoration {
     position: absolute; inset: 0; pointer-events: none; overflow: hidden;
   }
@@ -585,7 +689,7 @@
   }
   .project-title {
     font-family: 'Bebas Neue', cursive;
-    font-size: 2.6rem; line-height: 1; margin-bottom: 20px; letter-spacing: 1px;
+    font-size: clamp(2rem, 4vw, 2.6rem); line-height: 1; margin-bottom: 20px; letter-spacing: 1px;
   }
   .project-desc {
     font-size: 0.95rem; line-height: 1.8; color: var(--muted); margin-bottom: 32px;
@@ -594,6 +698,7 @@
   .project-desc em     { color: var(--text); font-style: italic; }
   .project-links-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
 
+  /* ── PROJECT BUTTONS ── */
   .project-btn {
     display: inline-flex; align-items: center; gap: 10px;
     font-family: 'Space Mono', monospace; font-weight: 700;
@@ -712,7 +817,8 @@
   .course-platform {
     font-family: 'Space Mono', monospace;
     font-size: 0.58rem; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 6px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 6px;
   }
   .course-name { font-size: 0.95rem; color: var(--text); font-weight: 500; margin-bottom: 4px; }
   .course-author { font-size: 0.8rem; color: var(--muted); }
@@ -730,7 +836,7 @@
   .contact-inner { max-width: 700px; margin: 0 auto; }
   .contact-big {
     font-family: 'Bebas Neue', cursive;
-    font-size: clamp(60px, 10vw, 120px);
+    font-size: clamp(50px, 10vw, 120px);
     line-height: 1; letter-spacing: -2px; margin-bottom: 40px;
     background: linear-gradient(135deg, var(--text), var(--accent));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -761,58 +867,161 @@
   .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* ══ MOBILE ══ */
+  /* ══════════════════════════════════════
+     RESPONSIVE BREAKPOINTS
+  ══════════════════════════════════════ */
+
+  /* Tablet: 1024px */
+  @media (max-width: 1024px) {
+    nav { padding: 20px 32px; }
+    section { padding: 100px 32px; }
+    #hero { padding: 120px 32px 80px; }
+    .about-grid { gap: 48px; }
+    .project-info { padding: 40px; }
+    .education-grid { gap: 40px; }
+    footer { padding: 28px 32px; }
+    .stat-item { padding: 28px 32px; }
+  }
+
+  /* Tablet portrait / large mobile: 768px */
   @media (max-width: 768px) {
-    nav { padding: 20px 24px; }
+    body { cursor: auto; }
+    #cursor-ring, #cursor-dot { display: none; }
+    .btn-primary, .btn-secondary, .project-btn { cursor: pointer; }
+
+    nav { padding: 18px 24px; }
     .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+
     section { padding: 80px 24px; }
     #hero { padding: 100px 24px 60px; }
-    .about-grid  { grid-template-columns: 1fr; gap: 40px; }
-    .about-details { grid-template-columns: 1fr 1fr; }
-    .project-card { grid-template-columns: 1fr; }
-    .project-visual { min-height: 200px; }
-    .project-info { padding: 32px; }
-    .education-grid { grid-template-columns: 1fr; gap: 40px; }
-    .stats-bar { flex-wrap: wrap; }
-    .stat-item { min-width: 50%; }
-    footer { flex-direction: column; gap: 12px; text-align: center; }
     .scroll-indicator { display: none; }
-    #cursor-main, #cursor-trail { display: none; }
-    body { cursor: auto; }
+
+    .hero-name { letter-spacing: -1px; }
+    .hero-tag::before { width: 20px; }
+
+    /* Stats: 2 per row */
+    .stats-bar { flex-wrap: wrap; }
+    .stat-item { flex-basis: 50%; border-right: 1px solid var(--border); }
+    .stat-item:nth-child(2n) { border-right: none; }
+    .stat-item:nth-child(3), .stat-item:nth-child(4) { border-bottom: none; }
+
+    /* About: stack */
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+
+    /* Profile card: internal grid collapses */
+    .profile-info-grid { grid-template-columns: 1fr; }
+    .profile-info-item { border-right: none !important; }
+    .profile-info-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+    .profile-info-item:last-child { border-bottom: none; }
+    .profile-status { display: none; }
+
+    /* Projects: stack visual above info */
+    .project-card { grid-template-columns: 1fr; }
+    .project-visual { min-height: 220px; order: 0; }
+    .project-info { padding: 28px 24px; order: 1; }
+    .project-logo { font-size: 2.8rem !important; }
+
+    /* Education: stack */
+    .education-grid { grid-template-columns: 1fr; gap: 40px; }
+
+    /* Contact */
+    .contact-links { flex-direction: column; align-items: center; }
+    .contact-link { width: 100%; max-width: 320px; justify-content: center; }
+
+    /* Footer */
+    footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px; }
+
+    /* Skill grid: 1 column */
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Small mobile: 480px */
+  @media (max-width: 480px) {
+    section { padding: 64px 20px; }
+    #hero { padding: 90px 20px 50px; }
+    nav { padding: 16px 20px; }
+
+    .hero-name { letter-spacing: -1px; }
+    .hero-desc { font-size: 0.9rem; }
+    .hero-cta { flex-direction: column; align-items: flex-start; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; justify-content: center; }
+
+    .stat-item { flex-basis: 100%; border-right: none; padding: 24px 20px; }
+
+    .section-title { margin-bottom: 40px; }
+
+    .profile-header { flex-direction: column; align-items: flex-start; gap: 14px; padding: 24px 20px; }
+    .profile-avatar { width: 52px; height: 52px; font-size: 1.3rem; }
+    .profile-socials { flex-direction: column; }
+    .social-link { border-right: 1px solid var(--border) !important; border-top: 1px solid var(--border); }
+    .social-link:first-child { border-top: none; }
+
+    .project-visual { min-height: 180px; }
+    .project-info { padding: 24px 20px; }
+    .project-year { font-size: 0.58rem; }
+    .project-btn { padding: 12px 18px; font-size: 0.65rem; }
+
+    .edu-card { padding: 24px 20px; }
+    .edu-badge { position: static; display: inline-flex; margin-bottom: 12px; }
+
+    .course-item { padding: 16px 18px; }
+
+    footer { padding: 20px; }
+    footer p:nth-child(3) { display: none; }
+
+    .marquee-item { font-size: 0.85rem; letter-spacing: 2px; gap: 28px; }
+    .marquee-track { gap: 28px; }
+  }
+
+  /* Extra small: 360px */
+  @media (max-width: 360px) {
+    .hero-cta .btn-primary, .hero-cta .btn-secondary { padding: 14px 24px; font-size: 0.65rem; }
+    .project-links-row { flex-direction: column; align-items: flex-start; }
   }
 </style>
 </head>
 <body>
 
 <!-- CURSOR -->
-<div id="cursor-ring3"></div>
-<div id="cursor-ring2"></div>
-<div id="cursor-ring1"></div>
-<div id="cursor-center"></div>
+<div id="cursor-ring"></div>
+<div id="cursor-dot"></div>
 
 <!-- ══ NAV ══ -->
 <nav>
   <a href="#" class="nav-logo">GL/</a>
+  <div class="nav-links">
+    <a href="#about" data-i18n="nav.about">About</a>
+    <a href="#skills" data-i18n="nav.skills">Skills</a>
+    <a href="#projects" data-i18n="nav.projects">Projects</a>
+    <a href="#education" data-i18n="nav.education">Education</a>
+    <a href="#contact" data-i18n="nav.contact">Contact</a>
+  </div>
   <div class="nav-right">
-    <div class="nav-links">
-      <a href="#about" data-i18n="nav_about">About</a>
-      <a href="#skills" data-i18n="nav_skills">Skills</a>
-      <a href="#projects" data-i18n="nav_projects">Projects</a>
-      <a href="#education" data-i18n="nav_education">Education</a>
-      <a href="#contact" data-i18n="nav_contact">Contact</a>
-    </div>
-    <div class="lang-toggle">
-      <button class="lang-btn active" id="btn-pt" onclick="setLang('pt')">PT</button>
-      <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
-    </div>
+    <button class="lang-toggle" id="langToggle" aria-label="Toggle language">
+      <span class="lang-flag" id="langFlag">🇧🇷</span>
+      <span class="lang-label" id="langLabel">PT</span>
+    </button>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+
+<!-- Mobile drawer -->
+<div class="nav-mobile-drawer" id="navDrawer">
+  <a href="#about"     onclick="closeDrawer()" data-i18n="nav.about">About</a>
+  <a href="#skills"    onclick="closeDrawer()" data-i18n="nav.skills">Skills</a>
+  <a href="#projects"  onclick="closeDrawer()" data-i18n="nav.projects">Projects</a>
+  <a href="#education" onclick="closeDrawer()" data-i18n="nav.education">Education</a>
+  <a href="#contact"   onclick="closeDrawer()" data-i18n="nav.contact">Contact</a>
+</div>
 
 <!-- ══ HERO ══ -->
 <section id="hero">
   <div class="hero-bg-text">GABRIEL</div>
   <div class="hero-content">
-    <div class="hero-tag" data-i18n="hero_available">Available for opportunities</div>
+    <div class="hero-tag" data-i18n="hero.tag">Available for opportunities</div>
     <div class="ai-badge">
       <span class="ai-dot"></span>
       LLMs &middot; Agents &middot; AI Integration
@@ -821,13 +1030,13 @@
       <span class="line1">Gabriel</span>
       <span class="line2">Le&atilde;o</span>
     </h1>
-    <p class="hero-desc" data-i18n="hero_desc">
-      <span data-i18n="hero_role">Software Developer</span> specialized in <strong>Django &amp; AI</strong>.
-      Building applications that unite the best of web development with applied artificial intelligence.
+    <p class="hero-desc" data-i18n="hero.desc">
+      <span>Desenvolvedor de Software</span> especializado em <strong>Django &amp; IA</strong>.
+      Construo aplica&ccedil;&otilde;es que unem o melhor do desenvolvimento web com o avan&ccedil;o da intelig&ecirc;ncia artificial aplicada.
     </p>
     <div class="hero-cta">
-      <a href="#projects" class="btn-primary" data-i18n="hero_cta1">View Projects</a>
-      <a href="#contact"  class="btn-secondary" data-i18n="hero_cta2">Get in Touch</a>
+      <a href="#projects" class="btn-primary" data-i18n="hero.cta1">Ver Projetos</a>
+      <a href="#contact"  class="btn-secondary" data-i18n="hero.cta2">Entre em Contato</a>
     </div>
   </div>
   <div class="scroll-indicator">
@@ -840,62 +1049,88 @@
 <div class="stats-bar">
   <div class="stat-item">
     <div class="stat-num">6&ordm;</div>
-    <div class="stat-label" data-i18n="stat1">Semester &mdash; IS / CESMAC</div>
+    <div class="stat-label" data-i18n="stats.s1">Per&iacute;odo &mdash; SI / CESMAC</div>
   </div>
   <div class="stat-item">
     <div class="stat-num">2+</div>
-    <div class="stat-label" data-i18n="stat2">Years Developing</div>
+    <div class="stat-label" data-i18n="stats.s2">Anos Desenvolvendo</div>
   </div>
   <div class="stat-item">
     <div class="stat-num">5+</div>
-    <div class="stat-label" data-i18n="stat3">Projects Completed</div>
+    <div class="stat-label" data-i18n="stats.s3">Projetos Conclu&iacute;dos</div>
   </div>
   <div class="stat-item">
     <div class="stat-num">&infin;</div>
-    <div class="stat-label" data-i18n="stat4">Will to Learn</div>
+    <div class="stat-label" data-i18n="stats.s4">Vontade de Aprender</div>
   </div>
 </div>
 
 <!-- ══ ABOUT ══ -->
 <section id="about">
-  <div class="section-tag" data-i18n="about_tag">About me</div>
+  <div class="section-tag" data-i18n="about.tag">About me</div>
   <div class="about-grid">
+
+    <!-- LEFT: text -->
     <div class="about-text reveal">
-      <h2 class="section-title" data-i18n="about_title">About<br>Me</h2>
-      <p data-i18n="about_p1">I'm a developer passionate about <span>combining technology and artificial intelligence</span> to create solutions that truly make a difference.</p>
-      <p data-i18n="about_p2">Focused on <strong>Python/Django</strong> on the back-end with a full-stack vision, I specialize in building robust, scalable and intelligent systems &mdash; from RESTful APIs to autonomous agents with <strong>LangChain and LLMs</strong>.</p>
-      <p data-i18n="about_p3">Currently studying <span>Information Systems at CESMAC (6th semester)</span> and never stop learning. Every project is an opportunity to go further.</p>
+      <h2 class="section-title" data-i18n="about.title">Sobre<br>Mim</h2>
+      <p data-i18n="about.p1">Sou um desenvolvedor apaixonado por <span>unir tecnologia e intelig&ecirc;ncia artificial</span> para criar solu&ccedil;&otilde;es que realmente fazem diferen&ccedil;a.</p>
+      <p data-i18n="about.p2">Com foco em <strong>Python/Django</strong> no back-end e uma vis&atilde;o full-stack, me especializei em construir sistemas robustos, escal&aacute;veis e inteligentes &mdash; desde APIs RESTful at&eacute; agentes aut&ocirc;nomos com <strong>LangChain e LLMs</strong>.</p>
+      <p data-i18n="about.p3">Estou cursando <span>Sistemas de Informa&ccedil;&atilde;o no CESMAC (6&ordm; per&iacute;odo)</span> e nunca paro de aprender. Cada projeto &eacute; uma oportunidade de ir al&eacute;m.</p>
     </div>
 
-    <!-- NEW about details grid -->
-    <div class="about-details reveal">
-      <div class="detail-card">
-        <span class="detail-key" data-i18n="detail_location_key">Location</span>
-        <div class="detail-val">Macei&oacute;, Alagoas</div>
-      </div>
-      <div class="detail-card">
-        <span class="detail-key" data-i18n="detail_focus_key">Current focus</span>
-        <div class="detail-val">Django + AI + LLMs</div>
-      </div>
-      <div class="detail-card">
-        <span class="detail-key">Email</span>
-        <div class="detail-val"><a href="mailto:gabrielleao.sb@gmail.com">gabrielleao.sb<br>@gmail.com</a></div>
-      </div>
-      <div class="detail-card">
-        <span class="detail-key">GitHub</span>
-        <div class="detail-val"><a href="https://github.com/gabrielleaosb" target="_blank">gabrielleaosb</a></div>
-      </div>
-      <div class="detail-card">
-        <span class="detail-key" data-i18n="detail_langs_key">Languages</span>
-        <div class="detail-val" data-i18n="detail_langs_val">PT-BR Native · EN Reading</div>
-      </div>
-      <div class="detail-card">
-        <span class="detail-key">Status</span>
-        <div class="detail-val status-online">
-          <span class="status-pulse"></span>
-          <span data-i18n="detail_status_val">Available</span>
+    <!-- RIGHT: refactored profile card -->
+    <div class="about-profile-card reveal">
+
+      <!-- Header: avatar + name + status -->
+      <div class="profile-header">
+        <div class="profile-avatar">GL</div>
+        <div class="profile-header-info">
+          <div class="profile-name">Gabriel Le&atilde;o</div>
+          <div class="profile-role">Software Developer · Django &amp; AI</div>
+        </div>
+        <div class="profile-status">
+          <span class="status-dot"></span>
+          <span data-i18n="about.available">Dispon&iacute;vel</span>
         </div>
       </div>
+
+      <!-- Body: 2-column info grid -->
+      <div class="profile-body">
+        <div class="profile-info-grid">
+          <div class="profile-info-item">
+            <div class="info-label" data-i18n="about.loc_label">Localiza&ccedil;&atilde;o</div>
+            <div class="info-value">Macei&oacute;, Alagoas</div>
+          </div>
+          <div class="profile-info-item">
+            <div class="info-label" data-i18n="about.focus_label">Foco Atual</div>
+            <div class="info-value">Django · IA · LLMs</div>
+          </div>
+          <div class="profile-info-item">
+            <div class="info-label" data-i18n="about.edu_label">Forma&ccedil;&atilde;o</div>
+            <div class="info-value">SI · CESMAC · 6&ordm; Per.</div>
+          </div>
+          <div class="profile-info-item">
+            <div class="info-label" data-i18n="about.lang_label">Idiomas</div>
+            <div class="info-value" data-i18n="about.lang_val">PT-BR Nativo · EN Leitura</div>
+          </div>
+          <div class="profile-info-item">
+            <div class="info-label">Email</div>
+            <div class="info-value"><a href="mailto:gabrielleaosb@gmail.com">gabrielleaosb@gmail.com</a></div>
+          </div>
+          <div class="profile-info-item">
+            <div class="info-label">GitHub</div>
+            <div class="info-value"><a href="https://github.com/gabrielleaosb" target="_blank">gabrielleaosb</a></div>
+          </div>
+        </div>
+
+        <!-- Social links row -->
+        <div class="profile-socials">
+          <a href="https://github.com/gabrielleaosb" target="_blank" class="social-link">&#9741; GitHub</a>
+          <a href="https://linkedin.com/in/gabriellsbagetti" target="_blank" class="social-link">&#9634; LinkedIn</a>
+          <a href="tel:+5582991487729" class="social-link" data-i18n="about.call">&#9742; Ligar</a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -910,14 +1145,14 @@
 
 <!-- ══ SKILLS ══ -->
 <section id="skills">
-  <div class="section-tag" data-i18n="skills_tag">Expertise</div>
-  <h2 class="section-title reveal" data-i18n="skills_title">Stack &amp;<br>Skills</h2>
+  <div class="section-tag" data-i18n="skills.tag">Expertise</div>
+  <h2 class="section-title reveal" data-i18n="skills.title">Stack &amp;<br>Habilidades</h2>
   <div class="skills-grid">
 
     <div class="skill-card reveal">
       <span class="skill-icon">&#9881;&#65039;</span>
-      <div class="skill-card-title" data-i18n="skill1_title">Back-End Development</div>
-      <p class="skill-card-desc" data-i18n="skill1_desc">Scalable architecture with async tasks, messaging and performance-oriented design.</p>
+      <div class="skill-card-title">Back-End Development</div>
+      <p class="skill-card-desc">Arquitetura escal&aacute;vel com tarefas ass&iacute;ncronas, mensageria e design orientado a performance.</p>
       <div class="skill-tags">
         <span class="tag">Python</span><span class="tag">Django</span>
         <span class="tag">DRF</span><span class="tag">Celery</span>
@@ -927,8 +1162,8 @@
 
     <div class="skill-card reveal">
       <span class="skill-icon">&#129302;</span>
-      <div class="skill-card-title" data-i18n="skill2_title">AI &amp; LLMs</div>
-      <p class="skill-card-desc" data-i18n="skill2_desc">Intelligent applications with advanced language models, autonomous agents and generative AI.</p>
+      <div class="skill-card-title">IA &amp; LLMs</div>
+      <p class="skill-card-desc">Aplica&ccedil;&otilde;es inteligentes com modelos de linguagem avan&ccedil;ados, agentes aut&ocirc;nomos e IA generativa.</p>
       <div class="skill-tags">
         <span class="tag">LangChain</span><span class="tag">LLMs</span>
         <span class="tag">Ollama</span><span class="tag">Generative AI</span>
@@ -938,8 +1173,8 @@
 
     <div class="skill-card reveal">
       <span class="skill-icon">&#128451;&#65039;</span>
-      <div class="skill-card-title" data-i18n="skill3_title">Databases</div>
-      <p class="skill-card-desc" data-i18n="skill3_desc">Modeling, optimization and integration of relational and NoSQL databases for high-availability systems.</p>
+      <div class="skill-card-title">Banco de Dados</div>
+      <p class="skill-card-desc">Modelagem, otimiza&ccedil;&atilde;o e integra&ccedil;&atilde;o de bancos relacionais e NoSQL para sistemas de alta disponibilidade.</p>
       <div class="skill-tags">
         <span class="tag">PostgreSQL</span><span class="tag">MySQL</span>
         <span class="tag">MongoDB</span><span class="tag">SQL</span><span class="tag">ORM</span>
@@ -948,8 +1183,8 @@
 
     <div class="skill-card reveal">
       <span class="skill-icon">&#127760;</span>
-      <div class="skill-card-title" data-i18n="skill4_title">Front-End</div>
-      <p class="skill-card-desc" data-i18n="skill4_desc">Modern, responsive and interactive interfaces focused on user experience. Native GUI with Flet (Python).</p>
+      <div class="skill-card-title">Front-End</div>
+      <p class="skill-card-desc">Interfaces modernas, responsivas e interativas com foco em experi&ecirc;ncia do usu&aacute;rio. Interface gr&aacute;fica nativa com Flet (Python).</p>
       <div class="skill-tags">
         <span class="tag">HTML</span><span class="tag">CSS</span>
         <span class="tag">JavaScript</span><span class="tag">Tailwind CSS</span>
@@ -959,8 +1194,8 @@
 
     <div class="skill-card reveal">
       <span class="skill-icon">&#128202;</span>
-      <div class="skill-card-title" data-i18n="skill5_title">Data Analysis</div>
-      <p class="skill-card-desc" data-i18n="skill5_desc">Data engineering, processing and visualization with AI applied for decision-making.</p>
+      <div class="skill-card-title">An&aacute;lise de Dados</div>
+      <p class="skill-card-desc">Engenharia, tratamento e visualiza&ccedil;&atilde;o de dados com aplica&ccedil;&atilde;o de IA para tomada de decis&otilde;es.</p>
       <div class="skill-tags">
         <span class="tag">Pandas</span><span class="tag">NumPy</span>
         <span class="tag">Matplotlib</span><span class="tag">Plotly</span>
@@ -969,8 +1204,8 @@
 
     <div class="skill-card reveal">
       <span class="skill-icon">&#128260;</span>
-      <div class="skill-card-title" data-i18n="skill6_title">DevOps &amp; Quality</div>
-      <p class="skill-card-desc" data-i18n="skill6_desc">Version control, CI/CD, unit and integration automated tests with focus on reliability.</p>
+      <div class="skill-card-title">DevOps &amp; Qualidade</div>
+      <p class="skill-card-desc">Controle de vers&atilde;o, CI/CD, testes automatizados unit&aacute;rios e de integra&ccedil;&atilde;o com foco em confiabilidade.</p>
       <div class="skill-tags">
         <span class="tag">Git</span><span class="tag">GitHub</span>
         <span class="tag">CI/CD</span><span class="tag">Pytest</span>
@@ -983,8 +1218,8 @@
 
 <!-- ══ PROJECTS ══ -->
 <section id="projects">
-  <div class="section-tag" data-i18n="projects_tag">Work</div>
-  <h2 class="section-title reveal" data-i18n="projects_title">Projects</h2>
+  <div class="section-tag">Work</div>
+  <h2 class="section-title reveal">Projetos</h2>
 
   <div class="projects-list">
 
@@ -1000,7 +1235,6 @@
           </div>
         </div>
         <div class="project-visual-grid" style="background-image:linear-gradient(rgba(255,77,109,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,77,109,0.05) 1px,transparent 1px);background-size:28px 28px;"></div>
-        <!-- FIXED: only real dice faces, no wheelchair emoji -->
         <div class="dice-decoration">
           <span class="dice-bg">&#9860;</span>
           <span class="dice">&#9856;</span>
@@ -1010,10 +1244,10 @@
         </div>
       </div>
       <div class="project-info">
-        <div class="project-year" data-i18n="kbones_year">2026 &mdash; Web Game &middot; Live &middot; P2P</div>
+        <div class="project-year">2026 &mdash; Web Game &middot; Live &middot; P2P</div>
         <h3 class="project-title" style="-webkit-text-stroke:2px var(--accent3);color:transparent;">Knucklebones</h3>
-        <p class="project-desc" data-i18n="kbones_desc">
-          Strategic dice game inspired by the <em>Cult of the Lamb</em> universe. Original scoring mechanics, fluid gameplay and completely live &mdash; just open and play.
+        <p class="project-desc">
+          Jogo de dados estrat&eacute;gico inspirado no universo de <em>Cult of the Lamb</em>. Mec&acirc;nicas originais de pontua&ccedil;&atilde;o, jogabilidade fluida e completamente no ar &mdash; s&oacute; abrir e jogar.
         </p>
         <div class="skill-tags" style="margin-bottom:32px;">
           <span class="tag">Web Game</span><span class="tag">JavaScript</span>
@@ -1023,7 +1257,7 @@
         <div class="project-links-row">
           <a href="https://kbones.xyz/" target="_blank" class="project-btn btn-red">
             <span class="btn-icon">&#9856;</span>
-            <span class="btn-text" data-i18n="play_now">Play Now</span>
+            <span class="btn-text">Jogar Agora</span>
             <span class="btn-arrow">&#8594;</span>
           </a>
         </div>
@@ -1051,10 +1285,10 @@
         </div>
       </div>
       <div class="project-info">
-        <div class="project-year" data-i18n="ai_year">2025 &mdash; AI &middot; Data Analysis &middot; Django</div>
+        <div class="project-year">2025 &mdash; AI &middot; Data Analysis &middot; Django</div>
         <h3 class="project-title" style="-webkit-text-stroke:2px var(--accent2);color:transparent;">AI Analyst</h3>
-        <p class="project-desc" data-i18n="ai_desc">
-          Django platform for automated CSV dataset analysis with local AI. File upload, automatic size detection and insight generation via <strong>Llama 3 (Ollama)</strong> with background processing &mdash; your data never leaves your machine.
+        <p class="project-desc">
+          Plataforma Django para an&aacute;lise automatizada de datasets CSV com IA local. Upload de arquivos, detec&ccedil;&atilde;o autom&aacute;tica de tamanho e gera&ccedil;&atilde;o de insights via <strong>Llama 3 (Ollama)</strong> com processamento em background &mdash; seus dados nunca saem da sua m&aacute;quina.
         </p>
         <div class="skill-tags" style="margin-bottom:32px;">
           <span class="tag">Django</span><span class="tag">LangChain</span>
@@ -1065,7 +1299,7 @@
         <div class="project-links-row">
           <a href="https://github.com/gabrielleaosb/ai_analyst" target="_blank" class="project-btn btn-purple">
             <span class="btn-icon">&#128279;</span>
-            <span class="btn-text" data-i18n="view_github">View on GitHub</span>
+            <span class="btn-text">Ver no GitHub</span>
             <span class="btn-arrow">&#8594;</span>
           </a>
         </div>
@@ -1079,7 +1313,7 @@
           <div class="project-logo" style="color:var(--accent4);text-shadow:0 0 60px rgba(245,158,11,0.6),0 0 120px rgba(245,158,11,0.15);font-size:3rem;animation:none;line-height:1.1;">LT<br>MANAGER</div>
           <div class="project-live-badge" style="border-color:rgba(245,158,11,0.5);color:var(--accent4);">
             <span class="live-dot" style="background:var(--accent4);"></span>
-            <span data-i18n="in_dev">IN DEVELOPMENT</span>
+            EM DESENVOLVIMENTO
           </div>
         </div>
         <div class="project-visual-grid" style="background-image:linear-gradient(rgba(245,158,11,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(245,158,11,0.05) 1px,transparent 1px);background-size:32px 32px;"></div>
@@ -1095,10 +1329,10 @@
         </div>
       </div>
       <div class="project-info">
-        <div class="project-year" data-i18n="lt_year">2025 &mdash; Web App &middot; Real-time &middot; Full Stack</div>
+        <div class="project-year">2025 &mdash; Web App &middot; Real-time &middot; Full Stack</div>
         <h3 class="project-title" style="-webkit-text-stroke:2px var(--accent4);color:transparent;">LT Manager</h3>
-        <p class="project-desc" data-i18n="lt_desc">
-          Platform for playing <strong>tabletop RPG online in real time</strong>. Fully interactive map canvas, character system, rooms and live sessions. Nearly finished, currently paused &mdash; with solid foundation and well-defined architecture.
+        <p class="project-desc">
+          Plataforma para jogar <strong>RPG de mesa online em tempo real</strong>. Canvas de mapa totalmente interativo, sistema de personagens, salas e sess&otilde;es ao vivo. Projeto quase finalizado, atualmente pausado &mdash; com base s&oacute;lida e arquitetura bem definida.
         </p>
         <div class="skill-tags" style="margin-bottom:32px;">
           <span class="tag">Django</span><span class="tag">Canvas API</span>
@@ -1108,7 +1342,7 @@
         <div class="project-links-row">
           <a href="https://github.com/gabrielleaosb/LT-Manager" target="_blank" class="project-btn btn-amber">
             <span class="btn-icon">&#128279;</span>
-            <span class="btn-text" data-i18n="view_github">View on GitHub</span>
+            <span class="btn-text">Ver no GitHub</span>
             <span class="btn-arrow">&#8594;</span>
           </a>
           <span class="project-wip">&#9881;&#160;WIP</span>
@@ -1136,10 +1370,10 @@
         </div>
       </div>
       <div class="project-info">
-        <div class="project-year" data-i18n="bot_year">2025 &mdash; Discord Bot &middot; Hobby &middot; MongoDB</div>
+        <div class="project-year">2025 &mdash; Discord Bot &middot; Hobby &middot; MongoDB</div>
         <h3 class="project-title" style="-webkit-text-stroke:2px #5865f2;color:transparent;">Discord RPG Bot</h3>
-        <p class="project-desc" data-i18n="bot_desc">
-          Character collection and battle bot for Discord, built as a hobby. <strong>Character roll system</strong> (Marvel &amp; Invincible) with rarities, stars and power, coin economy, daily, work, ranking and user profiles &mdash; all powered by <strong>MongoDB</strong> and JSON handling.
+        <p class="project-desc">
+          Bot de coleta e batalha de personagens para Discord, feito por hobby. Sistema de <strong>roll de personagens</strong> (Marvel &amp; Invenc&iacute;vel) com raridades, estrelas e poder, economia de moedas, daily, work, ranking e perfis de usu&aacute;rios &mdash; tudo com <strong>MongoDB</strong> e manipula&ccedil;&atilde;o de JSON.
         </p>
         <div class="skill-tags" style="margin-bottom:32px;">
           <span class="tag">Python</span><span class="tag">Discord.py</span>
@@ -1149,7 +1383,7 @@
         <div class="project-links-row">
           <a href="https://github.com/gabrielleaosb/JubaBot" target="_blank" class="project-btn btn-discord">
             <span class="btn-icon">&#128279;</span>
-            <span class="btn-text" data-i18n="view_github">View on GitHub</span>
+            <span class="btn-text">Ver no GitHub</span>
             <span class="btn-arrow">&#8594;</span>
           </a>
         </div>
@@ -1175,10 +1409,10 @@
         </div>
       </div>
       <div class="project-info">
-        <div class="project-year" data-i18n="burger_year">2025 &mdash; Full Stack &middot; Collaboration</div>
-        <h3 class="project-title" data-i18n="burger_title">Virtual Menu</h3>
-        <p class="project-desc" data-i18n="burger_desc">
-          Full stack web application for digital menu management in partnership with a family business. Intuitive interface for product, order and category management &mdash; from design to deploy.
+        <div class="project-year">2025 &mdash; Full Stack &middot; Collaboration</div>
+        <h3 class="project-title">Card&aacute;pio Virtual</h3>
+        <p class="project-desc">
+          Aplica&ccedil;&atilde;o web fullstack para gerenciamento de card&aacute;pio digital em parceria com um empreendimento familiar. Interface intuitiva para gest&atilde;o de produtos, pedidos e categorias &mdash; do design ao deploy.
         </p>
         <div class="skill-tags" style="margin-bottom:32px;">
           <span class="tag">Django</span><span class="tag">JavaScript</span>
@@ -1187,7 +1421,7 @@
         <div class="project-links-row">
           <a href="https://github.com/gabrielleaosb/da-casa-burguer" target="_blank" class="project-btn btn-green">
             <span class="btn-icon">&#128279;</span>
-            <span class="btn-text" data-i18n="view_github">View on GitHub</span>
+            <span class="btn-text">Ver no GitHub</span>
             <span class="btn-arrow">&#8594;</span>
           </a>
         </div>
@@ -1199,54 +1433,51 @@
 
 <!-- ══ EDUCATION ══ -->
 <section id="education">
-  <div class="section-tag" data-i18n="edu_tag">Education</div>
-  <h2 class="section-title reveal" data-i18n="edu_title">Education &amp;<br>Courses</h2>
+  <div class="section-tag">Education</div>
+  <h2 class="section-title reveal">Forma&ccedil;&atilde;o &amp;<br>Cursos</h2>
 
   <div class="education-grid">
 
-    <!-- COURSES -->
     <div class="courses-col reveal">
-      <div class="courses-subtitle" data-i18n="courses_sub">Complementary Courses</div>
+      <div class="courses-subtitle">Cursos Complementares</div>
 
       <div class="course-item">
-        <div class="course-platform" data-i18n="course1_platform">Udemy &middot; Complete</div>
+        <div class="course-platform">Udemy &middot; Completo</div>
         <div class="course-name">Django &amp; Django REST Framework</div>
-        <div class="course-author">by Luiz Ot&aacute;vio Miranda</div>
-        <span class="course-badge" data-i18n="completed">&#10003; Completed</span>
+        <div class="course-author">por Luiz Ot&aacute;vio Miranda</div>
+        <span class="course-badge">&#10003; Conclu&iacute;do</span>
       </div>
 
       <div class="course-item">
-        <div class="course-platform" data-i18n="course2_platform">Udemy &middot; Complete</div>
-        <div class="course-name">Flet Essentials &mdash; GUI with Python</div>
-        <div class="course-author">by Dalton Peixoto</div>
-        <span class="course-badge" data-i18n="completed">&#10003; Completed</span>
+        <div class="course-platform">Udemy &middot; Completo</div>
+        <div class="course-name">Flet Essentials &mdash; Interface Gr&aacute;fica com Python</div>
+        <div class="course-author">por Dalton Peixoto</div>
+        <span class="course-badge">&#10003; Conclu&iacute;do</span>
       </div>
 
       <div class="course-item">
-        <div class="course-platform" data-i18n="course3_platform">Curso em V&iacute;deo &middot; Complete</div>
+        <div class="course-platform">Curso em V&iacute;deo &middot; Completo</div>
         <div class="course-name">Python Mundo 1, 2 e 3</div>
-        <div class="course-author">by Gustavo Guanabara</div>
-        <span class="course-badge" data-i18n="completed">&#10003; Completed</span>
+        <div class="course-author">por Gustavo Guanabara</div>
+        <span class="course-badge">&#10003; Conclu&iacute;do</span>
       </div>
-
     </div>
 
-    <!-- FORMAL EDUCATION -->
     <div class="edu-cards reveal">
-      <div class="courses-subtitle" data-i18n="formal_edu_sub">Academic Background</div>
+      <div class="courses-subtitle">Forma&ccedil;&atilde;o Acad&ecirc;mica</div>
 
       <div class="edu-card">
-        <div class="edu-badge" data-i18n="in_progress">In Progress</div>
+        <div class="edu-badge">Em Andamento</div>
         <div class="edu-year">2022 &rarr; 2026</div>
-        <div class="edu-title" data-i18n="edu1_title">Information Systems</div>
-        <p class="edu-sub" data-i18n="edu1_sub">CESMAC &mdash; Centro de Estudos Superiores de Macei&oacute;<br>6th Semester &middot; Evening</p>
+        <div class="edu-title">Sistemas de Informa&ccedil;&atilde;o</div>
+        <p class="edu-sub">CESMAC &mdash; Centro de Estudos Superiores de Macei&oacute;<br>6&ordm; Per&iacute;odo &middot; Turno Noturno</p>
       </div>
 
       <div class="edu-card">
-        <div class="edu-badge" style="border-color:rgba(255,255,255,0.15);color:var(--muted);" data-i18n="concluded">Concluded</div>
+        <div class="edu-badge" style="border-color:rgba(255,255,255,0.15);color:var(--muted);">Conclu&iacute;do</div>
         <div class="edu-year">2021</div>
-        <div class="edu-title" data-i18n="edu2_title">High School Diploma</div>
-        <p class="edu-sub" data-i18n="edu2_sub">Col&eacute;gio Santa &Uacute;rsula<br>Macei&oacute;, Alagoas</p>
+        <div class="edu-title">Ensino M&eacute;dio Completo</div>
+        <p class="edu-sub">Col&eacute;gio Santa &Uacute;rsula<br>Macei&oacute;, Alagoas</p>
       </div>
     </div>
 
@@ -1256,14 +1487,14 @@
 <!-- ══ CONTACT ══ -->
 <section id="contact">
   <div class="contact-inner reveal">
-    <div class="section-tag" style="justify-content:center;">Get in touch</div>
-    <div class="contact-big" data-i18n="contact_big">Let's<br>Build<br>Together?</div>
-    <p class="contact-sub" data-i18n="contact_sub">
-      Open to new opportunities, freelance projects and collaborations.<br>
-      If you have an interesting idea or challenge, send me a message.
+    <div class="section-tag" style="justify-content:center;" data-i18n="contact.tag">Get in touch</div>
+    <div class="contact-big" data-i18n="contact.big">Vamos<br>Construir<br>Juntos?</div>
+    <p class="contact-sub" data-i18n="contact.sub">
+      Estou aberto a novas oportunidades, projetos freelance e colabora&ccedil;&otilde;es.<br>
+      Se voc&ecirc; tem uma ideia ou desafio interessante, me manda uma mensagem.
     </p>
     <div class="contact-links">
-      <a href="mailto:gabrielleao.sb@gmail.com" class="contact-link">&#9993; Email</a>
+      <a href="mailto:gabrielleaosb@gmail.com" class="contact-link">&#9993; Email</a>
       <a href="https://github.com/gabrielleaosb" target="_blank" class="contact-link">&#9741; GitHub</a>
       <a href="https://linkedin.com/in/gabriellsbagetti" target="_blank" class="contact-link">&#9634; LinkedIn</a>
       <a href="tel:+5582991487729" class="contact-link">&#9742; (82) 99148-7729</a>
@@ -1274,13 +1505,15 @@
 <!-- ══ FOOTER ══ -->
 <footer>
   <p>&copy; 2025 Gabriel Le&atilde;o Salles Bagetti</p>
-  <p data-i18n="footer_made">Made with <a href="https://github.com/gabrielleaosb" target="_blank">code</a> and lots of coffee &#9749;</p>
+  <p data-i18n="footer.made">Feito com <a href="https://github.com/gabrielleaosb" target="_blank">c&oacute;digo</a> e muito caf&eacute; &#9749;</p>
   <p>Macei&oacute;, Alagoas, BR</p>
 </footer>
 
 <script>
-/* ══ TRANSLATIONS ══ */
-var T = {
+  /* ══════════════════════════════════════
+     I18N — TRANSLATION SYSTEM
+  ══════════════════════════════════════ */
+  var translations = {
   pt: {
     nav_about: 'Sobre', nav_skills: 'Habilidades', nav_projects: 'Projetos',
     nav_education: 'Educação', nav_contact: 'Contato',
@@ -1403,118 +1636,117 @@ var T = {
   }
 };
 
-var currentLang = 'pt';
+  var currentLang = 'pt';
 
-function setLang(lang) {
-  currentLang = lang;
-  var d = T[lang];
-  document.getElementById('btn-pt').classList.toggle('active', lang==='pt');
-  document.getElementById('btn-en').classList.toggle('active', lang==='en');
-
-  document.querySelectorAll('[data-i18n]').forEach(function(el) {
-    var key = el.getAttribute('data-i18n');
-    if (!d[key]) return;
-    var val = d[key];
-    // handle newlines in section titles
-    if (el.classList.contains('section-title') || el.classList.contains('contact-big')) {
-      el.innerHTML = val.replace(/\n/g, '<br>');
-    } else if (el.classList.contains('about-text') || el.tagName === 'P') {
-      el.innerHTML = val.replace(/\n/g, '<br>');
-    } else {
-      el.innerHTML = val;
-    }
-  });
-
-  // handle hero desc specially (has nested spans/strongs)
-  var heroDesc = document.querySelector('.hero-desc');
-  if (heroDesc) {
-    heroDesc.innerHTML = '<span data-i18n="hero_role">' + d['hero_role'] + '</span> ' +
-      (lang === 'pt'
-        ? 'especializado em <strong>Django &amp; IA</strong>. Construo aplicações que unem o melhor do desenvolvimento web com o avanço da inteligência artificial aplicada.'
-        : 'specialized in <strong>Django &amp; AI</strong>. Building applications that unite the best of web development with applied artificial intelligence.');
+  function applyTranslations(lang) {
+    var t = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) {
+        el.innerHTML = t[key];
+      }
+    });
+    // Update html lang attr
+    document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+    // Update toggle button
+    document.getElementById('langFlag').textContent  = lang === 'pt' ? '🇧🇷' : '🇺🇸';
+    document.getElementById('langLabel').textContent = lang === 'pt' ? 'PT' : 'EN';
   }
 
-  // about paragraphs
-  var aboutPs = document.querySelectorAll('.about-text p');
-  ['about_p1','about_p2','about_p3'].forEach(function(key,i) {
-    if (aboutPs[i] && d[key]) aboutPs[i].innerHTML = d[key];
+  document.getElementById('langToggle').addEventListener('click', function() {
+    currentLang = currentLang === 'pt' ? 'en' : 'pt';
+    applyTranslations(currentLang);
   });
 
-  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
-}
+  /* ── MOBILE DRAWER ── */
+  var hamburger = document.getElementById('navHamburger');
+  var drawer    = document.getElementById('navDrawer');
+  hamburger.addEventListener('click', function() {
+    hamburger.classList.toggle('open');
+    drawer.classList.toggle('open');
+  });
+  function closeDrawer() {
+    hamburger.classList.remove('open');
+    drawer.classList.remove('open');
+  }
 
-/* init with PT */
-setLang('pt');
+  /* ── CURSOR: pulsing ring (desktop only) ── */
+  var ring   = document.getElementById('cursor-ring');
+  var dot    = document.getElementById('cursor-dot');
+  var mouseX = 0, mouseY = 0;
 
-/* ══ CURSOR ══ */
-var cursorCenter = document.getElementById('cursor-center');
-var cursorRing1  = document.getElementById('cursor-ring1');
-var cursorRing2  = document.getElementById('cursor-ring2');
-var cursorRing3  = document.getElementById('cursor-ring3');
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.addEventListener('mousemove', function(e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      ring.style.left = mouseX + 'px';
+      ring.style.top  = mouseY + 'px';
+      dot.style.left  = mouseX + 'px';
+      dot.style.top   = mouseY + 'px';
+    });
 
-document.addEventListener('mousemove', function(e) {
-  var x = e.clientX + 'px';
-  var y = e.clientY + 'px';
-  cursorCenter.style.left = x;
-  cursorCenter.style.top  = y;
-  cursorRing1.style.left  = x;
-  cursorRing1.style.top   = y;
-  cursorRing2.style.left  = x;
-  cursorRing2.style.top   = y;
-  cursorRing3.style.left  = x;
-  cursorRing3.style.top   = y;
-});
+    document.querySelectorAll('a, button').forEach(function(el) {
+      el.addEventListener('mouseenter', function() { ring.classList.add('hovered'); });
+      el.addEventListener('mouseleave', function() { ring.classList.remove('hovered'); });
+    });
+  }
 
-/* ══ Reveal on scroll ══ */
-var reveals = document.querySelectorAll('.reveal');
-var revealObs = new IntersectionObserver(function(entries) {
-  entries.forEach(function(entry, i) {
-    if (entry.isIntersecting) {
-      setTimeout(function() { entry.target.classList.add('visible'); }, i * 80);
-      revealObs.unobserve(entry.target);
+  /* ── REVEAL ON SCROLL ── */
+  var reveals = document.querySelectorAll('.reveal');
+  var revealObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry, i) {
+      if (entry.isIntersecting) {
+        setTimeout(function() { entry.target.classList.add('visible'); }, i * 80);
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(function(el) { revealObs.observe(el); });
+
+  /* ── STAGGER SKILL CARDS ── */
+  document.querySelectorAll('.skill-card').forEach(function(card, i) {
+    card.style.transitionDelay = (i * 70) + 'ms';
+  });
+
+  /* ── PARALLAX HERO BG TEXT ── */
+  var heroBg = document.querySelector('.hero-bg-text');
+  window.addEventListener('scroll', function() {
+    if (heroBg) {
+      heroBg.style.transform = 'translate(-50%, calc(-50% + ' + (window.scrollY * 0.3) + 'px))';
     }
-  });
-}, { threshold: 0.08 });
-reveals.forEach(function(el) { revealObs.observe(el); });
+  }, { passive: true });
 
-/* ══ Stagger skill cards ══ */
-document.querySelectorAll('.skill-card').forEach(function(card, i) {
-  card.style.transitionDelay = (i * 70) + 'ms';
-});
+  /* ── ACTIVE NAV HIGHLIGHT ── */
+  var sections = document.querySelectorAll('section[id]');
+  var navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', function() {
+    var current = '';
+    sections.forEach(function(sec) {
+      if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+    });
+    navLinks.forEach(function(a) {
+      a.style.color = a.getAttribute('href') === ('#' + current) ? 'var(--accent)' : '';
+    });
+  }, { passive: true });
 
-/* ══ Parallax hero bg text ══ */
-var heroBg = document.querySelector('.hero-bg-text');
-window.addEventListener('scroll', function() {
-  if (heroBg) heroBg.style.transform = 'translate(-50%, calc(-50% + ' + (window.scrollY * 0.3) + 'px))';
-}, { passive: true });
-
-/* ══ Active nav highlight ══ */
-var sections = document.querySelectorAll('section[id]');
-var navLinks = document.querySelectorAll('.nav-links a');
-window.addEventListener('scroll', function() {
-  var current = '';
-  sections.forEach(function(sec) {
-    if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
-  });
-  navLinks.forEach(function(a) {
-    a.style.color = a.getAttribute('href') === ('#' + current) ? 'var(--accent)' : '';
-  });
-}, { passive: true });
-
-/* ══ Stat fade-in ══ */
-var statNums = document.querySelectorAll('.stat-num');
-var statsObs = new IntersectionObserver(function(entries) {
-  entries.forEach(function(entry) {
-    if (entry.isIntersecting) {
-      var el = entry.target;
-      el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
-      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-      setTimeout(function() { el.style.opacity='1'; el.style.transform='translateY(0)'; }, 60);
-      statsObs.unobserve(el);
-    }
-  });
-}, { threshold: 0.5 });
-statNums.forEach(function(n) { statsObs.observe(n); });
+  /* ── STAT FADE-IN ── */
+  var statNums = document.querySelectorAll('.stat-num');
+  var statsObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var el = entry.target;
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        setTimeout(function() {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }, 60);
+        statsObs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  statNums.forEach(function(n) { statsObs.observe(n); });
 </script>
 </body>
 </html>
