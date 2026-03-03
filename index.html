@@ -30,47 +30,31 @@
     cursor: none;
   }
 
-  /* ══ CURSOR: pulsing circle ══ */
+  /* ══ CURSOR ══ */
   #cursor-ring {
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    top: 0; left: 0;
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    border: 1.5px solid var(--accent);
-    transform: translate(-50%, -50%);
+    position: fixed; pointer-events: none; z-index: 9999;
+    top: 0; left: 0; width: 20px; height: 20px; border-radius: 50%;
+    border: 1.5px solid var(--accent); transform: translate(-50%, -50%);
     transition: width 0.2s ease, height 0.2s ease, border-color 0.2s, opacity 0.2s;
     animation: cursorPulse 2.4s ease-in-out infinite;
   }
-  #cursor-ring.hovered {
-    width: 44px; height: 44px;
-    border-color: var(--accent);
-    animation: none;
-  }
+  #cursor-ring.hovered { width: 44px; height: 44px; border-color: var(--accent); animation: none; }
   #cursor-dot {
-    position: fixed;
-    pointer-events: none;
-    z-index: 10000;
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: var(--accent);
-    top: 0; left: 0;
-    transform: translate(-50%, -50%);
+    position: fixed; pointer-events: none; z-index: 10000;
+    width: 4px; height: 4px; border-radius: 50%; background: var(--accent);
+    top: 0; left: 0; transform: translate(-50%, -50%);
   }
   @keyframes cursorPulse {
     0%, 100% { opacity: 1;    transform: translate(-50%, -50%) scale(1); }
     50%       { opacity: 0.4; transform: translate(-50%, -50%) scale(1.5); }
   }
 
-  /* NOISE OVERLAY */
   body::before {
     content: '';
     position: fixed; inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
     pointer-events: none; z-index: 9997; opacity: 0.3;
   }
-  /* GRID BACKGROUND */
   body::after {
     content: '';
     position: fixed; inset: 0;
@@ -90,91 +74,55 @@
     border-bottom: 1px solid var(--border);
     background: rgba(5,5,7,0.7);
   }
-  .nav-logo {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 1.6rem; letter-spacing: 3px;
-    color: var(--accent); text-decoration: none;
-  }
+  .nav-logo { font-family: 'Bebas Neue', cursive; font-size: 1.6rem; letter-spacing: 3px; color: var(--accent); text-decoration: none; }
   .nav-links { display: flex; gap: 36px; }
   .nav-links a {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--muted);
-    text-decoration: none; transition: color 0.2s; position: relative;
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+    transition: color 0.2s; position: relative;
   }
   .nav-links a::after {
-    content: '';
-    position: absolute; bottom: -4px; left: 0; right: 0;
-    height: 1px; background: var(--accent);
-    transform: scaleX(0); transition: transform 0.2s;
+    content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 1px; background: var(--accent); transform: scaleX(0); transition: transform 0.2s;
   }
   .nav-links a:hover { color: var(--text); }
   .nav-links a:hover::after { transform: scaleX(1); }
 
-  /* ══ LANG TOGGLE ══ */
   .lang-toggle {
     display: flex; align-items: center;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.62rem; letter-spacing: 2px;
-    background: none; border: 1px solid var(--border);
-    color: var(--muted); cursor: pointer;
-    padding: 6px 12px; gap: 6px;
-    transition: border-color 0.2s, color 0.2s, background 0.2s;
-    white-space: nowrap;
+    font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 2px;
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    cursor: pointer; padding: 6px 12px; gap: 6px;
+    transition: border-color 0.2s, color 0.2s, background 0.2s; white-space: nowrap;
   }
   .lang-toggle:hover { border-color: rgba(0,255,136,0.4); color: var(--accent); background: rgba(0,255,136,0.04); }
   .lang-toggle .lang-flag { font-size: 0.9rem; line-height: 1; }
   .lang-toggle .lang-label { text-transform: uppercase; }
 
-  /* Nav right cluster: hamburger + lang */
   .nav-right { display: flex; align-items: center; gap: 12px; }
-  .nav-hamburger {
-    display: none;
-    flex-direction: column; gap: 5px;
-    background: none; border: none; cursor: pointer; padding: 4px;
-  }
-  .nav-hamburger span {
-    display: block; width: 24px; height: 1px;
-    background: var(--accent); transition: all 0.3s;
-  }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .nav-hamburger span { display: block; width: 24px; height: 1px; background: var(--accent); transition: all 0.3s; }
   .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
   .nav-hamburger.open span:nth-child(2) { opacity: 0; }
   .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
 
-  /* Mobile nav drawer */
   .nav-mobile-drawer {
-    display: none;
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(5,5,7,0.97);
-    z-index: 99;
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(5,5,7,0.97); z-index: 99;
     flex-direction: column; align-items: center; justify-content: center;
-    gap: 40px;
-    backdrop-filter: blur(20px);
+    gap: 40px; backdrop-filter: blur(20px);
   }
   .nav-mobile-drawer.open { display: flex; }
-  .nav-mobile-drawer a {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 3rem; letter-spacing: 4px;
-    color: var(--muted); text-decoration: none;
-    transition: color 0.2s;
-  }
+  .nav-mobile-drawer a { font-family: 'Bebas Neue', cursive; font-size: 3rem; letter-spacing: 4px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .nav-mobile-drawer a:hover { color: var(--accent); }
 
   /* ══ HERO ══ */
-  #hero {
-    min-height: 100vh;
-    display: flex; align-items: center;
-    padding: 120px 48px 80px;
-    position: relative; overflow: hidden;
-  }
+  #hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 48px 80px; position: relative; overflow: hidden; }
   .hero-bg-text {
-    position: absolute;
-    font-family: 'Bebas Neue', cursive;
-    font-size: clamp(80px, 20vw, 280px);
-    color: transparent;
+    position: absolute; font-family: 'Bebas Neue', cursive;
+    font-size: clamp(80px, 20vw, 280px); color: transparent;
     -webkit-text-stroke: 1px rgba(0,255,136,0.06);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
     white-space: nowrap; pointer-events: none; user-select: none;
     animation: floatBg 8s ease-in-out infinite;
   }
@@ -184,76 +132,46 @@
   }
   .hero-content { position: relative; z-index: 1; max-width: 900px; }
   .hero-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem; letter-spacing: 4px;
-    color: var(--accent); text-transform: uppercase;
-    margin-bottom: 24px;
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 4px;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 24px;
     display: flex; align-items: center; gap: 12px;
   }
-  .hero-tag::before {
-    content: ''; display: inline-block; width: 32px; height: 1px;
-    background: var(--accent);
-  }
+  .hero-tag::before { content: ''; display: inline-block; width: 32px; height: 1px; background: var(--accent); }
   .ai-badge {
     display: inline-flex; align-items: center; gap: 8px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem; letter-spacing: 2px;
-    padding: 8px 16px;
-    border: 1px solid rgba(123,94,167,0.5);
-    color: #7b5ea7; text-transform: uppercase;
-    margin-bottom: 24px; background: rgba(123,94,167,0.05);
+    font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 2px;
+    padding: 8px 16px; border: 1px solid rgba(123,94,167,0.5);
+    color: #7b5ea7; text-transform: uppercase; margin-bottom: 24px; background: rgba(123,94,167,0.05);
   }
-  .ai-dot {
-    width: 6px; height: 6px; background: var(--accent2);
-    border-radius: 50%; animation: blink 1.5s ease-in-out infinite;
-  }
+  .ai-dot { width: 6px; height: 6px; background: var(--accent2); border-radius: 50%; animation: blink 1.5s ease-in-out infinite; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-  .hero-name {
-    font-family: 'Bebas Neue', cursive;
-    font-size: clamp(56px, 12vw, 160px);
-    line-height: 0.9; letter-spacing: -2px; margin-bottom: 32px;
-  }
+  .hero-name { font-family: 'Bebas Neue', cursive; font-size: clamp(56px, 12vw, 160px); line-height: 0.9; letter-spacing: -2px; margin-bottom: 32px; }
   .hero-name .line1 { display: block; color: var(--text); }
   .hero-name .line2 { display: block; color: transparent; -webkit-text-stroke: 2px var(--accent); }
-  .hero-desc {
-    font-size: clamp(0.9rem, 2.5vw, 1.1rem); line-height: 1.8;
-    color: var(--muted); max-width: 520px;
-    margin-bottom: 48px; font-weight: 300;
-  }
+  .hero-desc { font-size: clamp(0.9rem, 2.5vw, 1.1rem); line-height: 1.8; color: var(--muted); max-width: 520px; margin-bottom: 48px; font-weight: 300; }
   .hero-desc span   { color: var(--text); }
   .hero-desc strong { color: var(--accent); font-weight: 400; }
   .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
   .btn-primary {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
-    padding: 16px 36px; background: var(--accent); color: var(--bg);
-    border: none; cursor: none; font-weight: 700;
-    text-decoration: none; display: inline-block;
-    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+    padding: 16px 36px; background: var(--accent); color: var(--bg); border: none; cursor: none;
+    font-weight: 700; text-decoration: none; display: inline-block; transition: transform 0.2s, box-shadow 0.2s;
     clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
   }
   .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,255,136,0.3); }
   .btn-secondary {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
-    padding: 16px 36px; background: transparent; color: var(--text);
-    border: 1px solid var(--border); cursor: none;
-    text-decoration: none; display: inline-block;
-    transition: border-color 0.2s, color 0.2s;
+    font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+    padding: 16px 36px; background: transparent; color: var(--text); border: 1px solid var(--border);
+    cursor: none; text-decoration: none; display: inline-block; transition: border-color 0.2s, color 0.2s;
   }
   .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
   .scroll-indicator {
     position: absolute; bottom: 48px; right: 48px;
     display: flex; flex-direction: column; align-items: center; gap: 8px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem; letter-spacing: 3px;
+    font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 3px;
     color: var(--muted); text-transform: uppercase; writing-mode: vertical-rl;
   }
-  .scroll-line {
-    width: 1px; height: 60px;
-    background: linear-gradient(to bottom, var(--accent), transparent);
-    animation: scrollDown 2s ease-in-out infinite;
-  }
+  .scroll-line { width: 1px; height: 60px; background: linear-gradient(to bottom, var(--accent), transparent); animation: scrollDown 2s ease-in-out infinite; }
   @keyframes scrollDown {
     0%  { transform: scaleY(0); transform-origin: top; }
     50% { transform: scaleY(1); transform-origin: top; }
@@ -262,604 +180,206 @@
   }
 
   /* ══ STATS ══ */
-  .stats-bar {
-    position: relative; z-index: 1;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    display: flex; overflow: hidden; background: var(--surface);
-    flex-wrap: wrap;
-  }
-  .stat-item {
-    flex: 1; min-width: 150px; padding: 32px 48px;
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    transition: background 0.3s;
-  }
+  .stats-bar { position: relative; z-index: 1; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); display: flex; overflow: hidden; background: var(--surface); flex-wrap: wrap; }
+  .stat-item { flex: 1; min-width: 150px; padding: 32px 48px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background 0.3s; }
   .stat-item:last-child { border-right: none; }
   .stat-item:hover { background: rgba(0,255,136,0.04); }
-  .stat-num {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 3rem; color: var(--accent); line-height: 1;
-  }
-  .stat-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--muted); margin-top: 6px;
-  }
+  .stat-num { font-family: 'Bebas Neue', cursive; font-size: 3rem; color: var(--accent); line-height: 1; }
+  .stat-label { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
 
   /* ══ SECTION BASE ══ */
   section { padding: 120px 48px; position: relative; z-index: 1; }
-  .section-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 4px;
-    text-transform: uppercase; color: var(--accent);
-    margin-bottom: 16px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .section-tag::before {
-    content: ''; display: inline-block; width: 24px; height: 1px;
-    background: var(--accent);
-  }
-  .section-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: clamp(40px, 6vw, 80px);
-    line-height: 1; letter-spacing: -1px; margin-bottom: 60px;
-  }
+  .section-tag { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .section-tag::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--accent); }
+  .section-title { font-family: 'Bebas Neue', cursive; font-size: clamp(40px, 6vw, 80px); line-height: 1; letter-spacing: -1px; margin-bottom: 60px; }
 
   /* ══ ABOUT ══ */
   #about { background: var(--surface); }
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
-  }
-
-  /* Left: text */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
   .about-text p { font-size: 1.05rem; line-height: 1.9; color: var(--muted); margin-bottom: 20px; }
   .about-text p span   { color: var(--text); font-weight: 500; }
   .about-text p strong { color: var(--accent); font-weight: 400; }
 
-  /* Right: refactored profile card */
-  .about-profile-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  /* Top colored band */
+  .about-profile-card { position: relative; display: flex; flex-direction: column; gap: 0; }
   .profile-header {
     background: linear-gradient(135deg, rgba(0,255,136,0.08), rgba(123,94,167,0.12));
-    border: 1px solid var(--border);
-    border-bottom: none;
-    padding: 32px 32px 28px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    position: relative;
-    overflow: hidden;
+    border: 1px solid var(--border); border-bottom: none;
+    padding: 32px 32px 28px; display: flex; align-items: center; gap: 20px;
+    position: relative; overflow: hidden;
   }
-  .profile-header::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-  }
-
-  /* Avatar placeholder — initials circle */
+  .profile-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
   .profile-avatar {
-    width: 64px; height: 64px; flex-shrink: 0;
-    border-radius: 0;
+    width: 64px; height: 64px; flex-shrink: 0; border-radius: 0;
     background: linear-gradient(135deg, rgba(0,255,136,0.15), rgba(123,94,167,0.15));
-    border: 1px solid rgba(0,255,136,0.3);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Bebas Neue', cursive;
-    font-size: 1.6rem; color: var(--accent);
-    letter-spacing: 2px;
+    border: 1px solid rgba(0,255,136,0.3); display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', cursive; font-size: 1.6rem; color: var(--accent); letter-spacing: 2px;
     clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
   }
-  .profile-header-info {}
-  .profile-name {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 1.5rem; letter-spacing: 2px;
-    color: var(--text); line-height: 1;
-  }
-  .profile-role {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.62rem; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--accent);
-    margin-top: 6px;
-  }
-  .profile-status {
-    margin-left: auto; flex-shrink: 0;
-    display: flex; align-items: center; gap: 6px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.58rem; letter-spacing: 2px;
-    color: var(--accent); text-transform: uppercase;
-    padding: 6px 12px;
-    border: 1px solid rgba(0,255,136,0.25);
-    background: rgba(0,255,136,0.04);
-    align-self: flex-start;
-  }
-  .status-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--accent);
-    animation: blink 2s ease-in-out infinite;
-    flex-shrink: 0;
-  }
+  .profile-name { font-family: 'Bebas Neue', cursive; font-size: 1.5rem; letter-spacing: 2px; color: var(--text); line-height: 1; }
+  .profile-role { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-top: 6px; }
+  .profile-status { margin-left: auto; flex-shrink: 0; display: flex; align-items: center; gap: 6px; font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; padding: 6px 12px; border: 1px solid rgba(0,255,136,0.25); background: rgba(0,255,136,0.04); align-self: flex-start; }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: blink 2s ease-in-out infinite; flex-shrink: 0; }
 
-  /* Info grid */
-  .profile-body {
-    border: 1px solid var(--border);
-    background: rgba(0,0,0,0.2);
-  }
-  .profile-info-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-  .profile-info-item {
-    padding: 20px 24px;
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    transition: background 0.25s;
-  }
+  .profile-body { border: 1px solid var(--border); background: rgba(0,0,0,0.2); }
+  .profile-info-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .profile-info-item { padding: 20px 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background 0.25s; }
   .profile-info-item:nth-child(even) { border-right: none; }
   .profile-info-item:nth-last-child(-n+2) { border-bottom: none; }
   .profile-info-item:hover { background: rgba(0,255,136,0.03); }
-  .info-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.56rem; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--muted);
-    margin-bottom: 6px;
-  }
-  .info-value {
-    font-size: 0.88rem; color: var(--text); font-weight: 500;
-    line-height: 1.4;
-  }
-  .info-value a {
-    color: var(--accent); text-decoration: none;
-  }
+  .info-label { font-family: 'Space Mono', monospace; font-size: 0.56rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .info-value { font-size: 0.88rem; color: var(--text); font-weight: 500; line-height: 1.4; }
+  .info-value a { color: var(--accent); text-decoration: none; }
   .info-value a:hover { text-decoration: underline; }
-  .info-value.accent { color: var(--accent); }
 
-  /* Social row */
-  .profile-socials {
-    display: flex; gap: 0;
-    border-top: none;
-  }
-  .social-link {
-    flex: 1;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    padding: 16px 12px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.62rem; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--muted);
-    text-decoration: none; border: 1px solid var(--border);
-    border-top: none;
-    transition: color 0.2s, background 0.2s, border-color 0.2s;
-  }
+  .profile-socials { display: flex; gap: 0; border-top: none; }
+  .social-link { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 16px 12px; font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); text-decoration: none; border: 1px solid var(--border); border-top: none; transition: color 0.2s, background 0.2s, border-color 0.2s; }
   .social-link:not(:last-child) { border-right: none; }
   .social-link:hover { color: var(--accent); background: rgba(0,255,136,0.04); border-color: rgba(0,255,136,0.25); }
 
   /* ══ SKILLS ══ */
   #skills { background: var(--bg); }
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2px;
-  }
-  .skill-card {
-    background: var(--surface); padding: 36px 32px;
-    position: relative; overflow: hidden;
-    transition: background 0.3s, transform 0.3s;
-    border: 1px solid var(--border);
-  }
-  .skill-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--accent), transparent);
-    transform: scaleX(0); transform-origin: left;
-    transition: transform 0.4s ease;
-  }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2px; }
+  .skill-card { background: var(--surface); padding: 36px 32px; position: relative; overflow: hidden; transition: background 0.3s, transform 0.3s; border: 1px solid var(--border); }
+  .skill-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
   .skill-card:hover { background: rgba(0,255,136,0.03); transform: translateY(-2px); }
   .skill-card:hover::before { transform: scaleX(1); }
   .skill-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
-  .skill-card-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 1.4rem; letter-spacing: 1px; margin-bottom: 12px; color: var(--text);
-  }
+  .skill-card-title { font-family: 'Bebas Neue', cursive; font-size: 1.4rem; letter-spacing: 1px; margin-bottom: 12px; color: var(--text); }
   .skill-card-desc { font-size: 0.85rem; line-height: 1.7; color: var(--muted); }
   .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
-  .tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem; letter-spacing: 1px;
-    padding: 4px 10px; border: 1px solid var(--border);
-    color: var(--muted); transition: border-color 0.2s, color 0.2s;
-  }
+  .tag { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 1px; padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); transition: border-color 0.2s, color 0.2s; }
   .skill-card:hover .tag { border-color: rgba(0,255,136,0.3); color: var(--accent); }
 
   /* ══ MARQUEE ══ */
-  .marquee-section {
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 24px 0; overflow: hidden;
-    background: var(--surface); position: relative; z-index: 1;
-  }
-  .marquee-track {
-    display: flex; gap: 48px;
-    animation: marquee 20s linear infinite; white-space: nowrap;
-  }
+  .marquee-section { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 24px 0; overflow: hidden; background: var(--surface); position: relative; z-index: 1; }
+  .marquee-track { display: flex; gap: 48px; animation: marquee 20s linear infinite; white-space: nowrap; }
   @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-  .marquee-item {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 1rem; letter-spacing: 4px; color: var(--muted);
-    display: flex; align-items: center; gap: 48px;
-  }
+  .marquee-item { font-family: 'Bebas Neue', cursive; font-size: 1rem; letter-spacing: 4px; color: var(--muted); display: flex; align-items: center; gap: 48px; }
   .marquee-item span { color: var(--accent); font-size: 0.8rem; }
 
   /* ══ PROJECTS ══ */
   #projects { background: var(--surface); }
   .projects-list { display: flex; flex-direction: column; gap: 2px; }
-  .project-card {
-    background: var(--bg); border: 1px solid var(--border);
-    display: grid; grid-template-columns: 1fr 1fr;
-    overflow: hidden; transition: border-color 0.3s;
-  }
+  .project-card { background: var(--bg); border: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; transition: border-color 0.3s; }
   .project-card:hover { border-color: rgba(255,255,255,0.12); }
-  .project-visual {
-    background: linear-gradient(135deg, rgba(0,255,136,0.08), rgba(123,94,167,0.08));
-    display: flex; align-items: center; justify-content: center;
-    min-height: 340px; position: relative; overflow: hidden;
-  }
-  .project-visual-inner {
-    position: relative; z-index: 1;
-    display: flex; flex-direction: column; align-items: center; gap: 16px;
-  }
-  .project-visual-grid {
-    position: absolute; inset: 0; background-size: 30px 30px;
-  }
-  .project-logo {
-    font-family: 'Bebas Neue', cursive;
-    font-size: clamp(3rem, 5vw, 4.5rem); color: var(--accent);
-    text-shadow: 0 0 60px rgba(0,255,136,0.4);
-    animation: glowPulse 3s ease-in-out infinite;
-    line-height: 1; text-align: center;
-  }
-  @keyframes glowPulse {
-    0%,100%{text-shadow:0 0 60px rgba(0,255,136,0.4)}
-    50%{text-shadow:0 0 100px rgba(0,255,136,0.8),0 0 20px rgba(0,255,136,0.4)}
-  }
-  .project-live-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem; letter-spacing: 3px; padding: 6px 14px;
-    border: 1px solid rgba(0,255,136,0.3); color: var(--accent);
-    text-transform: uppercase; background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(4px);
-  }
+  .project-visual { background: linear-gradient(135deg, rgba(0,255,136,0.08), rgba(123,94,167,0.08)); display: flex; align-items: center; justify-content: center; min-height: 340px; position: relative; overflow: hidden; }
+  .project-visual-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .project-visual-grid { position: absolute; inset: 0; background-size: 30px 30px; }
+  .project-logo { font-family: 'Bebas Neue', cursive; font-size: clamp(3rem, 5vw, 4.5rem); color: var(--accent); text-shadow: 0 0 60px rgba(0,255,136,0.4); animation: glowPulse 3s ease-in-out infinite; line-height: 1; text-align: center; }
+  @keyframes glowPulse { 0%,100%{text-shadow:0 0 60px rgba(0,255,136,0.4)} 50%{text-shadow:0 0 100px rgba(0,255,136,0.8),0 0 20px rgba(0,255,136,0.4)} }
+  .project-live-badge { display: inline-flex; align-items: center; gap: 8px; font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 3px; padding: 6px 14px; border: 1px solid rgba(0,255,136,0.3); color: var(--accent); text-transform: uppercase; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); }
   .live-dot { width: 7px; height: 7px; border-radius: 50%; animation: blink 1.2s ease-in-out infinite; }
 
-  /* ── KBONES: dice decoration ── */
   .dice-decoration { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-  .dice-bg {
-    position: absolute; font-size: 8rem; opacity: 0.09;
-    animation: floatDice 9s ease-in-out infinite;
-    line-height: 1; filter: drop-shadow(0 0 12px rgba(255,77,109,0.3));
-  }
+  .dice-bg { position: absolute; font-size: 8rem; opacity: 0.09; animation: floatDice 9s ease-in-out infinite; line-height: 1; filter: drop-shadow(0 0 12px rgba(255,77,109,0.3)); }
   .dice-bg:nth-child(1){ top:-12px; left:-10px; animation-duration:9s; }
   .dice-bg:nth-child(2){ bottom:-16px; right:-10px; animation-delay:2s; animation-duration:11s; font-size:10rem; }
-  .dice {
-    position: absolute; font-size: 2.4rem; opacity: 0.28;
-    animation: floatDice 6s ease-in-out infinite;
-    filter: drop-shadow(0 0 6px rgba(255,77,109,0.25));
-  }
+  .dice { position: absolute; font-size: 2.4rem; opacity: 0.28; animation: floatDice 6s ease-in-out infinite; filter: drop-shadow(0 0 6px rgba(255,77,109,0.25)); }
   .dice:nth-child(3){ top:14%; left:12%; animation-delay:.3s; }
   .dice:nth-child(4){ bottom:18%; right:14%; animation-delay:.8s; font-size:2.8rem; }
   .dice:nth-child(5){ top:52%; left:52%; animation-delay:1.4s; font-size:1.8rem; }
   .dice:nth-child(6){ top:28%; right:22%; animation-delay:2.1s; font-size:2rem; }
-  .dice-score {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 3px;
-    color: rgba(255,77,109,0.65); text-transform: uppercase;
-    position: relative; z-index: 1;
-  }
-  @keyframes floatDice {
-    0%,100%{transform:translateY(0) rotate(0deg)}
-    33%{transform:translateY(-12px) rotate(18deg)}
-    66%{transform:translateY(-7px) rotate(-12deg)}
-  }
+  .dice-score { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 3px; color: rgba(255,77,109,0.65); text-transform: uppercase; position: relative; z-index: 1; }
+  @keyframes floatDice { 0%,100%{transform:translateY(0) rotate(0deg)} 33%{transform:translateY(-12px) rotate(18deg)} 66%{transform:translateY(-7px) rotate(-12deg)} }
 
-  /* ── AI ANALYST decoration ── */
-  .ai-decoration {
-    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
-  }
-  .ai-col {
-    position: absolute; top: 0; display: flex; flex-direction: column; gap: 2px;
-    font-family: 'Space Mono', monospace; font-size: 0.82rem; line-height: 1.5;
-    color: var(--accent2); opacity: 0;
-    animation: rainDrop 4s linear infinite;
-  }
+  .ai-decoration { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .ai-col { position: absolute; top: 0; display: flex; flex-direction: column; gap: 2px; font-family: 'Space Mono', monospace; font-size: 0.82rem; line-height: 1.5; color: var(--accent2); opacity: 0; animation: rainDrop 4s linear infinite; }
   .ai-col:nth-child(1){ left:8%;  animation-delay:0s;   animation-duration:3.8s; }
   .ai-col:nth-child(2){ left:22%; animation-delay:1.2s; animation-duration:4.4s; }
   .ai-col:nth-child(3){ left:40%; animation-delay:0.6s; animation-duration:3.5s; opacity:0; }
   .ai-col:nth-child(4){ left:62%; animation-delay:1.8s; animation-duration:4.1s; }
   .ai-col:nth-child(5){ left:78%; animation-delay:0.9s; animation-duration:3.9s; }
-  @keyframes rainDrop {
-    0%   { opacity:0;    transform: translateY(-80px); }
-    8%   { opacity:0.35; }
-    75%  { opacity:0.28; }
-    100% { opacity:0;    transform: translateY(360px); }
-  }
-  .ai-scan {
-    position: absolute; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent 0%, rgba(123,94,167,0.7) 40%, rgba(123,94,167,0.9) 50%, rgba(123,94,167,0.7) 60%, transparent 100%);
-    animation: scanLine 3.5s ease-in-out infinite;
-    pointer-events: none;
-    box-shadow: 0 0 12px rgba(123,94,167,0.5);
-  }
-  @keyframes scanLine {
-    0%,100%{ top: 5%; opacity: 0; }
-    8%     { opacity: 1; }
-    88%    { opacity: 0.7; }
-    99%    { top: 92%; }
-  }
+  @keyframes rainDrop { 0%{opacity:0;transform:translateY(-80px)} 8%{opacity:0.35} 75%{opacity:0.28} 100%{opacity:0;transform:translateY(360px)} }
+  .ai-scan { position: absolute; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent 0%, rgba(123,94,167,0.7) 40%, rgba(123,94,167,0.9) 50%, rgba(123,94,167,0.7) 60%, transparent 100%); animation: scanLine 3.5s ease-in-out infinite; pointer-events: none; box-shadow: 0 0 12px rgba(123,94,167,0.5); }
+  @keyframes scanLine { 0%,100%{top:5%;opacity:0} 8%{opacity:1} 88%{opacity:0.7} 99%{top:92%} }
 
-  /* ── LT-MANAGER: RPG decoration ── */
-  .rpg-decoration {
-    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
-  }
-  .rpg-die {
-    position: absolute; font-family: 'Bebas Neue', cursive;
-    color: rgba(245,158,11,0.14);
-    animation: floatDice 8s ease-in-out infinite;
-    line-height: 1; filter: drop-shadow(0 0 16px rgba(245,158,11,0.2));
-  }
-  .rpg-die:nth-child(1){ font-size:7rem;  top:-5px;  left:-5px;  animation-duration:10s; }
-  .rpg-die:nth-child(2){ font-size:9rem;  bottom:-15px; right:-10px; animation-delay:2s; animation-duration:12s; }
-  .rpg-icon {
-    position: absolute; font-size: 1.4rem; opacity: 0.2;
-    animation: rpgPulse 4s ease-in-out infinite;
-    color: rgba(245,158,11,0.6);
-  }
-  .rpg-icon:nth-child(3){ top:18%; left:15%;  animation-delay:0s; }
-  .rpg-icon:nth-child(4){ top:20%; right:18%; animation-delay:0.7s; }
-  .rpg-icon:nth-child(5){ bottom:22%; left:20%; animation-delay:1.4s; }
-  .rpg-icon:nth-child(6){ bottom:18%; right:15%; animation-delay:2.1s; }
-  .rpg-icon:nth-child(7){ top:50%; left:45%; animation-delay:2.8s; font-size:1rem; }
-  @keyframes rpgPulse {
-    0%,100%{ opacity:0.15; transform: scale(1) rotate(0deg); }
-    50%    { opacity:0.32; transform: scale(1.2) rotate(45deg); }
-  }
-  .rpg-coords {
-    position: absolute; bottom: 16px; left: 16px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem; letter-spacing: 2px;
-    color: rgba(245,158,11,0.45); text-transform: uppercase;
-    pointer-events: none;
-  }
+  .rpg-decoration { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .rpg-die { position: absolute; font-family: 'Bebas Neue', cursive; color: rgba(245,158,11,0.14); animation: floatDice 8s ease-in-out infinite; line-height: 1; filter: drop-shadow(0 0 16px rgba(245,158,11,0.2)); }
+  .rpg-die:nth-child(1){ font-size:7rem;top:-5px;left:-5px;animation-duration:10s; }
+  .rpg-die:nth-child(2){ font-size:9rem;bottom:-15px;right:-10px;animation-delay:2s;animation-duration:12s; }
+  .rpg-icon { position: absolute; font-size: 1.4rem; opacity: 0.2; animation: rpgPulse 4s ease-in-out infinite; color: rgba(245,158,11,0.6); }
+  .rpg-icon:nth-child(3){ top:18%;left:15%;animation-delay:0s; }
+  .rpg-icon:nth-child(4){ top:20%;right:18%;animation-delay:0.7s; }
+  .rpg-icon:nth-child(5){ bottom:22%;left:20%;animation-delay:1.4s; }
+  .rpg-icon:nth-child(6){ bottom:18%;right:15%;animation-delay:2.1s; }
+  .rpg-icon:nth-child(7){ top:50%;left:45%;animation-delay:2.8s;font-size:1rem; }
+  @keyframes rpgPulse { 0%,100%{opacity:0.15;transform:scale(1) rotate(0deg)} 50%{opacity:0.32;transform:scale(1.2) rotate(45deg)} }
+  .rpg-coords { position: absolute; bottom: 16px; left: 16px; font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; color: rgba(245,158,11,0.45); text-transform: uppercase; pointer-events: none; }
 
-  /* ── DISCORD BOT decoration ── */
-  .bot-decoration {
-    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
-  }
-  .bot-embed {
-    position: absolute; left: 14px; top: 14px; right: 14px; bottom: 14px;
-    border-left: 3px solid rgba(88,101,242,0.35);
-    border-radius: 0 4px 4px 0;
-    background: rgba(88,101,242,0.07);
-  }
-  .bot-cmd {
-    position: absolute;
-    font-family: 'Space Mono', monospace;
-    color: rgba(88,101,242,0.85);
-    font-size: 0.85rem; letter-spacing: 1px;
-    animation: cmdAppear 5s ease-in-out infinite;
-    white-space: nowrap;
-    text-shadow: 0 0 10px rgba(88,101,242,0.4);
-  }
+  .bot-decoration { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .bot-embed { position: absolute; left: 14px; top: 14px; right: 14px; bottom: 14px; border-left: 3px solid rgba(88,101,242,0.35); border-radius: 0 4px 4px 0; background: rgba(88,101,242,0.07); }
+  .bot-cmd { position: absolute; font-family: 'Space Mono', monospace; color: rgba(88,101,242,0.85); font-size: 0.85rem; letter-spacing: 1px; animation: cmdAppear 5s ease-in-out infinite; white-space: nowrap; text-shadow: 0 0 10px rgba(88,101,242,0.4); }
   .bot-cmd::before { content: '> '; color: rgba(0,255,136,0.7); }
-  .bot-cmd:nth-child(2){ top:20%;  left:22%; animation-delay:0s;   font-size:0.82rem; }
-  .bot-cmd:nth-child(3){ top:38%;  left:22%; animation-delay:0.7s; font-size:0.76rem; }
-  .bot-cmd:nth-child(4){ top:55%;  left:22%; animation-delay:1.4s; font-size:0.79rem; }
-  .bot-cmd:nth-child(5){ top:72%;  left:22%; animation-delay:2.1s; font-size:0.73rem; }
-  @keyframes cmdAppear {
-    0%,12% { opacity:0; transform: translateX(-8px); }
-    22%,72% { opacity:1; transform: translateX(0); }
-    88%,100% { opacity:0; }
-  }
+  .bot-cmd:nth-child(2){ top:20%;left:22%;animation-delay:0s;font-size:0.82rem; }
+  .bot-cmd:nth-child(3){ top:38%;left:22%;animation-delay:0.7s;font-size:0.76rem; }
+  .bot-cmd:nth-child(4){ top:55%;left:22%;animation-delay:1.4s;font-size:0.79rem; }
+  .bot-cmd:nth-child(5){ top:72%;left:22%;animation-delay:2.1s;font-size:0.73rem; }
+  @keyframes cmdAppear { 0%,12%{opacity:0;transform:translateX(-8px)} 22%,72%{opacity:1;transform:translateX(0)} 88%,100%{opacity:0} }
 
-  /* ── BURGER decoration ── */
   .burger-decoration { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-  .burger-icon {
-    position: absolute; opacity: 0.18;
-    animation: floatDice 7s ease-in-out infinite;
-    filter: drop-shadow(0 0 8px rgba(0,255,136,0.2));
-  }
-  .burger-icon:nth-child(1){ font-size:5.5rem; top:-10px; left:-6px;  animation-duration:9s; }
-  .burger-icon:nth-child(2){ font-size:3.2rem; bottom:8px; right:6px; animation-delay:1.5s; }
-  .burger-icon:nth-child(3){ font-size:2.2rem; top:30%; left:62%; animation-delay:2.5s; }
-  .burger-icon:nth-child(4){ font-size:2rem;   top:66%; left:14%; animation-delay:3.2s; }
+  .burger-icon { position: absolute; opacity: 0.18; animation: floatDice 7s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(0,255,136,0.2)); }
+  .burger-icon:nth-child(1){ font-size:5.5rem;top:-10px;left:-6px;animation-duration:9s; }
+  .burger-icon:nth-child(2){ font-size:3.2rem;bottom:8px;right:6px;animation-delay:1.5s; }
+  .burger-icon:nth-child(3){ font-size:2.2rem;top:30%;left:62%;animation-delay:2.5s; }
+  .burger-icon:nth-child(4){ font-size:2rem;top:66%;left:14%;animation-delay:3.2s; }
 
-  /* ── PROJECT INFO & BUTTONS ── */
   .project-info { padding: 56px; }
-  .project-year {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 3px;
-    color: var(--muted); text-transform: uppercase; margin-bottom: 20px;
-  }
-  .project-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: clamp(2rem, 4vw, 2.6rem); line-height: 1; margin-bottom: 20px; letter-spacing: 1px;
-  }
-  .project-desc {
-    font-size: 0.95rem; line-height: 1.8; color: var(--muted); margin-bottom: 32px;
-  }
+  .project-year { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 20px; }
+  .project-title { font-family: 'Bebas Neue', cursive; font-size: clamp(2rem, 4vw, 2.6rem); line-height: 1; margin-bottom: 20px; letter-spacing: 1px; }
+  .project-desc { font-size: 0.95rem; line-height: 1.8; color: var(--muted); margin-bottom: 32px; }
   .project-desc strong { color: var(--text); font-weight: 500; }
   .project-desc em     { color: var(--text); font-style: italic; }
   .project-links-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
 
-  /* ── PROJECT BUTTONS ── */
-  .project-btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: 'Space Mono', monospace; font-weight: 700;
-    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
-    text-decoration: none; padding: 14px 26px;
-    position: relative; overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.25s;
-    cursor: none; white-space: nowrap;
-  }
+  .project-btn { display: inline-flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; padding: 14px 26px; position: relative; overflow: hidden; transition: transform 0.2s, box-shadow 0.25s; cursor: none; white-space: nowrap; }
   .project-btn .btn-icon { font-size: 1rem; flex-shrink: 0; }
-  .project-btn .btn-arrow {
-    transition: transform 0.25s ease;
-    display: inline-block; flex-shrink: 0;
-  }
+  .project-btn .btn-arrow { transition: transform 0.25s ease; display: inline-block; flex-shrink: 0; }
   .project-btn:hover .btn-arrow { transform: translateX(5px); }
-
-  .btn-red {
-    background: var(--accent3); color: #0a0005;
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-    box-shadow: 0 4px 20px rgba(255,77,109,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
-  }
+  .btn-red { background: var(--accent3); color: #0a0005; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); box-shadow: 0 4px 20px rgba(255,77,109,0.25), inset 0 1px 0 rgba(255,255,255,0.15); }
   .btn-red:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,77,109,0.5); }
-
-  .btn-purple {
-    background: var(--accent2); color: #fff;
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-    box-shadow: 0 4px 20px rgba(123,94,167,0.3), inset 0 1px 0 rgba(255,255,255,0.12);
-  }
+  .btn-purple { background: var(--accent2); color: #fff; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); box-shadow: 0 4px 20px rgba(123,94,167,0.3), inset 0 1px 0 rgba(255,255,255,0.12); }
   .btn-purple:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(123,94,167,0.55); }
-
-  .btn-amber {
-    background: var(--accent4); color: #1a0e00;
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-    box-shadow: 0 4px 20px rgba(245,158,11,0.25), inset 0 1px 0 rgba(255,255,255,0.2);
-  }
+  .btn-amber { background: var(--accent4); color: #1a0e00; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); box-shadow: 0 4px 20px rgba(245,158,11,0.25), inset 0 1px 0 rgba(255,255,255,0.2); }
   .btn-amber:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(245,158,11,0.5); }
-
-  .btn-discord {
-    background: #5865f2; color: #fff;
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-    box-shadow: 0 4px 20px rgba(88,101,242,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
-  }
+  .btn-discord { background: #5865f2; color: #fff; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); box-shadow: 0 4px 20px rgba(88,101,242,0.3), inset 0 1px 0 rgba(255,255,255,0.15); }
   .btn-discord:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(88,101,242,0.55); }
-
-  .btn-green {
-    background: var(--accent); color: #000d06;
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-    box-shadow: 0 4px 20px rgba(0,255,136,0.2), inset 0 1px 0 rgba(255,255,255,0.15);
-  }
+  .btn-green { background: var(--accent); color: #000d06; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); box-shadow: 0 4px 20px rgba(0,255,136,0.2), inset 0 1px 0 rgba(255,255,255,0.15); }
   .btn-green:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,255,136,0.45); }
-
-  .project-wip {
-    font-family: 'Space Mono', monospace; font-weight: 700;
-    font-size: 0.62rem; letter-spacing: 2px; padding: 12px 16px;
-    border: 1px solid rgba(245,158,11,0.4);
-    color: var(--accent4); text-transform: uppercase;
-    clip-path: polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
-    background: rgba(245,158,11,0.06);
-  }
+  .project-wip { font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.62rem; letter-spacing: 2px; padding: 12px 16px; border: 1px solid rgba(245,158,11,0.4); color: var(--accent4); text-transform: uppercase; clip-path: polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px)); background: rgba(245,158,11,0.06); }
 
   /* ══ EDUCATION ══ */
   #education { background: var(--bg); }
-  .education-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
-  }
+  .education-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
   .edu-cards { display: flex; flex-direction: column; gap: 24px; }
-  .edu-card {
-    border: 1px solid var(--border); padding: 36px;
-    position: relative; transition: border-color 0.3s, background 0.3s;
-  }
+  .edu-card { border: 1px solid var(--border); padding: 36px; position: relative; transition: border-color 0.3s, background 0.3s; }
   .edu-card:hover { border-color: rgba(0,255,136,0.3); background: rgba(0,255,136,0.02); }
-  .edu-year {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 3px;
-    color: var(--accent); text-transform: uppercase; margin-bottom: 14px;
-  }
-  .edu-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 1.5rem; letter-spacing: 1px; margin-bottom: 8px;
-  }
+  .edu-year { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 3px; color: var(--accent); text-transform: uppercase; margin-bottom: 14px; }
+  .edu-title { font-family: 'Bebas Neue', cursive; font-size: 1.5rem; letter-spacing: 1px; margin-bottom: 8px; }
   .edu-sub { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
-  .edu-badge {
-    position: absolute; top: 20px; right: 20px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.58rem; letter-spacing: 2px; padding: 5px 10px;
-    border: 1px solid rgba(0,255,136,0.3);
-    color: var(--accent); text-transform: uppercase;
-  }
+  .edu-badge { position: absolute; top: 20px; right: 20px; font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 2px; padding: 5px 10px; border: 1px solid rgba(0,255,136,0.3); color: var(--accent); text-transform: uppercase; }
   .courses-col {}
-  .courses-subtitle {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 3px;
-    text-transform: uppercase; color: var(--muted);
-    margin-bottom: 28px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .courses-subtitle::before {
-    content: ''; display: inline-block; width: 20px; height: 1px;
-    background: var(--muted);
-  }
-  .course-item {
-    border-left: 2px solid var(--border);
-    padding: 20px 24px; margin-bottom: 4px;
-    transition: border-color 0.3s, background 0.3s;
-    position: relative;
-  }
-  .course-item::before {
-    content: '';
-    position: absolute; left: -5px; top: 50%; transform: translateY(-50%);
-    width: 8px; height: 8px;
-    background: var(--bg); border: 2px solid var(--muted);
-    transition: border-color 0.3s, background 0.3s;
-  }
+  .courses-subtitle { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 28px; display: flex; align-items: center; gap: 12px; }
+  .courses-subtitle::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--muted); }
+  .course-item { border-left: 2px solid var(--border); padding: 20px 24px; margin-bottom: 4px; transition: border-color 0.3s, background 0.3s; position: relative; }
+  .course-item::before { content: ''; position: absolute; left: -5px; top: 50%; transform: translateY(-50%); width: 8px; height: 8px; background: var(--bg); border: 2px solid var(--muted); transition: border-color 0.3s, background 0.3s; }
   .course-item:hover { border-color: var(--accent); background: rgba(0,255,136,0.02); }
   .course-item:hover::before { border-color: var(--accent); background: var(--accent); }
-  .course-platform {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.58rem; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--accent);
-    margin-bottom: 6px;
-  }
+  .course-platform { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
   .course-name { font-size: 0.95rem; color: var(--text); font-weight: 500; margin-bottom: 4px; }
   .course-author { font-size: 0.8rem; color: var(--muted); }
-  .course-badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.55rem; letter-spacing: 1px;
-    padding: 3px 8px; margin-top: 8px;
-    border: 1px solid rgba(0,255,136,0.25);
-    color: var(--accent); text-transform: uppercase;
-  }
+  .course-badge { display: inline-flex; align-items: center; gap: 5px; font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 1px; padding: 3px 8px; margin-top: 8px; border: 1px solid rgba(0,255,136,0.25); color: var(--accent); text-transform: uppercase; }
 
   /* ══ CONTACT ══ */
   #contact { background: var(--surface); text-align: center; }
   .contact-inner { max-width: 700px; margin: 0 auto; }
-  .contact-big {
-    font-family: 'Bebas Neue', cursive;
-    font-size: clamp(50px, 10vw, 120px);
-    line-height: 1; letter-spacing: -2px; margin-bottom: 40px;
-    background: linear-gradient(135deg, var(--text), var(--accent));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
+  .contact-big { font-family: 'Bebas Neue', cursive; font-size: clamp(50px, 10vw, 120px); line-height: 1; letter-spacing: -2px; margin-bottom: 40px; background: linear-gradient(135deg, var(--text), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .contact-sub { font-size: 1rem; color: var(--muted); line-height: 1.8; margin-bottom: 48px; }
   .contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-  .contact-link {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
-    padding: 14px 28px; border: 1px solid var(--border);
-    color: var(--text); text-decoration: none;
-    transition: border-color 0.2s, color 0.2s, background 0.2s;
-  }
+  .contact-link { display: inline-flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; padding: 14px 28px; border: 1px solid var(--border); color: var(--text); text-decoration: none; transition: border-color 0.2s, color 0.2s, background 0.2s; }
   .contact-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,255,136,0.05); }
 
   /* ══ FOOTER ══ */
-  footer {
-    position: relative; z-index: 1;
-    border-top: 1px solid var(--border); padding: 32px 48px;
-    display: flex; justify-content: space-between; align-items: center;
-    background: var(--bg);
-  }
+  footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; background: var(--bg); }
   footer p { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 2px; color: var(--muted); }
   footer a { color: var(--accent); text-decoration: none; }
 
@@ -867,11 +387,7 @@
   .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* ══════════════════════════════════════
-     RESPONSIVE BREAKPOINTS
-  ══════════════════════════════════════ */
-
-  /* Tablet: 1024px */
+  /* ══ RESPONSIVE ══ */
   @media (max-width: 1024px) {
     nav { padding: 20px 32px; }
     section { padding: 100px 32px; }
@@ -882,99 +398,65 @@
     footer { padding: 28px 32px; }
     .stat-item { padding: 28px 32px; }
   }
-
-  /* Tablet portrait / large mobile: 768px */
   @media (max-width: 768px) {
     body { cursor: auto; }
     #cursor-ring, #cursor-dot { display: none; }
     .btn-primary, .btn-secondary, .project-btn { cursor: pointer; }
-
     nav { padding: 18px 24px; }
     .nav-links { display: none; }
     .nav-hamburger { display: flex; }
-
     section { padding: 80px 24px; }
     #hero { padding: 100px 24px 60px; }
     .scroll-indicator { display: none; }
-
     .hero-name { letter-spacing: -1px; }
     .hero-tag::before { width: 20px; }
-
-    /* Stats: 2 per row */
     .stats-bar { flex-wrap: wrap; }
     .stat-item { flex-basis: 50%; border-right: 1px solid var(--border); }
     .stat-item:nth-child(2n) { border-right: none; }
     .stat-item:nth-child(3), .stat-item:nth-child(4) { border-bottom: none; }
-
-    /* About: stack */
     .about-grid { grid-template-columns: 1fr; gap: 48px; }
-
-    /* Profile card: internal grid collapses */
     .profile-info-grid { grid-template-columns: 1fr; }
     .profile-info-item { border-right: none !important; }
     .profile-info-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
     .profile-info-item:last-child { border-bottom: none; }
     .profile-status { display: none; }
-
-    /* Projects: stack visual above info */
     .project-card { grid-template-columns: 1fr; }
     .project-visual { min-height: 220px; order: 0; }
     .project-info { padding: 28px 24px; order: 1; }
     .project-logo { font-size: 2.8rem !important; }
-
-    /* Education: stack */
     .education-grid { grid-template-columns: 1fr; gap: 40px; }
-
-    /* Contact */
     .contact-links { flex-direction: column; align-items: center; }
     .contact-link { width: 100%; max-width: 320px; justify-content: center; }
-
-    /* Footer */
     footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px; }
-
-    /* Skill grid: 1 column */
     .skills-grid { grid-template-columns: 1fr; }
   }
-
-  /* Small mobile: 480px */
   @media (max-width: 480px) {
     section { padding: 64px 20px; }
     #hero { padding: 90px 20px 50px; }
     nav { padding: 16px 20px; }
-
     .hero-name { letter-spacing: -1px; }
     .hero-desc { font-size: 0.9rem; }
     .hero-cta { flex-direction: column; align-items: flex-start; }
     .btn-primary, .btn-secondary { width: 100%; text-align: center; justify-content: center; }
-
     .stat-item { flex-basis: 100%; border-right: none; padding: 24px 20px; }
-
     .section-title { margin-bottom: 40px; }
-
     .profile-header { flex-direction: column; align-items: flex-start; gap: 14px; padding: 24px 20px; }
     .profile-avatar { width: 52px; height: 52px; font-size: 1.3rem; }
     .profile-socials { flex-direction: column; }
     .social-link { border-right: 1px solid var(--border) !important; border-top: 1px solid var(--border); }
     .social-link:first-child { border-top: none; }
-
     .project-visual { min-height: 180px; }
     .project-info { padding: 24px 20px; }
     .project-year { font-size: 0.58rem; }
     .project-btn { padding: 12px 18px; font-size: 0.65rem; }
-
     .edu-card { padding: 24px 20px; }
     .edu-badge { position: static; display: inline-flex; margin-bottom: 12px; }
-
     .course-item { padding: 16px 18px; }
-
     footer { padding: 20px; }
     footer p:nth-child(3) { display: none; }
-
     .marquee-item { font-size: 0.85rem; letter-spacing: 2px; gap: 28px; }
     .marquee-track { gap: 28px; }
   }
-
-  /* Extra small: 360px */
   @media (max-width: 360px) {
     .hero-cta .btn-primary, .hero-cta .btn-secondary { padding: 14px 24px; font-size: 0.65rem; }
     .project-links-row { flex-direction: column; align-items: flex-start; }
@@ -991,11 +473,11 @@
 <nav>
   <a href="#" class="nav-logo">GL/</a>
   <div class="nav-links">
-    <a href="#about" data-i18n="nav.about">About</a>
-    <a href="#skills" data-i18n="nav.skills">Skills</a>
-    <a href="#projects" data-i18n="nav.projects">Projects</a>
-    <a href="#education" data-i18n="nav.education">Education</a>
-    <a href="#contact" data-i18n="nav.contact">Contact</a>
+    <a href="#about"     id="nav-about">Sobre</a>
+    <a href="#skills"    id="nav-skills">Habilidades</a>
+    <a href="#projects"  id="nav-projects">Projetos</a>
+    <a href="#education" id="nav-education">Educação</a>
+    <a href="#contact"   id="nav-contact">Contato</a>
   </div>
   <div class="nav-right">
     <button class="lang-toggle" id="langToggle" aria-label="Toggle language">
@@ -1010,18 +492,18 @@
 
 <!-- Mobile drawer -->
 <div class="nav-mobile-drawer" id="navDrawer">
-  <a href="#about"     onclick="closeDrawer()" data-i18n="nav.about">About</a>
-  <a href="#skills"    onclick="closeDrawer()" data-i18n="nav.skills">Skills</a>
-  <a href="#projects"  onclick="closeDrawer()" data-i18n="nav.projects">Projects</a>
-  <a href="#education" onclick="closeDrawer()" data-i18n="nav.education">Education</a>
-  <a href="#contact"   onclick="closeDrawer()" data-i18n="nav.contact">Contact</a>
+  <a href="#about"     onclick="closeDrawer()" id="mnav-about">Sobre</a>
+  <a href="#skills"    onclick="closeDrawer()" id="mnav-skills">Habilidades</a>
+  <a href="#projects"  onclick="closeDrawer()" id="mnav-projects">Projetos</a>
+  <a href="#education" onclick="closeDrawer()" id="mnav-education">Educação</a>
+  <a href="#contact"   onclick="closeDrawer()" id="mnav-contact">Contato</a>
 </div>
 
 <!-- ══ HERO ══ -->
 <section id="hero">
   <div class="hero-bg-text">GABRIEL</div>
   <div class="hero-content">
-    <div class="hero-tag" data-i18n="hero.tag">Available for opportunities</div>
+    <div class="hero-tag" id="hero-tag">Disponível para oportunidades</div>
     <div class="ai-badge">
       <span class="ai-dot"></span>
       LLMs &middot; Agents &middot; AI Integration
@@ -1030,13 +512,13 @@
       <span class="line1">Gabriel</span>
       <span class="line2">Le&atilde;o</span>
     </h1>
-    <p class="hero-desc" data-i18n="hero.desc">
-      <span>Desenvolvedor de Software</span> especializado em <strong>Django &amp; IA</strong>.
-      Construo aplica&ccedil;&otilde;es que unem o melhor do desenvolvimento web com o avan&ccedil;o da intelig&ecirc;ncia artificial aplicada.
+    <p class="hero-desc" id="hero-desc">
+      <span id="hero-role">Desenvolvedor de Software</span> especializado em <strong>Backend &amp; IA</strong>.
+      <span id="hero-desc-text">Construo aplicações que unem o melhor do desenvolvimento web com o avanço da inteligência artificial aplicada.</span>
     </p>
     <div class="hero-cta">
-      <a href="#projects" class="btn-primary" data-i18n="hero.cta1">Ver Projetos</a>
-      <a href="#contact"  class="btn-secondary" data-i18n="hero.cta2">Entre em Contato</a>
+      <a href="#projects" class="btn-primary" id="hero-cta1">Ver Projetos</a>
+      <a href="#contact"  class="btn-secondary" id="hero-cta2">Entre em Contato</a>
     </div>
   </div>
   <div class="scroll-indicator">
@@ -1049,69 +531,62 @@
 <div class="stats-bar">
   <div class="stat-item">
     <div class="stat-num">6&ordm;</div>
-    <div class="stat-label" data-i18n="stats.s1">Per&iacute;odo &mdash; SI / CESMAC</div>
+    <div class="stat-label" id="stat1">Período &mdash; SI / CESMAC</div>
   </div>
   <div class="stat-item">
     <div class="stat-num">2+</div>
-    <div class="stat-label" data-i18n="stats.s2">Anos Desenvolvendo</div>
+    <div class="stat-label" id="stat2">Anos Desenvolvendo</div>
   </div>
   <div class="stat-item">
     <div class="stat-num">5+</div>
-    <div class="stat-label" data-i18n="stats.s3">Projetos Conclu&iacute;dos</div>
+    <div class="stat-label" id="stat3">Projetos Concluídos</div>
   </div>
   <div class="stat-item">
     <div class="stat-num">&infin;</div>
-    <div class="stat-label" data-i18n="stats.s4">Vontade de Aprender</div>
+    <div class="stat-label" id="stat4">Vontade de Aprender</div>
   </div>
 </div>
 
 <!-- ══ ABOUT ══ -->
 <section id="about">
-  <div class="section-tag" data-i18n="about.tag">About me</div>
+  <div class="section-tag" id="about-tag">About me</div>
   <div class="about-grid">
-
-    <!-- LEFT: text -->
     <div class="about-text reveal">
-      <h2 class="section-title" data-i18n="about.title">Sobre<br>Mim</h2>
-      <p data-i18n="about.p1">Sou um desenvolvedor apaixonado por <span>unir tecnologia e intelig&ecirc;ncia artificial</span> para criar solu&ccedil;&otilde;es que realmente fazem diferen&ccedil;a.</p>
-      <p data-i18n="about.p2">Com foco em <strong>Python/Django</strong> no back-end e uma vis&atilde;o full-stack, me especializei em construir sistemas robustos, escal&aacute;veis e inteligentes &mdash; desde APIs RESTful at&eacute; agentes aut&ocirc;nomos com <strong>LangChain e LLMs</strong>.</p>
-      <p data-i18n="about.p3">Estou cursando <span>Sistemas de Informa&ccedil;&atilde;o no CESMAC (6&ordm; per&iacute;odo)</span> e nunca paro de aprender. Cada projeto &eacute; uma oportunidade de ir al&eacute;m.</p>
+      <h2 class="section-title" id="about-title">Sobre<br>Mim</h2>
+        <p id="about-p1">Sou um desenvolvedor Python com foco em <span>backend e inteligência artificial</span>. Trabalho com APIs robustas, arquiteturas escaláveis e sistemas orientados a performance — do banco de dados à camada de negócio.</p>
+        <p id="about-p2">Com visão <strong>full-stack</strong>, me especializei em integrar <strong>LLMs e agentes autônomos</strong> em aplicações reais, unindo desenvolvimento web sólido com o que há de mais atual em IA aplicada.</p>
+        <p id="about-p3">Curso <span>Sistemas de Informação no CESMAC (6º período)</span> e estou sempre construindo algo novo. Cada projeto é uma oportunidade de resolver um problema de verdade.</p>
     </div>
 
-    <!-- RIGHT: refactored profile card -->
     <div class="about-profile-card reveal">
-
-      <!-- Header: avatar + name + status -->
       <div class="profile-header">
         <div class="profile-avatar">GL</div>
         <div class="profile-header-info">
-          <div class="profile-name">Gabriel Le&atilde;o</div>
-          <div class="profile-role">Software Developer · Django &amp; AI</div>
+          <div class="profile-name">Gabriel Leão</div>
+          <div class="profile-role">Software Developer · Backend &amp; AI</div>
         </div>
         <div class="profile-status">
           <span class="status-dot"></span>
-          <span data-i18n="about.available">Dispon&iacute;vel</span>
+          <span id="profile-status-text">Disponível</span>
         </div>
       </div>
-
-      <!-- Body: 2-column info grid -->
       <div class="profile-body">
         <div class="profile-info-grid">
           <div class="profile-info-item">
-            <div class="info-label" data-i18n="about.loc_label">Localiza&ccedil;&atilde;o</div>
-            <div class="info-value">Macei&oacute;, Alagoas</div>
+            <div class="info-label" id="info-loc-label">Localização</div>
+            <div class="info-value">Maceió, Alagoas</div>
           </div>
           <div class="profile-info-item">
-            <div class="info-label" data-i18n="about.focus_label">Foco Atual</div>
-            <div class="info-value">Django · IA · LLMs</div>
+            <div class="info-label" id="info-focus-label">Foco Atual</div>
+            <div class="info-value">Python · Backend · LLMs</div>
           </div>
           <div class="profile-info-item">
-            <div class="info-label" data-i18n="about.edu_label">Forma&ccedil;&atilde;o</div>
-            <div class="info-value">SI · CESMAC · 6&ordm; Per.</div>
+            <div class="info-label" id="info-edu-label">Formação</div>
+            <div class="info-value">SI · CESMAC · 6º Per.</div>
           </div>
           <div class="profile-info-item">
-            <div class="info-label" data-i18n="about.lang_label">Idiomas</div>
-            <div class="info-value" data-i18n="about.lang_val">PT-BR Nativo · EN Leitura</div>
+            <div class="info-label" id="info-lang-label">Idiomas</div>
+            <div class="info-value" id="info-lang-val">PT-BR Nativo · EN Leitura</div>
           </div>
           <div class="profile-info-item">
             <div class="info-label">Email</div>
@@ -1122,15 +597,12 @@
             <div class="info-value"><a href="https://github.com/gabrielleaosb" target="_blank">gabrielleaosb</a></div>
           </div>
         </div>
-
-        <!-- Social links row -->
         <div class="profile-socials">
           <a href="https://github.com/gabrielleaosb" target="_blank" class="social-link">&#9741; GitHub</a>
           <a href="https://linkedin.com/in/gabriellsbagetti" target="_blank" class="social-link">&#9634; LinkedIn</a>
-          <a href="tel:+5582991487729" class="social-link" data-i18n="about.call">&#9742; Ligar</a>
+          <a href="https://wa.me/5582991487729" target="_blank" class="social-link" id="social-call">&#128172; WhatsApp</a>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -1145,82 +617,52 @@
 
 <!-- ══ SKILLS ══ -->
 <section id="skills">
-  <div class="section-tag" data-i18n="skills.tag">Expertise</div>
-  <h2 class="section-title reveal" data-i18n="skills.title">Stack &amp;<br>Habilidades</h2>
+  <div class="section-tag" id="skills-tag">Expertise</div>
+  <h2 class="section-title reveal" id="skills-title">Stack &amp;<br>Habilidades</h2>
   <div class="skills-grid">
-
     <div class="skill-card reveal">
       <span class="skill-icon">&#9881;&#65039;</span>
-      <div class="skill-card-title">Back-End Development</div>
-      <p class="skill-card-desc">Arquitetura escal&aacute;vel com tarefas ass&iacute;ncronas, mensageria e design orientado a performance.</p>
-      <div class="skill-tags">
-        <span class="tag">Python</span><span class="tag">Django</span>
-        <span class="tag">DRF</span><span class="tag">Celery</span>
-        <span class="tag">Redis</span><span class="tag">Flet</span>
-      </div>
+      <div class="skill-card-title" id="sk1-title">Back-End Development</div>
+      <p class="skill-card-desc" id="sk1-desc">Arquitetura escalável com tarefas assíncronas, mensageria e design orientado a performance.</p>
+      <div class="skill-tags"><span class="tag">Python</span><span class="tag">Django</span><span class="tag">DRF</span><span class="tag">Celery</span><span class="tag">Redis</span><span class="tag">Flet</span></div>
     </div>
-
     <div class="skill-card reveal">
       <span class="skill-icon">&#129302;</span>
-      <div class="skill-card-title">IA &amp; LLMs</div>
-      <p class="skill-card-desc">Aplica&ccedil;&otilde;es inteligentes com modelos de linguagem avan&ccedil;ados, agentes aut&ocirc;nomos e IA generativa.</p>
-      <div class="skill-tags">
-        <span class="tag">LangChain</span><span class="tag">LLMs</span>
-        <span class="tag">Ollama</span><span class="tag">Generative AI</span>
-        <span class="tag">Agents</span>
-      </div>
+      <div class="skill-card-title" id="sk2-title">IA &amp; LLMs</div>
+      <p class="skill-card-desc" id="sk2-desc">Aplicações inteligentes com modelos de linguagem avançados, agentes autônomos e IA generativa.</p>
+      <div class="skill-tags"><span class="tag">LangChain</span><span class="tag">LLMs</span><span class="tag">Ollama</span><span class="tag">Generative AI</span><span class="tag">Agents</span></div>
     </div>
-
     <div class="skill-card reveal">
       <span class="skill-icon">&#128451;&#65039;</span>
-      <div class="skill-card-title">Banco de Dados</div>
-      <p class="skill-card-desc">Modelagem, otimiza&ccedil;&atilde;o e integra&ccedil;&atilde;o de bancos relacionais e NoSQL para sistemas de alta disponibilidade.</p>
-      <div class="skill-tags">
-        <span class="tag">PostgreSQL</span><span class="tag">MySQL</span>
-        <span class="tag">MongoDB</span><span class="tag">SQL</span><span class="tag">ORM</span>
-      </div>
+      <div class="skill-card-title" id="sk3-title">Banco de Dados</div>
+      <p class="skill-card-desc" id="sk3-desc">Modelagem, otimização e integração de bancos relacionais e NoSQL para sistemas de alta disponibilidade.</p>
+      <div class="skill-tags"><span class="tag">PostgreSQL</span><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">SQL</span><span class="tag">ORM</span></div>
     </div>
-
     <div class="skill-card reveal">
       <span class="skill-icon">&#127760;</span>
-      <div class="skill-card-title">Front-End</div>
-      <p class="skill-card-desc">Interfaces modernas, responsivas e interativas com foco em experi&ecirc;ncia do usu&aacute;rio. Interface gr&aacute;fica nativa com Flet (Python).</p>
-      <div class="skill-tags">
-        <span class="tag">HTML</span><span class="tag">CSS</span>
-        <span class="tag">JavaScript</span><span class="tag">Tailwind CSS</span>
-        <span class="tag">Flet</span>
-      </div>
+      <div class="skill-card-title" id="sk4-title">Front-End</div>
+      <p class="skill-card-desc" id="sk4-desc">Interfaces modernas, responsivas e interativas com foco em experiência do usuário. Interface gráfica nativa com Flet (Python).</p>
+      <div class="skill-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Tailwind CSS</span><span class="tag">Flet</span></div>
     </div>
-
     <div class="skill-card reveal">
       <span class="skill-icon">&#128202;</span>
-      <div class="skill-card-title">An&aacute;lise de Dados</div>
-      <p class="skill-card-desc">Engenharia, tratamento e visualiza&ccedil;&atilde;o de dados com aplica&ccedil;&atilde;o de IA para tomada de decis&otilde;es.</p>
-      <div class="skill-tags">
-        <span class="tag">Pandas</span><span class="tag">NumPy</span>
-        <span class="tag">Matplotlib</span><span class="tag">Plotly</span>
-      </div>
+      <div class="skill-card-title" id="sk5-title">Análise de Dados</div>
+      <p class="skill-card-desc" id="sk5-desc">Engenharia, tratamento e visualização de dados com aplicação de IA para tomada de decisões.</p>
+      <div class="skill-tags"><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Plotly</span></div>
     </div>
-
     <div class="skill-card reveal">
       <span class="skill-icon">&#128260;</span>
-      <div class="skill-card-title">DevOps &amp; Qualidade</div>
-      <p class="skill-card-desc">Controle de vers&atilde;o, CI/CD, testes automatizados unit&aacute;rios e de integra&ccedil;&atilde;o com foco em confiabilidade.</p>
-      <div class="skill-tags">
-        <span class="tag">Git</span><span class="tag">GitHub</span>
-        <span class="tag">CI/CD</span><span class="tag">Pytest</span>
-        <span class="tag">Selenium</span>
-      </div>
+      <div class="skill-card-title" id="sk6-title">DevOps &amp; Qualidade</div>
+      <p class="skill-card-desc" id="sk6-desc">Controle de versão, CI/CD, testes automatizados unitários e de integração com foco em confiabilidade.</p>
+      <div class="skill-tags"><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">CI/CD</span><span class="tag">Pytest</span><span class="tag">Selenium</span></div>
     </div>
-
   </div>
 </section>
 
 <!-- ══ PROJECTS ══ -->
 <section id="projects">
-  <div class="section-tag">Work</div>
-  <h2 class="section-title reveal">Projetos</h2>
-
+  <div class="section-tag" id="projects-tag">Work</div>
+  <h2 class="section-title reveal" id="projects-title">Projetos</h2>
   <div class="projects-list">
 
     <!-- PROJECT 1: Knucklebones -->
@@ -1236,28 +678,19 @@
         </div>
         <div class="project-visual-grid" style="background-image:linear-gradient(rgba(255,77,109,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,77,109,0.05) 1px,transparent 1px);background-size:28px 28px;"></div>
         <div class="dice-decoration">
-          <span class="dice-bg">&#9860;</span>
-          <span class="dice">&#9856;</span>
-          <span class="dice">&#9861;</span>
-          <span class="dice">&#9859;</span>
-          <span class="dice">&#9858;</span>
+          <span class="dice-bg">&#9860;</span><span class="dice">&#9856;</span>
+          <span class="dice">&#9861;</span><span class="dice">&#9859;</span><span class="dice">&#9858;</span>
         </div>
       </div>
       <div class="project-info">
-        <div class="project-year">2026 &mdash; Web Game &middot; Live &middot; P2P</div>
+        <div class="project-year" id="kbones-year">2026 &mdash; Web Game · Live · P2P</div>
         <h3 class="project-title" style="-webkit-text-stroke:2px var(--accent3);color:transparent;">Knucklebones</h3>
-        <p class="project-desc">
-          Jogo de dados estrat&eacute;gico inspirado no universo de <em>Cult of the Lamb</em>. Mec&acirc;nicas originais de pontua&ccedil;&atilde;o, jogabilidade fluida e completamente no ar &mdash; s&oacute; abrir e jogar.
-        </p>
-        <div class="skill-tags" style="margin-bottom:32px;">
-          <span class="tag">Web Game</span><span class="tag">JavaScript</span>
-          <span class="tag">HTML/CSS</span><span class="tag">Game Logic</span>
-          <span class="tag">PeerJS</span><span class="tag">P2P</span>
-        </div>
+        <p class="project-desc" id="kbones-desc">Jogo de dados estratégico inspirado no universo de <em>Cult of the Lamb</em>. Mecânicas originais de pontuação, jogabilidade fluida e completamente no ar &mdash; só abrir e jogar.</p>
+        <div class="skill-tags" style="margin-bottom:32px;"><span class="tag">Web Game</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span><span class="tag">Game Logic</span><span class="tag">PeerJS</span><span class="tag">P2P</span></div>
         <div class="project-links-row">
           <a href="https://kbones.xyz/" target="_blank" class="project-btn btn-red">
             <span class="btn-icon">&#9856;</span>
-            <span class="btn-text">Jogar Agora</span>
+            <span class="btn-text" id="kbones-btn">Jogar Agora</span>
             <span class="btn-arrow">&#8594;</span>
           </a>
         </div>
@@ -1285,21 +718,14 @@
         </div>
       </div>
       <div class="project-info">
-        <div class="project-year">2025 &mdash; AI &middot; Data Analysis &middot; Django</div>
+        <div class="project-year" id="ai-year">2025 &mdash; AI · Data Analysis · Django</div>
         <h3 class="project-title" style="-webkit-text-stroke:2px var(--accent2);color:transparent;">AI Analyst</h3>
-        <p class="project-desc">
-          Plataforma Django para an&aacute;lise automatizada de datasets CSV com IA local. Upload de arquivos, detec&ccedil;&atilde;o autom&aacute;tica de tamanho e gera&ccedil;&atilde;o de insights via <strong>Llama 3 (Ollama)</strong> com processamento em background &mdash; seus dados nunca saem da sua m&aacute;quina.
-        </p>
-        <div class="skill-tags" style="margin-bottom:32px;">
-          <span class="tag">Django</span><span class="tag">LangChain</span>
-          <span class="tag">Llama 3</span><span class="tag">Ollama</span>
-          <span class="tag">Pandas</span><span class="tag">NumPy</span>
-          <span class="tag">Celery</span><span class="tag">REST API</span>
-        </div>
+        <p class="project-desc" id="ai-desc">Plataforma Django para análise automatizada de datasets CSV com IA local. Upload de arquivos, detecção automática de tamanho e geração de insights via <strong>Llama 3 (Ollama)</strong> com processamento em background &mdash; seus dados nunca saem da sua máquina.</p>
+        <div class="skill-tags" style="margin-bottom:32px;"><span class="tag">Django</span><span class="tag">LangChain</span><span class="tag">Llama 3</span><span class="tag">Ollama</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Celery</span><span class="tag">REST API</span></div>
         <div class="project-links-row">
           <a href="https://github.com/gabrielleaosb/ai_analyst" target="_blank" class="project-btn btn-purple">
             <span class="btn-icon">&#128279;</span>
-            <span class="btn-text">Ver no GitHub</span>
+            <span class="btn-text" id="ai-btn">Ver no GitHub</span>
             <span class="btn-arrow">&#8594;</span>
           </a>
         </div>
@@ -1313,36 +739,27 @@
           <div class="project-logo" style="color:var(--accent4);text-shadow:0 0 60px rgba(245,158,11,0.6),0 0 120px rgba(245,158,11,0.15);font-size:3rem;animation:none;line-height:1.1;">LT<br>MANAGER</div>
           <div class="project-live-badge" style="border-color:rgba(245,158,11,0.5);color:var(--accent4);">
             <span class="live-dot" style="background:var(--accent4);"></span>
-            EM DESENVOLVIMENTO
+            <span id="lt-badge">EM DESENVOLVIMENTO</span>
           </div>
         </div>
         <div class="project-visual-grid" style="background-image:linear-gradient(rgba(245,158,11,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(245,158,11,0.05) 1px,transparent 1px);background-size:32px 32px;"></div>
         <div class="rpg-decoration">
           <span class="rpg-die" style="font-size:7rem;top:-10px;left:-8px;">20</span>
           <span class="rpg-die" style="font-size:9rem;bottom:-18px;right:-12px;animation-delay:2s;">12</span>
-          <span class="rpg-icon">&#9670;</span>
-          <span class="rpg-icon">&#9670;</span>
-          <span class="rpg-icon">&#9670;</span>
-          <span class="rpg-icon">&#9670;</span>
-          <span class="rpg-icon">&#9670;</span>
+          <span class="rpg-icon">&#9670;</span><span class="rpg-icon">&#9670;</span>
+          <span class="rpg-icon">&#9670;</span><span class="rpg-icon">&#9670;</span><span class="rpg-icon">&#9670;</span>
           <div class="rpg-coords">MAP&#160;&#160;X:142&#160;&#160;Y:089&#160;&#160;Z:00</div>
         </div>
       </div>
       <div class="project-info">
-        <div class="project-year">2025 &mdash; Web App &middot; Real-time &middot; Full Stack</div>
+        <div class="project-year" id="lt-year">2025 &mdash; Web App · Real-time · Full Stack</div>
         <h3 class="project-title" style="-webkit-text-stroke:2px var(--accent4);color:transparent;">LT Manager</h3>
-        <p class="project-desc">
-          Plataforma para jogar <strong>RPG de mesa online em tempo real</strong>. Canvas de mapa totalmente interativo, sistema de personagens, salas e sess&otilde;es ao vivo. Projeto quase finalizado, atualmente pausado &mdash; com base s&oacute;lida e arquitetura bem definida.
-        </p>
-        <div class="skill-tags" style="margin-bottom:32px;">
-          <span class="tag">Django</span><span class="tag">Canvas API</span>
-          <span class="tag">WebSockets</span><span class="tag">Real-time</span>
-          <span class="tag">JavaScript</span><span class="tag">Full Stack</span>
-        </div>
+        <p class="project-desc" id="lt-desc">Plataforma para jogar <strong>RPG de mesa online em tempo real</strong>. Canvas de mapa totalmente interativo, sistema de personagens, salas e sessões ao vivo. Projeto quase finalizado, atualmente pausado &mdash; com base sólida e arquitetura bem definida.</p>
+        <div class="skill-tags" style="margin-bottom:32px;"><span class="tag">Django</span><span class="tag">Canvas API</span><span class="tag">WebSockets</span><span class="tag">Real-time</span><span class="tag">JavaScript</span><span class="tag">Full Stack</span></div>
         <div class="project-links-row">
           <a href="https://github.com/gabrielleaosb/LT-Manager" target="_blank" class="project-btn btn-amber">
             <span class="btn-icon">&#128279;</span>
-            <span class="btn-text">Ver no GitHub</span>
+            <span class="btn-text" id="lt-btn">Ver no GitHub</span>
             <span class="btn-arrow">&#8594;</span>
           </a>
           <span class="project-wip">&#9881;&#160;WIP</span>
@@ -1363,27 +780,19 @@
         <div class="project-visual-grid" style="background-image:linear-gradient(rgba(88,101,242,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(88,101,242,0.06) 1px,transparent 1px);background-size:26px 26px;"></div>
         <div class="bot-decoration">
           <div class="bot-embed"></div>
-          <span class="bot-cmd">!roll</span>
-          <span class="bot-cmd">!daily</span>
-          <span class="bot-cmd">!work</span>
-          <span class="bot-cmd">!rank</span>
+          <span class="bot-cmd">!roll</span><span class="bot-cmd">!daily</span>
+          <span class="bot-cmd">!work</span><span class="bot-cmd">!rank</span>
         </div>
       </div>
       <div class="project-info">
-        <div class="project-year">2025 &mdash; Discord Bot &middot; Hobby &middot; MongoDB</div>
+        <div class="project-year" id="bot-year">2025 &mdash; Discord Bot · Hobby · MongoDB</div>
         <h3 class="project-title" style="-webkit-text-stroke:2px #5865f2;color:transparent;">Discord RPG Bot</h3>
-        <p class="project-desc">
-          Bot de coleta e batalha de personagens para Discord, feito por hobby. Sistema de <strong>roll de personagens</strong> (Marvel &amp; Invenc&iacute;vel) com raridades, estrelas e poder, economia de moedas, daily, work, ranking e perfis de usu&aacute;rios &mdash; tudo com <strong>MongoDB</strong> e manipula&ccedil;&atilde;o de JSON.
-        </p>
-        <div class="skill-tags" style="margin-bottom:32px;">
-          <span class="tag">Python</span><span class="tag">Discord.py</span>
-          <span class="tag">MongoDB</span><span class="tag">Motor (Async)</span>
-          <span class="tag">JSON</span><span class="tag">PyTZ</span>
-        </div>
+        <p class="project-desc" id="bot-desc">Bot de coleta e batalha de personagens para Discord, feito por hobby. Sistema de <strong>roll de personagens</strong> (Marvel &amp; Invencível) com raridades, estrelas e poder, economia de moedas, daily, work, ranking e perfis de usuários &mdash; tudo com <strong>MongoDB</strong> e manipulação de JSON.</p>
+        <div class="skill-tags" style="margin-bottom:32px;"><span class="tag">Python</span><span class="tag">Discord.py</span><span class="tag">MongoDB</span><span class="tag">Motor (Async)</span><span class="tag">JSON</span><span class="tag">PyTZ</span></div>
         <div class="project-links-row">
           <a href="https://github.com/gabrielleaosb/JubaBot" target="_blank" class="project-btn btn-discord">
             <span class="btn-icon">&#128279;</span>
-            <span class="btn-text">Ver no GitHub</span>
+            <span class="btn-text" id="bot-btn">Ver no GitHub</span>
             <span class="btn-arrow">&#8594;</span>
           </a>
         </div>
@@ -1402,26 +811,19 @@
         </div>
         <div class="project-visual-grid" style="background-image:linear-gradient(rgba(0,255,136,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,0.04) 1px,transparent 1px);background-size:30px 30px;"></div>
         <div class="burger-decoration">
-          <span class="burger-icon">&#127828;</span>
-          <span class="burger-icon">&#127839;</span>
-          <span class="burger-icon">&#127824;</span>
-          <span class="burger-icon">&#127857;</span>
+          <span class="burger-icon">&#127828;</span><span class="burger-icon">&#127839;</span>
+          <span class="burger-icon">&#127824;</span><span class="burger-icon">&#127857;</span>
         </div>
       </div>
       <div class="project-info">
-        <div class="project-year">2025 &mdash; Full Stack &middot; Collaboration</div>
-        <h3 class="project-title">Card&aacute;pio Virtual</h3>
-        <p class="project-desc">
-          Aplica&ccedil;&atilde;o web fullstack para gerenciamento de card&aacute;pio digital em parceria com um empreendimento familiar. Interface intuitiva para gest&atilde;o de produtos, pedidos e categorias &mdash; do design ao deploy.
-        </p>
-        <div class="skill-tags" style="margin-bottom:32px;">
-          <span class="tag">Django</span><span class="tag">JavaScript</span>
-          <span class="tag">Tailwind CSS</span><span class="tag">PostgreSQL</span>
-        </div>
+        <div class="project-year" id="burger-year">2025 &mdash; Full Stack · Colaboração</div>
+        <h3 class="project-title" id="burger-title">Cardápio Virtual</h3>
+        <p class="project-desc" id="burger-desc">Aplicação web fullstack para gerenciamento de cardápio digital em parceria com um empreendimento familiar. Interface intuitiva para gestão de produtos, pedidos e categorias &mdash; do design ao deploy.</p>
+        <div class="skill-tags" style="margin-bottom:32px;"><span class="tag">Django</span><span class="tag">JavaScript</span><span class="tag">Tailwind CSS</span><span class="tag">PostgreSQL</span></div>
         <div class="project-links-row">
           <a href="https://github.com/gabrielleaosb/da-casa-burguer" target="_blank" class="project-btn btn-green">
             <span class="btn-icon">&#128279;</span>
-            <span class="btn-text">Ver no GitHub</span>
+            <span class="btn-text" id="burger-btn">Ver no GitHub</span>
             <span class="btn-arrow">&#8594;</span>
           </a>
         </div>
@@ -1433,65 +835,56 @@
 
 <!-- ══ EDUCATION ══ -->
 <section id="education">
-  <div class="section-tag">Education</div>
-  <h2 class="section-title reveal">Forma&ccedil;&atilde;o &amp;<br>Cursos</h2>
-
+  <div class="section-tag" id="edu-tag">Education</div>
+  <h2 class="section-title reveal" id="edu-title">Formação &amp;<br>Cursos</h2>
   <div class="education-grid">
-
     <div class="courses-col reveal">
-      <div class="courses-subtitle">Cursos Complementares</div>
-
+      <div class="courses-subtitle" id="courses-sub">Cursos Complementares</div>
       <div class="course-item">
-        <div class="course-platform">Udemy &middot; Completo</div>
+        <div class="course-platform" id="course1-platform">Udemy · Completo</div>
         <div class="course-name">Django &amp; Django REST Framework</div>
-        <div class="course-author">por Luiz Ot&aacute;vio Miranda</div>
-        <span class="course-badge">&#10003; Conclu&iacute;do</span>
+        <div class="course-author">por Luiz Otávio Miranda</div>
+        <span class="course-badge" id="course1-badge">&#10003; Concluído</span>
       </div>
-
       <div class="course-item">
-        <div class="course-platform">Udemy &middot; Completo</div>
-        <div class="course-name">Flet Essentials &mdash; Interface Gr&aacute;fica com Python</div>
+        <div class="course-platform" id="course2-platform">Udemy · Completo</div>
+        <div class="course-name">Flet Essentials &mdash; Interface Gráfica com Python</div>
         <div class="course-author">por Dalton Peixoto</div>
-        <span class="course-badge">&#10003; Conclu&iacute;do</span>
+        <span class="course-badge" id="course2-badge">&#10003; Concluído</span>
       </div>
-
       <div class="course-item">
-        <div class="course-platform">Curso em V&iacute;deo &middot; Completo</div>
+        <div class="course-platform" id="course3-platform">Curso em Vídeo · Completo</div>
         <div class="course-name">Python Mundo 1, 2 e 3</div>
         <div class="course-author">por Gustavo Guanabara</div>
-        <span class="course-badge">&#10003; Conclu&iacute;do</span>
+        <span class="course-badge" id="course3-badge">&#10003; Concluído</span>
       </div>
     </div>
-
     <div class="edu-cards reveal">
-      <div class="courses-subtitle">Forma&ccedil;&atilde;o Acad&ecirc;mica</div>
-
+      <div class="courses-subtitle" id="formal-edu-sub">Formação Acadêmica</div>
       <div class="edu-card">
-        <div class="edu-badge">Em Andamento</div>
+        <div class="edu-badge" id="edu1-badge">Em Andamento</div>
         <div class="edu-year">2022 &rarr; 2026</div>
-        <div class="edu-title">Sistemas de Informa&ccedil;&atilde;o</div>
-        <p class="edu-sub">CESMAC &mdash; Centro de Estudos Superiores de Macei&oacute;<br>6&ordm; Per&iacute;odo &middot; Turno Noturno</p>
+        <div class="edu-title" id="edu1-title">Sistemas de Informação</div>
+        <p class="edu-sub" id="edu1-sub">CESMAC &mdash; Centro de Estudos Superiores de Maceió<br>6º Período · Turno Noturno</p>
       </div>
-
       <div class="edu-card">
-        <div class="edu-badge" style="border-color:rgba(255,255,255,0.15);color:var(--muted);">Conclu&iacute;do</div>
+        <div class="edu-badge" style="border-color:rgba(255,255,255,0.15);color:var(--muted);" id="edu2-badge">Concluído</div>
         <div class="edu-year">2021</div>
-        <div class="edu-title">Ensino M&eacute;dio Completo</div>
-        <p class="edu-sub">Col&eacute;gio Santa &Uacute;rsula<br>Macei&oacute;, Alagoas</p>
+        <div class="edu-title" id="edu2-title">Ensino Médio Completo</div>
+        <p class="edu-sub" id="edu2-sub">Colégio Santa Úrsula<br>Maceió, Alagoas</p>
       </div>
     </div>
-
   </div>
 </section>
 
 <!-- ══ CONTACT ══ -->
 <section id="contact">
   <div class="contact-inner reveal">
-    <div class="section-tag" style="justify-content:center;" data-i18n="contact.tag">Get in touch</div>
-    <div class="contact-big" data-i18n="contact.big">Vamos<br>Construir<br>Juntos?</div>
-    <p class="contact-sub" data-i18n="contact.sub">
-      Estou aberto a novas oportunidades, projetos freelance e colabora&ccedil;&otilde;es.<br>
-      Se voc&ecirc; tem uma ideia ou desafio interessante, me manda uma mensagem.
+    <div class="section-tag" style="justify-content:center;" id="contact-tag">Get in touch</div>
+    <div class="contact-big" id="contact-big">Vamos<br>Construir<br>Juntos?</div>
+    <p class="contact-sub" id="contact-sub">
+      Estou aberto a novas oportunidades, projetos freelance e colaborações.<br>
+      Se você tem uma ideia ou desafio interessante, me manda uma mensagem.
     </p>
     <div class="contact-links">
       <a href="mailto:gabrielleaosb@gmail.com" class="contact-link">&#9993; Email</a>
@@ -1504,151 +897,222 @@
 
 <!-- ══ FOOTER ══ -->
 <footer>
-  <p>&copy; 2025 Gabriel Le&atilde;o Salles Bagetti</p>
-  <p data-i18n="footer.made">Feito com <a href="https://github.com/gabrielleaosb" target="_blank">c&oacute;digo</a> e muito caf&eacute; &#9749;</p>
-  <p>Macei&oacute;, Alagoas, BR</p>
+  <p>&copy; 2025 Gabriel Leão Salles Bagetti</p>
+  <p id="footer-made">Feito com <a href="https://github.com/gabrielleaosb" target="_blank">código</a> e muito café &#9749;</p>
+  <p>Maceió, Alagoas, BR</p>
 </footer>
 
 <script>
   /* ══════════════════════════════════════
-     I18N — TRANSLATION SYSTEM
+     I18N — SISTEMA DE TRADUÇÃO CORRIGIDO
+     Estratégia: cada elemento tem um id único.
+     applyTranslations() atualiza innerHTML de
+     cada id diretamente, sem depender de
+     data-i18n com chaves de ponto.
   ══════════════════════════════════════ */
-  var translations = {
-  pt: {
-    nav_about: 'Sobre', nav_skills: 'Habilidades', nav_projects: 'Projetos',
-    nav_education: 'Educação', nav_contact: 'Contato',
-    hero_available: 'Disponível para oportunidades',
-    hero_role: 'Desenvolvedor de Software',
-    hero_cta1: 'Ver Projetos', hero_cta2: 'Entre em Contato',
-    stat1: 'Período — SI / CESMAC', stat2: 'Anos Desenvolvendo',
-    stat3: 'Projetos Concluídos', stat4: 'Vontade de Aprender',
-    about_tag: 'About me',
-    about_title: 'Sobre\nMim',
-    about_p1: 'Sou um desenvolvedor apaixonado por <span>unir tecnologia e inteligência artificial</span> para criar soluções que realmente fazem diferença.',
-    about_p2: 'Com foco em <strong>Python/Django</strong> no back-end e uma visão full-stack, me especializei em construir sistemas robustos, escaláveis e inteligentes — desde APIs RESTful até agentes autônomos com <strong>LangChain e LLMs</strong>.',
-    about_p3: 'Estou cursando <span>Sistemas de Informação no CESMAC (6º período)</span> e nunca paro de aprender. Cada projeto é uma oportunidade de ir além.',
-    detail_location_key: 'Localização', detail_focus_key: 'Foco atual',
-    detail_langs_key: 'Idiomas', detail_langs_val: 'PT-BR Nativo · EN Leitura',
-    detail_status_val: 'Disponível',
-    skills_tag: 'Expertise', skills_title: 'Stack &\nHabilidades',
-    skill1_title: 'Back-End Development',
-    skill1_desc: 'Arquitetura escalável com tarefas assíncronas, mensageria e design orientado a performance.',
-    skill2_title: 'IA & LLMs',
-    skill2_desc: 'Aplicações inteligentes com modelos de linguagem avançados, agentes autônomos e IA generativa.',
-    skill3_title: 'Banco de Dados',
-    skill3_desc: 'Modelagem, otimização e integração de bancos relacionais e NoSQL para sistemas de alta disponibilidade.',
-    skill4_title: 'Front-End',
-    skill4_desc: 'Interfaces modernas, responsivas e interativas com foco em experiência do usuário. Interface gráfica nativa com Flet (Python).',
-    skill5_title: 'Análise de Dados',
-    skill5_desc: 'Engenharia, tratamento e visualização de dados com aplicação de IA para tomada de decisões.',
-    skill6_title: 'DevOps & Qualidade',
-    skill6_desc: 'Controle de versão, CI/CD, testes automatizados unitários e de integração com foco em confiabilidade.',
-    projects_tag: 'Work', projects_title: 'Projetos',
-    kbones_year: '2026 — Web Game · Live · P2P',
-    kbones_desc: 'Jogo de dados estratégico inspirado no universo de <em>Cult of the Lamb</em>. Mecânicas originais de pontuação, jogabilidade fluida e completamente no ar — só abrir e jogar.',
-    play_now: 'Jogar Agora',
-    view_github: 'Ver no GitHub',
-    ai_year: '2025 — AI · Análise de Dados · Django',
-    ai_desc: 'Plataforma Django para análise automatizada de datasets CSV com IA local. Upload de arquivos, detecção automática de tamanho e geração de insights via <strong>Llama 3 (Ollama)</strong> com processamento em background — seus dados nunca saem da sua máquina.',
-    lt_year: '2025 — Web App · Real-time · Full Stack',
-    lt_desc: 'Plataforma para jogar <strong>RPG de mesa online em tempo real</strong>. Canvas de mapa totalmente interativo, sistema de personagens, salas e sessões ao vivo. Projeto quase finalizado, atualmente pausado — com base sólida e arquitetura bem definida.',
-    in_dev: 'EM DESENVOLVIMENTO',
-    bot_year: '2025 — Discord Bot · Hobby · MongoDB',
-    bot_desc: 'Bot de coleta e batalha de personagens para Discord, feito por hobby. Sistema de <strong>roll de personagens</strong> (Marvel & Invencível) com raridades, estrelas e poder, economia de moedas, daily, work, ranking e perfis de usuários — tudo com <strong>MongoDB</strong> e manipulação de JSON.',
-    burger_year: '2025 — Full Stack · Colaboração',
-    burger_title: 'Cardápio Virtual',
-    burger_desc: 'Aplicação web fullstack para gerenciamento de cardápio digital em parceria com um empreendimento familiar. Interface intuitiva para gestão de produtos, pedidos e categorias — do design ao deploy.',
-    edu_tag: 'Education', edu_title: 'Formação &\nCursos',
-    courses_sub: 'Cursos Complementares',
-    course1_platform: 'Udemy · Completo',
-    course2_platform: 'Udemy · Completo',
-    course3_platform: 'Curso em Vídeo · Completo',
-    completed: '✓ Concluído',
-    formal_edu_sub: 'Formação Acadêmica',
-    in_progress: 'Em Andamento', concluded: 'Concluído',
-    edu1_title: 'Sistemas de Informação',
-    edu1_sub: 'CESMAC — Centro de Estudos Superiores de Maceió\n6º Período · Turno Noturno',
-    edu2_title: 'Ensino Médio Completo',
-    edu2_sub: 'Colégio Santa Úrsula\nMaceió, Alagoas',
-    contact_big: 'Vamos\nConstruir\nJuntos?',
-    contact_sub: 'Estou aberto a novas oportunidades, projetos freelance e colaborações.\nSe você tem uma ideia ou desafio interessante, me manda uma mensagem.',
-    footer_made: 'Feito com <a href="https://github.com/gabrielleaosb" target="_blank">código</a> e muito café ☕'
-  },
-  en: {
-    nav_about: 'About', nav_skills: 'Skills', nav_projects: 'Projects',
-    nav_education: 'Education', nav_contact: 'Contact',
-    hero_available: 'Available for opportunities',
-    hero_role: 'Software Developer',
-    hero_cta1: 'View Projects', hero_cta2: 'Get in Touch',
-    stat1: 'Semester — IS / CESMAC', stat2: 'Years Developing',
-    stat3: 'Projects Completed', stat4: 'Will to Learn',
-    about_tag: 'About me',
-    about_title: 'About\nMe',
-    about_p1: 'I\'m a developer passionate about <span>combining technology and artificial intelligence</span> to create solutions that truly make a difference.',
-    about_p2: 'Focused on <strong>Python/Django</strong> on the back-end with a full-stack vision, I specialize in building robust, scalable and intelligent systems — from RESTful APIs to autonomous agents with <strong>LangChain and LLMs</strong>.',
-    about_p3: 'Currently studying <span>Information Systems at CESMAC (6th semester)</span> and never stop learning. Every project is an opportunity to go further.',
-    detail_location_key: 'Location', detail_focus_key: 'Current focus',
-    detail_langs_key: 'Languages', detail_langs_val: 'PT-BR Native · EN Reading',
-    detail_status_val: 'Available',
-    skills_tag: 'Expertise', skills_title: 'Stack &\nSkills',
-    skill1_title: 'Back-End Development',
-    skill1_desc: 'Scalable architecture with async tasks, messaging and performance-oriented design.',
-    skill2_title: 'AI & LLMs',
-    skill2_desc: 'Intelligent applications with advanced language models, autonomous agents and generative AI.',
-    skill3_title: 'Databases',
-    skill3_desc: 'Modeling, optimization and integration of relational and NoSQL databases for high-availability systems.',
-    skill4_title: 'Front-End',
-    skill4_desc: 'Modern, responsive and interactive interfaces focused on user experience. Native GUI with Flet (Python).',
-    skill5_title: 'Data Analysis',
-    skill5_desc: 'Data engineering, processing and visualization with AI applied for decision-making.',
-    skill6_title: 'DevOps & Quality',
-    skill6_desc: 'Version control, CI/CD, unit and integration automated tests with focus on reliability.',
-    projects_tag: 'Work', projects_title: 'Projects',
-    kbones_year: '2026 — Web Game · Live · P2P',
-    kbones_desc: 'Strategic dice game inspired by the <em>Cult of the Lamb</em> universe. Original scoring mechanics, fluid gameplay and completely live — just open and play.',
-    play_now: 'Play Now',
-    view_github: 'View on GitHub',
-    ai_year: '2025 — AI · Data Analysis · Django',
-    ai_desc: 'Django platform for automated CSV dataset analysis with local AI. File upload, automatic size detection and insight generation via <strong>Llama 3 (Ollama)</strong> with background processing — your data never leaves your machine.',
-    lt_year: '2025 — Web App · Real-time · Full Stack',
-    lt_desc: 'Platform for playing <strong>tabletop RPG online in real time</strong>. Fully interactive map canvas, character system, rooms and live sessions. Nearly finished, currently paused — with solid foundation and well-defined architecture.',
-    in_dev: 'IN DEVELOPMENT',
-    bot_year: '2025 — Discord Bot · Hobby · MongoDB',
-    bot_desc: 'Character collection and battle bot for Discord, built as a hobby. <strong>Character roll system</strong> (Marvel & Invincible) with rarities, stars and power, coin economy, daily, work, ranking and user profiles — all powered by <strong>MongoDB</strong> and JSON handling.',
-    burger_year: '2025 — Full Stack · Collaboration',
-    burger_title: 'Virtual Menu',
-    burger_desc: 'Full stack web application for digital menu management in partnership with a family business. Intuitive interface for product, order and category management — from design to deploy.',
-    edu_tag: 'Education', edu_title: 'Education &\nCourses',
-    courses_sub: 'Complementary Courses',
-    course1_platform: 'Udemy · Complete',
-    course2_platform: 'Udemy · Complete',
-    course3_platform: 'Curso em Vídeo · Complete',
-    completed: '✓ Completed',
-    formal_edu_sub: 'Academic Background',
-    in_progress: 'In Progress', concluded: 'Concluded',
-    edu1_title: 'Information Systems',
-    edu1_sub: 'CESMAC — Centro de Estudos Superiores de Maceió\n6th Semester · Evening',
-    edu2_title: 'High School Diploma',
-    edu2_sub: 'Colégio Santa Úrsula\nMaceió, Alagoas',
-    contact_big: "Let's\nBuild\nTogether?",
-    contact_sub: 'Open to new opportunities, freelance projects and collaborations.\nIf you have an interesting idea or challenge, send me a message.',
-    footer_made: 'Made with <a href="https://github.com/gabrielleaosb" target="_blank">code</a> and lots of coffee ☕'
-  }
-};
+
+  var T = {
+    pt: {
+      // Nav
+      'nav-about':      'Sobre',
+      'nav-skills':     'Habilidades',
+      'nav-projects':   'Projetos',
+      'nav-education':  'Educação',
+      'nav-contact':    'Contato',
+      'mnav-about':     'Sobre',
+      'mnav-skills':    'Habilidades',
+      'mnav-projects':  'Projetos',
+      'mnav-education': 'Educação',
+      'mnav-contact':   'Contato',
+      // Hero
+      'hero-tag':       'Disponível para oportunidades',
+      'hero-role':      'Desenvolvedor Python',
+      'hero-desc-text': 'Construo aplicações que unem o melhor do desenvolvimento web com o avanço da inteligência artificial aplicada.',
+      'hero-cta1':      'Ver Projetos',
+      'hero-cta2':      'Entre em Contato',
+      // Stats
+      'stat1': 'Período — SI / CESMAC',
+      'stat2': 'Anos Desenvolvendo',
+      'stat3': 'Projetos Concluídos',
+      'stat4': 'Vontade de Aprender',
+      // About
+      'about-tag':   'About me',
+      'about-title': 'Sobre<br>Mim',
+      'about-p1':    'Sou um desenvolvedor Python com foco em <span>backend e inteligência artificial</span>. Trabalho com APIs robustas, arquiteturas escaláveis e sistemas orientados a performance — do banco de dados à camada de negócio.',
+      'about-p2':    'Com visão <strong>full-stack</strong>, me especializei em integrar <strong>LLMs e agentes autônomos</strong> em aplicações reais, unindo desenvolvimento web sólido com o que há de mais atual em IA aplicada.',
+      'about-p3':    'Curso <span>Sistemas de Informação no CESMAC (6º período)</span> e estou sempre construindo algo novo. Cada projeto é uma oportunidade de resolver um problema de verdade.',
+      'profile-status-text': 'Disponível',
+      'info-loc-label':   'Localização',
+      'info-focus-label': 'Foco Atual',
+      'info-edu-label':   'Formação',
+      'info-lang-label':  'Idiomas',
+      'info-lang-val':    'PT-BR Nativo · EN Leitura',
+      'social-call':      '💬 WhatsApp',
+      // Skills
+      'skills-tag':   'Expertise',
+      'skills-title': 'Stack &amp;<br>Habilidades',
+      'sk1-title': 'Back-End Development',
+      'sk1-desc':  'Arquitetura escalável com tarefas assíncronas, mensageria e design orientado a performance.',
+      'sk2-title': 'IA &amp; LLMs',
+      'sk2-desc':  'Aplicações inteligentes com modelos de linguagem avançados, agentes autônomos e IA generativa.',
+      'sk3-title': 'Banco de Dados',
+      'sk3-desc':  'Modelagem, otimização e integração de bancos relacionais e NoSQL para sistemas de alta disponibilidade.',
+      'sk4-title': 'Front-End',
+      'sk4-desc':  'Interfaces modernas, responsivas e interativas com foco em experiência do usuário. Interface gráfica nativa com Flet (Python).',
+      'sk5-title': 'Análise de Dados',
+      'sk5-desc':  'Engenharia, tratamento e visualização de dados com aplicação de IA para tomada de decisões.',
+      'sk6-title': 'DevOps &amp; Qualidade',
+      'sk6-desc':  'Controle de versão, CI/CD, testes automatizados unitários e de integração com foco em confiabilidade.',
+      // Projects
+      'projects-tag':   'Work',
+      'projects-title': 'Projetos',
+      'kbones-year': '2026 — Web Game · Live · P2P',
+      'kbones-desc': 'Jogo de dados estratégico inspirado no universo de <em>Cult of the Lamb</em>. Mecânicas originais de pontuação, jogabilidade fluida e completamente no ar — só abrir e jogar.',
+      'kbones-btn':  'Jogar Agora',
+      'ai-year': '2025 — AI · Análise de Dados · Django',
+      'ai-desc': 'Plataforma Django para análise automatizada de datasets CSV com IA local. Upload de arquivos, detecção automática de tamanho e geração de insights via <strong>Llama 3 (Ollama)</strong> com processamento em background — seus dados nunca saem da sua máquina.',
+      'ai-btn':  'Ver no GitHub',
+      'lt-year':  '2025 — Web App · Real-time · Full Stack',
+      'lt-badge': 'EM DESENVOLVIMENTO',
+      'lt-desc':  'Plataforma para jogar <strong>RPG de mesa online em tempo real</strong>. Canvas de mapa totalmente interativo, sistema de personagens, salas e sessões ao vivo. Projeto quase finalizado, atualmente pausado — com base sólida e arquitetura bem definida.',
+      'lt-btn':   'Ver no GitHub',
+      'bot-year': '2025 — Discord Bot · Hobby · MongoDB',
+      'bot-desc': 'Bot de coleta e batalha de personagens para Discord, feito por hobby. Sistema de <strong>roll de personagens</strong> (Marvel &amp; Invencível) com raridades, estrelas e poder, economia de moedas, daily, work, ranking e perfis de usuários — tudo com <strong>MongoDB</strong> e manipulação de JSON.',
+      'bot-btn':  'Ver no GitHub',
+      'burger-year':  '2025 — Full Stack · Colaboração',
+      'burger-title': 'Cardápio Virtual',
+      'burger-desc':  'Aplicação web fullstack para gerenciamento de cardápio digital em parceria com um empreendimento familiar. Interface intuitiva para gestão de produtos, pedidos e categorias — do design ao deploy.',
+      'burger-btn':   'Ver no GitHub',
+      // Education
+      'edu-tag':   'Education',
+      'edu-title': 'Formação &amp;<br>Cursos',
+      'courses-sub':      'Cursos Complementares',
+      'course1-platform': 'Udemy · Completo',
+      'course2-platform': 'Udemy · Completo',
+      'course3-platform': 'Curso em Vídeo · Completo',
+      'course1-badge': '&#10003; Concluído',
+      'course2-badge': '&#10003; Concluído',
+      'course3-badge': '&#10003; Concluído',
+      'formal-edu-sub': 'Formação Acadêmica',
+      'edu1-badge': 'Em Andamento',
+      'edu1-title': 'Sistemas de Informação',
+      'edu1-sub':   'CESMAC — Centro de Estudos Superiores de Maceió<br>6º Período · Turno Noturno',
+      'edu2-badge': 'Concluído',
+      'edu2-title': 'Ensino Médio Completo',
+      'edu2-sub':   'Colégio Santa Úrsula<br>Maceió, Alagoas',
+      // Contact
+      'contact-tag': 'Get in touch',
+      'contact-big': 'Vamos<br>Construir<br>Juntos?',
+      'contact-sub': 'Estou aberto a novas oportunidades, projetos freelance e colaborações.<br>Se você tem uma ideia ou desafio interessante, me manda uma mensagem.',
+      // Footer
+      'footer-made': 'Feito com <a href="https://github.com/gabrielleaosb" target="_blank">código</a> e muito café &#9749;'
+    },
+    en: {
+      // Nav
+      'nav-about':      'About',
+      'nav-skills':     'Skills',
+      'nav-projects':   'Projects',
+      'nav-education':  'Education',
+      'nav-contact':    'Contact',
+      'mnav-about':     'About',
+      'mnav-skills':    'Skills',
+      'mnav-projects':  'Projects',
+      'mnav-education': 'Education',
+      'mnav-contact':   'Contact',
+      // Hero
+      'hero-tag':       'Available for opportunities',
+      'hero-role':      'Software Developer',
+      'hero-desc-text': 'I build applications that combine the best of web development with the advancement of applied artificial intelligence.',
+      'hero-cta1':      'View Projects',
+      'hero-cta2':      'Get in Touch',
+      // Stats
+      'stat1': 'Semester — IS / CESMAC',
+      'stat2': 'Years Developing',
+      'stat3': 'Projects Completed',
+      'stat4': 'Will to Learn',
+      // About
+      'about-tag':   'About me',
+      'about-title': 'About<br>Me',
+      'about-p1': 'I\'m a Python developer focused on <span>backend and artificial intelligence</span>. I build robust APIs, scalable architectures and performance-oriented systems — from the database layer to business logic.',
+      'about-p2': 'With a <strong>full-stack</strong> vision, I specialize in integrating <strong>LLMs and autonomous agents</strong> into real applications, combining solid web development with the latest in applied AI.',
+      'about-p3': 'Currently studying <span>Information Systems at CESMAC (6th semester)</span> and always building something new. Every project is a chance to solve a real problem.',
+      'profile-status-text': 'Available',
+      'info-loc-label':   'Location',
+      'info-focus-label': 'Current Focus',
+      'info-edu-label':   'Education',
+      'info-lang-label':  'Languages',
+      'info-lang-val':    'PT-BR Native · EN Reading',
+      'social-call':      '💬 WhatsApp',
+      // Skills
+      'skills-tag':   'Expertise',
+      'skills-title': 'Stack &amp;<br>Skills',
+      'sk1-title': 'Back-End Development',
+      'sk1-desc':  'Scalable architecture with async tasks, messaging and performance-oriented design.',
+      'sk2-title': 'AI &amp; LLMs',
+      'sk2-desc':  'Intelligent applications with advanced language models, autonomous agents and generative AI.',
+      'sk3-title': 'Databases',
+      'sk3-desc':  'Modeling, optimization and integration of relational and NoSQL databases for high-availability systems.',
+      'sk4-title': 'Front-End',
+      'sk4-desc':  'Modern, responsive and interactive interfaces focused on user experience. Native GUI with Flet (Python).',
+      'sk5-title': 'Data Analysis',
+      'sk5-desc':  'Data engineering, processing and visualization with AI applied for decision-making.',
+      'sk6-title': 'DevOps &amp; Quality',
+      'sk6-desc':  'Version control, CI/CD, unit and integration automated tests focused on reliability.',
+      // Projects
+      'projects-tag':   'Work',
+      'projects-title': 'Projects',
+      'kbones-year': '2026 — Web Game · Live · P2P',
+      'kbones-desc': 'Strategic dice game inspired by the <em>Cult of the Lamb</em> universe. Original scoring mechanics, fluid gameplay and completely live — just open and play.',
+      'kbones-btn':  'Play Now',
+      'ai-year': '2025 — AI · Data Analysis · Django',
+      'ai-desc': 'Django platform for automated CSV dataset analysis with local AI. File upload, automatic size detection and insight generation via <strong>Llama 3 (Ollama)</strong> with background processing — your data never leaves your machine.',
+      'ai-btn':  'View on GitHub',
+      'lt-year':  '2025 — Web App · Real-time · Full Stack',
+      'lt-badge': 'IN DEVELOPMENT',
+      'lt-desc':  'Platform for playing <strong>tabletop RPG online in real time</strong>. Fully interactive map canvas, character system, rooms and live sessions. Nearly finished, currently paused — with solid foundation and well-defined architecture.',
+      'lt-btn':   'View on GitHub',
+      'bot-year': '2025 — Discord Bot · Hobby · MongoDB',
+      'bot-desc': 'Character collection and battle bot for Discord, built as a hobby. <strong>Character roll system</strong> (Marvel &amp; Invincible) with rarities, stars and power, coin economy, daily, work, ranking and user profiles — all powered by <strong>MongoDB</strong> and JSON handling.',
+      'bot-btn':  'View on GitHub',
+      'burger-year':  '2025 — Full Stack · Collaboration',
+      'burger-title': 'Virtual Menu',
+      'burger-desc':  'Full stack web application for digital menu management in partnership with a family business. Intuitive interface for product, order and category management — from design to deploy.',
+      'burger-btn':   'View on GitHub',
+      // Education
+      'edu-tag':   'Education',
+      'edu-title': 'Education &amp;<br>Courses',
+      'courses-sub':      'Complementary Courses',
+      'course1-platform': 'Udemy · Complete',
+      'course2-platform': 'Udemy · Complete',
+      'course3-platform': 'Curso em Vídeo · Complete',
+      'course1-badge': '&#10003; Completed',
+      'course2-badge': '&#10003; Completed',
+      'course3-badge': '&#10003; Completed',
+      'formal-edu-sub': 'Academic Background',
+      'edu1-badge': 'In Progress',
+      'edu1-title': 'Information Systems',
+      'edu1-sub':   'CESMAC — Centro de Estudos Superiores de Maceió<br>6th Semester · Evening',
+      'edu2-badge': 'Concluded',
+      'edu2-title': 'High School Diploma',
+      'edu2-sub':   'Colégio Santa Úrsula<br>Maceió, Alagoas',
+      // Contact
+      'contact-tag': 'Get in touch',
+      'contact-big': "Let's<br>Build<br>Together?",
+      'contact-sub': 'Open to new opportunities, freelance projects and collaborations.<br>If you have an interesting idea or challenge, send me a message.',
+      // Footer
+      'footer-made': 'Made with <a href="https://github.com/gabrielleaosb" target="_blank">code</a> and lots of coffee &#9749;'
+    }
+  };
 
   var currentLang = 'pt';
 
   function applyTranslations(lang) {
-    var t = translations[lang];
-    document.querySelectorAll('[data-i18n]').forEach(function(el) {
-      var key = el.getAttribute('data-i18n');
-      if (t[key] !== undefined) {
-        el.innerHTML = t[key];
-      }
+    var t = T[lang];
+    Object.keys(t).forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.innerHTML = t[id];
     });
-    // Update html lang attr
     document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
-    // Update toggle button
     document.getElementById('langFlag').textContent  = lang === 'pt' ? '🇧🇷' : '🇺🇸';
     document.getElementById('langLabel').textContent = lang === 'pt' ? 'PT' : 'EN';
   }
@@ -1658,7 +1122,7 @@
     applyTranslations(currentLang);
   });
 
-  /* ── MOBILE DRAWER ── */
+  /* ══ MOBILE DRAWER ══ */
   var hamburger = document.getElementById('navHamburger');
   var drawer    = document.getElementById('navDrawer');
   hamburger.addEventListener('click', function() {
@@ -1670,29 +1134,23 @@
     drawer.classList.remove('open');
   }
 
-  /* ── CURSOR: pulsing ring (desktop only) ── */
-  var ring   = document.getElementById('cursor-ring');
-  var dot    = document.getElementById('cursor-dot');
-  var mouseX = 0, mouseY = 0;
-
+  /* ══ CURSOR ══ */
   if (window.matchMedia('(pointer: fine)').matches) {
+    var ring = document.getElementById('cursor-ring');
+    var dot  = document.getElementById('cursor-dot');
     document.addEventListener('mousemove', function(e) {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      ring.style.left = mouseX + 'px';
-      ring.style.top  = mouseY + 'px';
-      dot.style.left  = mouseX + 'px';
-      dot.style.top   = mouseY + 'px';
+      ring.style.left = e.clientX + 'px';
+      ring.style.top  = e.clientY + 'px';
+      dot.style.left  = e.clientX + 'px';
+      dot.style.top   = e.clientY + 'px';
     });
-
     document.querySelectorAll('a, button').forEach(function(el) {
       el.addEventListener('mouseenter', function() { ring.classList.add('hovered'); });
       el.addEventListener('mouseleave', function() { ring.classList.remove('hovered'); });
     });
   }
 
-  /* ── REVEAL ON SCROLL ── */
-  var reveals = document.querySelectorAll('.reveal');
+  /* ══ REVEAL ON SCROLL ══ */
   var revealObs = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry, i) {
       if (entry.isIntersecting) {
@@ -1701,22 +1159,20 @@
       }
     });
   }, { threshold: 0.08 });
-  reveals.forEach(function(el) { revealObs.observe(el); });
+  document.querySelectorAll('.reveal').forEach(function(el) { revealObs.observe(el); });
 
-  /* ── STAGGER SKILL CARDS ── */
+  /* ══ STAGGER SKILL CARDS ══ */
   document.querySelectorAll('.skill-card').forEach(function(card, i) {
     card.style.transitionDelay = (i * 70) + 'ms';
   });
 
-  /* ── PARALLAX HERO BG TEXT ── */
+  /* ══ PARALLAX HERO BG TEXT ══ */
   var heroBg = document.querySelector('.hero-bg-text');
   window.addEventListener('scroll', function() {
-    if (heroBg) {
-      heroBg.style.transform = 'translate(-50%, calc(-50% + ' + (window.scrollY * 0.3) + 'px))';
-    }
+    if (heroBg) heroBg.style.transform = 'translate(-50%, calc(-50% + ' + (window.scrollY * 0.3) + 'px))';
   }, { passive: true });
 
-  /* ── ACTIVE NAV HIGHLIGHT ── */
+  /* ══ ACTIVE NAV HIGHLIGHT ══ */
   var sections = document.querySelectorAll('section[id]');
   var navLinks = document.querySelectorAll('.nav-links a');
   window.addEventListener('scroll', function() {
@@ -1729,8 +1185,7 @@
     });
   }, { passive: true });
 
-  /* ── STAT FADE-IN ── */
-  var statNums = document.querySelectorAll('.stat-num');
+  /* ══ STAT FADE-IN ══ */
   var statsObs = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
@@ -1738,15 +1193,12 @@
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
         el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        setTimeout(function() {
-          el.style.opacity = '1';
-          el.style.transform = 'translateY(0)';
-        }, 60);
+        setTimeout(function() { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 60);
         statsObs.unobserve(el);
       }
     });
   }, { threshold: 0.5 });
-  statNums.forEach(function(n) { statsObs.observe(n); });
+  document.querySelectorAll('.stat-num').forEach(function(n) { statsObs.observe(n); });
 </script>
 </body>
 </html>
