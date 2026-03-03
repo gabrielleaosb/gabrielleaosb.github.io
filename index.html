@@ -16,8 +16,8 @@
     --accent3: #ff4d6d;
     --accent4: #f59e0b;
     --text: #e8e8f0;
-    --muted: #555570;
-    --border: rgba(255,255,255,0.06);
+    --muted: #8888a8;
+    --border: rgba(255,255,255,0.12);
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,38 +32,10 @@
   }
 
   /* ══ CURSOR ══ */
-  #cursor-ring {
-    position: fixed; pointer-events: none; z-index: 9999;
-    top: 0; left: 0; width: 20px; height: 20px; border-radius: 50%;
-    border: 1.5px solid var(--accent); transform: translate(-50%, -50%);
-    transition: width 0.2s ease, height 0.2s ease, border-color 0.2s, opacity 0.2s;
-    animation: cursorPulse 2.4s ease-in-out infinite;
-  }
-  #cursor-ring.hovered { width: 44px; height: 44px; border-color: var(--accent); animation: none; }
-  #cursor-dot {
-    position: fixed; pointer-events: none; z-index: 10000;
-    width: 4px; height: 4px; border-radius: 50%; background: var(--accent);
-    top: 0; left: 0; transform: translate(-50%, -50%);
-  }
-  @keyframes cursorPulse {
-    0%, 100% { opacity: 1;    transform: translate(-50%, -50%) scale(1); }
-    50%       { opacity: 0.4; transform: translate(-50%, -50%) scale(1.5); }
-  }
+    *, *::before, *::after { cursor: none !important; }
 
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 9997; opacity: 0.3;
-  }
-  body::after {
-    content: '';
-    position: fixed; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none; z-index: 0;
+    body {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpolygon points='1,1 1,13 4,10 7,15 9,14 6,9 11,9' fill='%2300ff88'/%3E%3C/svg%3E") 1 1, auto !important;
   }
 
   /* ══ NAV ══ */
@@ -400,9 +372,6 @@
     .stat-item { padding: 28px 32px; }
   }
   @media (max-width: 768px) {
-    body { cursor: auto; }
-    #cursor-ring, #cursor-dot { display: none; }
-    .btn-primary, .btn-secondary, .project-btn { cursor: pointer; }
     nav { padding: 18px 24px; }
     .nav-links { display: none; }
     .nav-hamburger { display: flex; }
@@ -465,10 +434,6 @@
 </style>
 </head>
 <body>
-
-<!-- CURSOR -->
-<div id="cursor-ring"></div>
-<div id="cursor-dot"></div>
 
 <!-- ══ NAV ══ -->
 <nav>
@@ -1135,22 +1100,6 @@
   function closeDrawer() {
     hamburger.classList.remove('open');
     drawer.classList.remove('open');
-  }
-
-  /* ══ CURSOR ══ */
-  if (window.matchMedia('(pointer: fine)').matches) {
-    var ring = document.getElementById('cursor-ring');
-    var dot  = document.getElementById('cursor-dot');
-    document.addEventListener('mousemove', function(e) {
-      ring.style.left = e.clientX + 'px';
-      ring.style.top  = e.clientY + 'px';
-      dot.style.left  = e.clientX + 'px';
-      dot.style.top   = e.clientY + 'px';
-    });
-    document.querySelectorAll('a, button').forEach(function(el) {
-      el.addEventListener('mouseenter', function() { ring.classList.add('hovered'); });
-      el.addEventListener('mouseleave', function() { ring.classList.remove('hovered'); });
-    });
   }
 
   /* ══ REVEAL ON SCROLL ══ */
