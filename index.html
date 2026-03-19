@@ -15,6 +15,8 @@
     --accent2: #7b5ea7;
     --accent3: #ff4d6d;
     --accent4: #f59e0b;
+    --orange: #f97316;
+    --discord: #5865f2;
     --text: #e8e8f0;
     --muted: #8888a8;
     --border: rgba(255,255,255,0.12);
@@ -282,14 +284,21 @@
   .bot-cmd:nth-child(5){ top:72%;left:22%;animation-delay:2.1s;font-size:0.73rem; }
   @keyframes cmdAppear { 0%,12%{opacity:0;transform:translateX(-8px)} 22%,72%{opacity:1;transform:translateX(0)} 88%,100%{opacity:0} }
 
-  .burger-decoration { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-  .burger-icon { position: absolute; opacity: 0.18; animation: floatDice 7s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(0,255,136,0.2)); }
-  .burger-icon:nth-child(1){ font-size:5.5rem;top:-10px;left:-6px;animation-duration:9s; }
-  .burger-icon:nth-child(2){ font-size:3.2rem;bottom:8px;right:6px;animation-delay:1.5s; }
-  .burger-icon:nth-child(3){ font-size:2.2rem;top:30%;left:62%;animation-delay:2.5s; }
-  .burger-icon:nth-child(4){ font-size:2rem;top:66%;left:14%;animation-delay:3.2s; }
+  .menu-decoration { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .menu-icon { position: absolute; opacity: 0.18; animation: floatDice 7s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(249,115,22,0.2)); }
+  .menu-icon:nth-child(1){ font-size:5rem;top:-8px;left:-4px;animation-duration:8s; }
+  .menu-icon:nth-child(2){ font-size:3rem;bottom:10px;right:8px;animation-delay:1.8s; }
+  .menu-icon:nth-child(3){ font-size:2rem;top:35%;left:60%;animation-delay:2.8s; }
+  .menu-icon:nth-child(4){ font-size:1.8rem;top:65%;left:16%;animation-delay:3.5s; }
 
-  .project-info { padding: 56px; }
+  .project-card--reverse .project-visual { order: 2; }
+  .project-card--reverse .project-info  { order: 1; }
+  .project-card--featured { border-top: 2px solid rgba(249,115,22,0.4); }
+  .project-card--featured .project-visual { min-height: 440px; }
+  .project-info::before { content: attr(data-num); position: absolute; top: 24px; right: 32px; font-family: 'Bebas Neue', cursive; font-size: 7rem; line-height: 1; color: rgba(255,255,255,0.032); pointer-events: none; letter-spacing: -2px; user-select: none; }
+  .project-card--featured .project-info::before { color: rgba(249,115,22,0.06); }
+
+  .project-info { padding: 56px; position: relative; }
   .project-year { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 20px; }
   .project-title { font-family: 'Bebas Neue', cursive; font-size: clamp(2rem, 4vw, 2.6rem); line-height: 1; margin-bottom: 20px; letter-spacing: 1px; }
   .project-desc { font-size: 0.95rem; line-height: 1.8; color: var(--muted); margin-bottom: 32px; }
@@ -311,11 +320,14 @@
   .btn-discord:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(88,101,242,0.55); }
   .btn-green { background: var(--accent); color: #000d06; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); box-shadow: 0 4px 20px rgba(0,255,136,0.2), inset 0 1px 0 rgba(255,255,255,0.15); }
   .btn-green:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,255,136,0.45); }
+  .btn-orange { background: #f97316; color: #1a0700; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); box-shadow: 0 4px 20px rgba(249,115,22,0.25), inset 0 1px 0 rgba(255,255,255,0.2); }
+  .btn-orange:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(249,115,22,0.5); }
   .project-wip { font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.62rem; letter-spacing: 2px; padding: 12px 16px; border: 1px solid rgba(245,158,11,0.4); color: var(--accent4); text-transform: uppercase; clip-path: polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px)); background: rgba(245,158,11,0.06); }
 
   /* ══ EDUCATION ══ */
   #education { background: var(--bg); }
-  .education-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .education-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 60px; align-items: start; }
+  .courses-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
   .edu-cards { display: flex; flex-direction: column; gap: 24px; }
   .edu-card { border: 1px solid var(--border); padding: 36px; position: relative; transition: border-color 0.3s, background 0.3s; }
   .edu-card:hover { border-color: rgba(0,255,136,0.3); background: rgba(0,255,136,0.02); }
@@ -388,6 +400,7 @@
     .project-info { padding: 28px 24px; order: 1; }
     .project-logo { font-size: 2.8rem !important; }
     .education-grid { grid-template-columns: 1fr; gap: 40px; }
+    .courses-grid { grid-template-columns: 1fr; }
     .contact-links { flex-direction: column; align-items: center; }
     .contact-link { width: 100%; max-width: 320px; justify-content: center; }
     footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px; }
@@ -424,9 +437,333 @@
     .hero-cta .btn-primary, .hero-cta .btn-secondary { padding: 14px 24px; font-size: 0.65rem; }
     .project-links-row { flex-direction: column; align-items: flex-start; }
   }
+
+  /* ══ GRID OVERLAY — fundo quadriculado global ══ */
+  .grid-overlay {
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.015) 1px, transparent 1px);
+    background-size: 48px 48px;
+    animation: gridDrift 28s linear infinite;
+    pointer-events: none; z-index: 0;
+  }
+  @keyframes gridDrift {
+    from { background-position: 0 0; }
+    to   { background-position: 48px 48px; }
+  }
+
+  /* ══ PROJECTS — novo design lista ══ */
+  #projects { background: var(--bg); }
+
+  #projects .section-title {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.45);
+    margin-bottom: 16px;
+    position: relative; z-index: 1;
+  }
+  .projects-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.18); margin-bottom: 52px;
+    display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;
+  }
+  .projects-count::before { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  #projects .projects-list {
+    display: block;
+    border-top: 1px solid var(--border);
+    position: relative; z-index: 1;
+  }
+
+  /* ── project-row ── */
+  .project-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 80px 200px;
+    align-items: center;
+    gap: 32px;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+    cursor: default;
+  }
+  .project-row::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    transform: scaleY(0); transform-origin: bottom;
+    transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), box-shadow 0.5s;
+    border-radius: 0 2px 2px 0; z-index: 2;
+  }
+  .project-row:hover::before { transform: scaleY(1); }
+  .project-row:hover { background: rgba(255,255,255,0.013); }
+  .project-row::after {
+    content: '';
+    position: absolute; inset: 0;
+    transform: translateX(-100%);
+    pointer-events: none; z-index: 2; opacity: 0;
+  }
+  .project-row:hover::after { animation: rowScan 0.9s ease-out forwards; }
+  @keyframes rowScan {
+    0%   { transform: translateX(-100%); opacity: 1; }
+    100% { transform: translateX(100%);  opacity: 0; }
+  }
+
+  /* ── row-anim ── */
+  .row-anim {
+    position: absolute; right: 0; top: 0; bottom: 0; width: 52%;
+    overflow: hidden; pointer-events: none; z-index: 0;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%);
+    mask-image: linear-gradient(to right, transparent 0%, black 30%);
+    opacity: 0.7; transition: opacity 0.5s;
+  }
+  .project-row:hover .row-anim { opacity: 1; }
+
+  /* ── keyframes shared ── */
+  @keyframes floatUp {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    33%     { transform: translateY(-14px) rotate(12deg); }
+    66%     { transform: translateY(-8px) rotate(-10deg); }
+  }
+  @keyframes binaryDrop {
+    0%   { opacity: 0; transform: translateY(-60px); }
+    8%   { opacity: 0.35; }
+    80%  { opacity: 0.25; }
+    100% { opacity: 0; transform: translateY(320px); }
+  }
+  @keyframes cmdFade {
+    0%,10%  { opacity: 0; transform: translateX(-10px); }
+    20%,70% { opacity: 1; transform: translateX(0); }
+    90%,100%{ opacity: 0; }
+  }
+
+  /* anim-menu */
+  .anim-menu span {
+    position: absolute; font-size: 2rem; opacity: 0.12;
+    animation: floatUp 8s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(249,115,22,0.3));
+  }
+  .anim-menu span:nth-child(1){ font-size:4rem; top:-8px; left:5%; animation-duration:9s; opacity:0.09; }
+  .anim-menu span:nth-child(2){ font-size:2rem; bottom:4px; right:8%; animation-delay:1.5s; }
+  .anim-menu span:nth-child(3){ font-size:1.6rem; top:28%; left:42%; animation-delay:2.8s; }
+  .anim-menu span:nth-child(4){ font-size:1.4rem; top:62%; left:18%; animation-delay:4s; opacity:0.08; }
+  .anim-menu span:nth-child(5){ font-size:3rem; top:15%; right:22%; animation-delay:1s; opacity:0.07; }
+
+  /* anim-binary */
+  .anim-binary { position: absolute; inset: 0; overflow: hidden; }
+  .bin-col {
+    position: absolute; top: 0;
+    display: flex; flex-direction: column; gap: 2px;
+    font-family: 'Space Mono', monospace; font-size: 0.8rem; line-height: 1.5;
+    color: var(--accent2); opacity: 0;
+    animation: binaryDrop 4s linear infinite;
+  }
+  .bin-col:nth-child(1){ left:6%; animation-duration:3.8s; animation-delay:0s; }
+  .bin-col:nth-child(2){ left:20%; animation-duration:4.4s; animation-delay:1.1s; }
+  .bin-col:nth-child(3){ left:38%; animation-duration:3.5s; animation-delay:0.5s; }
+  .bin-col:nth-child(4){ left:58%; animation-duration:4.1s; animation-delay:1.7s; }
+  .bin-col:nth-child(5){ left:76%; animation-duration:3.9s; animation-delay:0.9s; }
+  .bin-scan {
+    position: absolute; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg,transparent,rgba(123,94,167,0.7) 40%,rgba(123,94,167,0.9) 50%,rgba(123,94,167,0.7) 60%,transparent);
+    animation: scanLine 3.5s ease-in-out infinite;
+    box-shadow: 0 0 12px rgba(123,94,167,0.5);
+  }
+
+  /* anim-dice */
+  .anim-dice span {
+    position: absolute; opacity: 0.2;
+    animation: floatUp 6s ease-in-out infinite;
+    filter: drop-shadow(0 0 6px rgba(255,77,109,0.3));
+    font-style: normal;
+  }
+  .anim-dice span:nth-child(1){ font-size:5rem; top:-10px; left:2%; opacity:0.1; animation-duration:10s; }
+  .anim-dice span:nth-child(2){ font-size:2rem; bottom:6px; right:10%; animation-delay:0.8s; }
+  .anim-dice span:nth-child(3){ font-size:1.8rem; top:20%; left:35%; animation-delay:1.8s; }
+  .anim-dice span:nth-child(4){ font-size:2.2rem; top:55%; left:15%; animation-delay:3s; }
+  .anim-dice span:nth-child(5){ font-size:1.6rem; top:32%; right:18%; animation-delay:2.2s; opacity:0.15; }
+
+  /* anim-rpg */
+  .anim-rpg { position: absolute; inset: 0; overflow: hidden; }
+  .rpg-num {
+    position: absolute;
+    font-family: 'Bebas Neue', cursive;
+    color: rgba(245,158,11,0.12);
+    animation: floatUp 9s ease-in-out infinite;
+    line-height: 1;
+    filter: drop-shadow(0 0 16px rgba(245,158,11,0.2));
+  }
+  .rpg-num:nth-child(1){ font-size:7rem; top:-8px; left:4%; animation-duration:10s; }
+  .rpg-num:nth-child(2){ font-size:9rem; bottom:-18px; right:6%; animation-delay:2s; animation-duration:12s; color:rgba(245,158,11,0.08); }
+  .rpg-num:nth-child(3){ font-size:3.5rem; top:30%; left:38%; animation-delay:1.2s; color:rgba(245,158,11,0.1); }
+  .rpg-coords-new {
+    position: absolute; bottom: 16px; left: 16px;
+    font-family: 'Space Mono', monospace; font-size: 0.55rem;
+    letter-spacing: 2px; color: rgba(245,158,11,0.3); text-transform: uppercase;
+    animation: blink 3s ease-in-out infinite;
+  }
+
+  /* anim-bot */
+  .anim-bot { position: absolute; inset: 0; }
+  .bot-embed-line {
+    position: absolute; left: 8%; top: 8%; right: 8%; bottom: 8%;
+    border-left: 3px solid rgba(88,101,242,0.25);
+    background: rgba(88,101,242,0.05);
+    border-radius: 0 4px 4px 0;
+  }
+  .project-row .bot-cmd {
+    position: absolute;
+    font-family: 'Space Mono', monospace; font-size: 0.75rem;
+    color: rgba(88,101,242,0.9); letter-spacing: 1px;
+    animation: cmdFade 5s ease-in-out infinite;
+    text-shadow: 0 0 10px rgba(88,101,242,0.5);
+    white-space: nowrap;
+  }
+  .project-row .bot-cmd::before { content: '> '; color: rgba(0,255,136,0.7); }
+  .project-row .bot-cmd:nth-child(2){ top:20%; left:16%; animation-delay:0s; font-size:0.72rem; }
+  .project-row .bot-cmd:nth-child(3){ top:38%; left:16%; animation-delay:0.7s; font-size:0.68rem; }
+  .project-row .bot-cmd:nth-child(4){ top:56%; left:16%; animation-delay:1.4s; font-size:0.7rem; }
+  .project-row .bot-cmd:nth-child(5){ top:74%; left:16%; animation-delay:2.1s; font-size:0.65rem; }
+
+  /* ── project cells ── */
+  .project-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2.8rem; line-height: 1;
+    color: rgba(255,255,255,0.06);
+    user-select: none;
+    transition: color 0.4s, transform 0.4s;
+    transform-origin: left center;
+    position: relative; z-index: 1;
+  }
+  .project-row:hover .project-num { transform: scale(1.08); }
+
+  .project-main { display: flex; flex-direction: column; gap: 10px; min-width: 0; position: relative; z-index: 1; }
+  .project-name-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+
+  .project-name {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(2rem,2.8vw,3rem); line-height: 1; letter-spacing: 1px;
+    color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.28);
+    transition: color 0.35s, -webkit-text-stroke 0.35s, text-shadow 0.35s;
+    white-space: nowrap;
+  }
+  .project-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.52rem; letter-spacing: 3px; text-transform: uppercase;
+    padding: 4px 12px; border: 1px solid rgba(255,255,255,0.1); color: var(--muted);
+    display: inline-flex; align-items: center; gap: 7px;
+    transition: border-color 0.35s, color 0.35s; flex-shrink: 0;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; animation: blink 1.2s infinite; flex-shrink: 0; display: inline-block; }
+  .project-meta { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+
+  .project-swap { position: relative; min-height: 52px; }
+  .project-tags {
+    display: flex; flex-wrap: wrap; gap: 5px;
+    transition: opacity 0.32s;
+    position: absolute; top: 0; left: 0; right: 0;
+  }
+  .project-row .project-tags .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.56rem; letter-spacing: 1px; padding: 3px 8px;
+    border: 1px solid var(--border); color: var(--muted); text-transform: uppercase;
+    transition: border-color 0.35s, color 0.35s;
+  }
+  .project-row .project-desc {
+    font-size: 0.8rem; line-height: 1.75; color: var(--muted);
+    opacity: 0; transition: opacity 0.32s;
+    position: absolute; top: 0; left: 0; right: 0;
+    pointer-events: none; margin-bottom: 0;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .project-row:hover .project-tags { opacity: 0; pointer-events: none; }
+  .project-row:hover .project-desc { opacity: 1; pointer-events: auto; }
+
+  .project-year-col {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(255,255,255,0.15); text-align: center;
+    transition: color 0.35s; position: relative; z-index: 1;
+  }
+  .project-row:hover .project-year-col { color: rgba(255,255,255,0.35); }
+
+  .project-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; position: relative; z-index: 1; }
+
+  .project-row .project-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none; color: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.08); padding: 12px 20px;
+    transition: color 0.3s, border-color 0.3s, background 0.3s; white-space: nowrap;
+    clip-path: none; box-shadow: none; background: transparent; transform: none;
+  }
+  .project-row .project-btn .arr { transition: transform 0.3s; display: inline-block; }
+  .project-row .project-btn:hover .arr { transform: translateX(4px); }
+  .project-btn-ghost { font-size: 0.58rem !important; padding: 7px 14px !important; border-color: transparent !important; color: rgba(255,255,255,0.15) !important; }
+  .wip-badge { font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent4); border: 1px solid rgba(245,158,11,0.3); padding: 5px 10px; }
+
+  /* ── color themes ── */
+  .c-orange::before { background: var(--orange); box-shadow: 4px 0 20px rgba(249,115,22,.35); }
+  .c-orange::after  { background: linear-gradient(90deg,transparent,rgba(249,115,22,0.04),transparent); }
+  .c-orange:hover .project-num   { color: rgba(249,115,22,.22); }
+  .c-orange:hover .project-name  { color: var(--orange); -webkit-text-stroke: 1px var(--orange); text-shadow: 0 0 50px rgba(249,115,22,.2); }
+  .c-orange:hover .project-badge { border-color: rgba(249,115,22,.45); color: var(--orange); }
+  .c-orange:hover .tag            { border-color: rgba(249,115,22,.2); color: rgba(249,115,22,.7); }
+  .c-orange .project-btn:hover    { color: var(--orange) !important; border-color: rgba(249,115,22,.5) !important; background: rgba(249,115,22,.05) !important; }
+
+  .c-purple::before { background: var(--accent2); box-shadow: 4px 0 20px rgba(123,94,167,.4); }
+  .c-purple::after  { background: linear-gradient(90deg,transparent,rgba(123,94,167,0.05),transparent); }
+  .c-purple:hover .project-num   { color: rgba(123,94,167,.28); }
+  .c-purple:hover .project-name  { color: var(--accent2); -webkit-text-stroke: 1px var(--accent2); text-shadow: 0 0 50px rgba(123,94,167,.25); }
+  .c-purple:hover .project-badge { border-color: rgba(123,94,167,.5); color: var(--accent2); }
+  .c-purple:hover .tag            { border-color: rgba(123,94,167,.3); color: rgba(123,94,167,.85); }
+  .c-purple .project-btn:hover    { color: var(--accent2) !important; border-color: rgba(123,94,167,.5) !important; background: rgba(123,94,167,.05) !important; }
+
+  .c-red::before { background: var(--accent3); box-shadow: 4px 0 20px rgba(255,77,109,.4); }
+  .c-red::after  { background: linear-gradient(90deg,transparent,rgba(255,77,109,0.04),transparent); }
+  .c-red:hover .project-num   { color: rgba(255,77,109,.25); }
+  .c-red:hover .project-name  { color: var(--accent3); -webkit-text-stroke: 1px var(--accent3); text-shadow: 0 0 50px rgba(255,77,109,.25); }
+  .c-red:hover .project-badge { border-color: rgba(255,77,109,.5); color: var(--accent3); }
+  .c-red:hover .tag            { border-color: rgba(255,77,109,.3); color: rgba(255,77,109,.85); }
+  .c-red .project-btn:hover    { color: var(--accent3) !important; border-color: rgba(255,77,109,.5) !important; background: rgba(255,77,109,.05) !important; }
+
+  .c-amber::before { background: var(--accent4); box-shadow: 4px 0 20px rgba(245,158,11,.35); }
+  .c-amber::after  { background: linear-gradient(90deg,transparent,rgba(245,158,11,0.04),transparent); }
+  .c-amber:hover .project-num   { color: rgba(245,158,11,.25); }
+  .c-amber:hover .project-name  { color: var(--accent4); -webkit-text-stroke: 1px var(--accent4); text-shadow: 0 0 50px rgba(245,158,11,.25); }
+  .c-amber:hover .project-badge { border-color: rgba(245,158,11,.5); color: var(--accent4); }
+  .c-amber:hover .tag            { border-color: rgba(245,158,11,.25); color: rgba(245,158,11,.85); }
+  .c-amber .project-btn:hover    { color: var(--accent4) !important; border-color: rgba(245,158,11,.5) !important; background: rgba(245,158,11,.05) !important; }
+
+  .c-discord::before { background: var(--discord); box-shadow: 4px 0 20px rgba(88,101,242,.4); }
+  .c-discord::after  { background: linear-gradient(90deg,transparent,rgba(88,101,242,0.05),transparent); }
+  .c-discord:hover .project-num   { color: rgba(88,101,242,.28); }
+  .c-discord:hover .project-name  { color: var(--discord); -webkit-text-stroke: 1px var(--discord); text-shadow: 0 0 50px rgba(88,101,242,.25); }
+  .c-discord:hover .project-badge { border-color: rgba(88,101,242,.5); color: var(--discord); }
+  .c-discord:hover .tag            { border-color: rgba(88,101,242,.3); color: rgba(88,101,242,.9); }
+  .c-discord .project-btn:hover    { color: var(--discord) !important; border-color: rgba(88,101,242,.5) !important; background: rgba(88,101,242,.05) !important; }
+
+  /* ── Responsive project-row ── */
+  @media (max-width: 1024px) {
+    .project-row { grid-template-columns: 60px 1fr 60px 160px; gap: 20px; }
+  }
+  @media (max-width: 768px) {
+    .project-row { grid-template-columns: 48px 1fr; gap: 16px; padding: 28px 0; }
+    .project-year-col, .project-actions, .row-anim { display: none; }
+    .project-swap { min-height: 40px; }
+  }
+  @media (max-width: 480px) {
+    .project-row { grid-template-columns: 40px 1fr; gap: 12px; padding: 22px 0; }
+    .project-name { font-size: 1.6rem; }
+    .projects-count { margin-bottom: 32px; }
+  }
 </style>
 </head>
 <body>
+
+<div class="grid-overlay"></div>
 
 <!-- ══ NAV ══ -->
 <nav>
@@ -624,170 +961,155 @@
 <section id="projects">
   <div class="section-tag" id="projects-tag">Work</div>
   <h2 class="section-title reveal" id="projects-title">Projetos</h2>
+  <div class="projects-count">05 projetos</div>
+
   <div class="projects-list">
 
-    <!-- PROJECT 1: Knucklebones -->
-    <div class="project-card reveal">
-      <div class="project-visual" style="background:linear-gradient(135deg,rgba(255,77,109,0.14),rgba(80,10,30,0.25));">
-        <div class="project-visual-inner">
-          <div class="project-logo" style="color:var(--accent3);text-shadow:0 0 60px rgba(255,77,109,0.6),0 0 120px rgba(255,77,109,0.2);animation:none;letter-spacing:4px;">KBONES</div>
-          <div class="dice-score">&#9856;&nbsp;&#9858;&nbsp;&#9860;&nbsp;&mdash;&nbsp;Roll to win</div>
-          <div class="project-live-badge" style="border-color:rgba(255,77,109,0.5);color:var(--accent3);">
-            <span class="live-dot" style="background:var(--accent3);"></span>
-            LIVE
-          </div>
+    <!-- 01 e-Menu Virtual -->
+    <div class="project-row c-orange">
+      <div class="project-num">01</div>
+      <div class="project-main">
+        <div class="project-name-row">
+          <span class="project-name">e-Menu Virtual</span>
+          <span class="project-badge"><span class="dot" style="background:var(--orange)"></span>SaaS</span>
         </div>
-        <div class="project-visual-grid" style="background-image:linear-gradient(rgba(255,77,109,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,77,109,0.05) 1px,transparent 1px);background-size:28px 28px;"></div>
-        <div class="dice-decoration">
-          <span class="dice-bg">&#9860;</span><span class="dice">&#9856;</span>
-          <span class="dice">&#9861;</span><span class="dice">&#9859;</span><span class="dice">&#9858;</span>
+        <div class="project-meta" id="emenu-year">2025 &mdash; Multi-tenant · PHP · Hospedagem Compartilhada</div>
+        <div class="project-swap">
+          <div class="project-tags">
+            <span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Bootstrap 5</span><span class="tag">jQuery</span><span class="tag">.htaccess</span><span class="tag">Multi-tenant</span>
+          </div>
+          <p class="project-desc" id="emenu-desc">Plataforma SaaS para cardápios digitais de múltiplos restaurantes em um único domínio. Painel admin isolado por restaurante, CRUD completo e URLs amigáveis via .htaccess.</p>
         </div>
       </div>
-      <div class="project-info">
-        <div class="project-year" id="kbones-year">2026 &mdash; Web Game · Live · P2P</div>
-        <h3 class="project-title" style="-webkit-text-stroke:0.1px var(--accent3);color:transparent;">Knucklebones</h3>
-        <p class="project-desc" id="kbones-desc">Jogo de dados estratégico inspirado no universo de <em>Cult of the Lamb</em>. Mecânicas originais de pontuação, jogabilidade fluida e completamente no ar &mdash; só abrir e jogar.</p>
-        <div class="skill-tags" style="margin-bottom:32px;"><span class="tag">Web Game</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span><span class="tag">Game Logic</span><span class="tag">PeerJS</span><span class="tag">P2P</span></div>
-        <div class="project-links-row">
-          <a href="https://kbones.xyz/" target="_blank" class="project-btn btn-red">
-            <span class="btn-icon">&#9856;</span>
-            <span class="btn-text" id="kbones-btn">Jogar Agora</span>
-            <span class="btn-arrow">&#8594;</span>
-            
-          </a>
+      <div class="project-year-col">2026</div>
+      <div class="project-actions">
+        <a href="https://emenuvirtual.com.br/pizzabagetti" target="_blank" class="project-btn"><span id="emenu-btn">Ver Cardápio Demo</span> <span class="arr">→</span></a>
+        <a href="https://emenuvirtual.com.br" target="_blank" class="project-btn project-btn-ghost"><span id="emenu-btn2">Admin Login</span> <span class="arr">→</span></a>
+      </div>
+      <div class="row-anim">
+        <div class="anim-menu">
+          <span>&#127869;</span><span>&#129518;</span><span>&#128203;</span><span>&#127869;</span><span>&#129367;</span>
         </div>
       </div>
     </div>
 
-    <!-- PROJECT 2: AI Analyst -->
-    <div class="project-card reveal">
-      <div class="project-visual" style="background:linear-gradient(135deg,rgba(30,10,60,0.35),rgba(0,255,136,0.05));">
-        <div class="project-visual-inner">
-          <div class="project-logo" style="color:var(--accent2);text-shadow:0 0 60px rgba(123,94,167,0.7),0 0 120px rgba(123,94,167,0.2);font-size:3rem;animation:none;line-height:1.1;">AI<br>ANALYST</div>
-          <div class="project-live-badge" style="border-color:rgba(123,94,167,0.5);color:var(--accent2);">
-            <span class="live-dot" style="background:var(--accent2);"></span>
-            OPEN SOURCE
-          </div>
+    <!-- 02 AI Analyst -->
+    <div class="project-row c-purple">
+      <div class="project-num">02</div>
+      <div class="project-main">
+        <div class="project-name-row">
+          <span class="project-name">AI Analyst</span>
+          <span class="project-badge">Open Source</span>
         </div>
-        <div class="project-visual-grid" style="background-image:linear-gradient(rgba(123,94,167,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(123,94,167,0.06) 1px,transparent 1px);background-size:24px 24px;"></div>
-        <div class="ai-decoration">
-          <div class="ai-col"><span>0</span><span>1</span><span>1</span><span>0</span><span>1</span><span>0</span><span>1</span><span>1</span></div>
-          <div class="ai-col"><span>1</span><span>0</span><span>0</span><span>1</span><span>1</span><span>0</span><span>1</span><span>0</span></div>
-          <div class="ai-col"><span>0</span><span>1</span><span>0</span><span>0</span><span>1</span><span>1</span><span>0</span><span>1</span></div>
-          <div class="ai-col"><span>1</span><span>1</span><span>0</span><span>1</span><span>0</span><span>1</span><span>0</span><span>0</span></div>
-          <div class="ai-col"><span>0</span><span>0</span><span>1</span><span>1</span><span>0</span><span>0</span><span>1</span><span>1</span></div>
-          <div class="ai-scan"></div>
+        <div class="project-meta" id="ai-year">2025 &mdash; IA · Análise de Dados · Django</div>
+        <div class="project-swap">
+          <div class="project-tags">
+            <span class="tag">Django</span><span class="tag">LangChain</span><span class="tag">Llama 3</span><span class="tag">Ollama</span><span class="tag">Pandas</span><span class="tag">Celery</span><span class="tag">REST API</span>
+          </div>
+          <p class="project-desc" id="ai-desc">Plataforma Django para análise automatizada de datasets CSV com IA local. Geração de insights via Llama 3 com processamento em background — seus dados nunca saem da máquina.</p>
         </div>
       </div>
-      <div class="project-info">
-        <div class="project-year" id="ai-year">2025 &mdash; AI · Data Analysis · Django</div>
-        <h3 class="project-title" style="-webkit-text-stroke:0.1px var(--accent2);color:transparent;">AI Analyst</h3>
-        <p class="project-desc" id="ai-desc">Plataforma Django para análise automatizada de datasets CSV com IA local. Upload de arquivos, detecção automática de tamanho e geração de insights via <strong>Llama 3 (Ollama)</strong> com processamento em background &mdash; seus dados nunca saem da sua máquina.</p>
-        <div class="skill-tags" style="margin-bottom:32px;"><span class="tag">Django</span><span class="tag">LangChain</span><span class="tag">Llama 3</span><span class="tag">Ollama</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Celery</span><span class="tag">REST API</span></div>
-        <div class="project-links-row">
-          <a href="https://github.com/gabrielleaosb/ai_analyst" target="_blank" class="project-btn btn-purple">
-            <span class="btn-icon">&#128279;</span>
-            <span class="btn-text" id="ai-btn">Ver no GitHub</span>
-            <span class="btn-arrow">&#8594;</span>
-          </a>
+      <div class="project-year-col">2025</div>
+      <div class="project-actions">
+        <a href="https://github.com/gabrielleaosb/ai_analyst" target="_blank" class="project-btn"><span id="ai-btn">Ver no GitHub</span> <span class="arr">→</span></a>
+      </div>
+      <div class="row-anim">
+        <div class="anim-binary">
+          <div class="bin-col"><span>0</span><span>1</span><span>1</span><span>0</span><span>1</span><span>0</span><span>1</span><span>1</span></div>
+          <div class="bin-col"><span>1</span><span>0</span><span>0</span><span>1</span><span>1</span><span>0</span><span>1</span><span>0</span></div>
+          <div class="bin-col"><span>0</span><span>1</span><span>0</span><span>0</span><span>1</span><span>1</span><span>0</span><span>1</span></div>
+          <div class="bin-col"><span>1</span><span>1</span><span>0</span><span>1</span><span>0</span><span>1</span><span>0</span><span>0</span></div>
+          <div class="bin-col"><span>0</span><span>0</span><span>1</span><span>1</span><span>0</span><span>0</span><span>1</span><span>1</span></div>
+          <div class="bin-scan"></div>
         </div>
       </div>
     </div>
 
-    <!-- PROJECT 3: LT-Manager -->
-    <div class="project-card reveal">
-      <div class="project-visual" style="background:linear-gradient(135deg,rgba(40,25,5,0.4),rgba(100,50,10,0.2));">
-        <div class="project-visual-inner">
-          <div class="project-logo" style="color:var(--accent4);text-shadow:0 0 60px rgba(245,158,11,0.6),0 0 120px rgba(245,158,11,0.15);font-size:3rem;animation:none;line-height:1.1;">LT<br>MANAGER</div>
-          <div class="project-live-badge" style="border-color:rgba(245,158,11,0.5);color:var(--accent4);">
-            <span class="live-dot" style="background:var(--accent4);"></span>
-            <span id="lt-badge">EM DESENVOLVIMENTO</span>
-          </div>
+    <!-- 03 Knucklebones -->
+    <div class="project-row c-red">
+      <div class="project-num">03</div>
+      <div class="project-main">
+        <div class="project-name-row">
+          <span class="project-name">Knucklebones</span>
+          <span class="project-badge"><span class="dot" style="background:var(--accent3)"></span>Live</span>
         </div>
-        <div class="project-visual-grid" style="background-image:linear-gradient(rgba(245,158,11,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(245,158,11,0.05) 1px,transparent 1px);background-size:32px 32px;"></div>
-        <div class="rpg-decoration">
-          <span class="rpg-die" style="font-size:7rem;top:-10px;left:-8px;">20</span>
-          <span class="rpg-die" style="font-size:9rem;bottom:-18px;right:-12px;animation-delay:2s;">12</span>
-          <span class="rpg-icon">&#9670;</span><span class="rpg-icon">&#9670;</span>
-          <span class="rpg-icon">&#9670;</span><span class="rpg-icon">&#9670;</span><span class="rpg-icon">&#9670;</span>
-          <div class="rpg-coords">MAP&#160;&#160;X:142&#160;&#160;Y:089&#160;&#160;Z:00</div>
+        <div class="project-meta" id="kbones-year">2026 &mdash; Web Game · P2P · JavaScript</div>
+        <div class="project-swap">
+          <div class="project-tags">
+            <span class="tag">JavaScript</span><span class="tag">HTML/CSS</span><span class="tag">PeerJS</span><span class="tag">P2P</span><span class="tag">Game Logic</span>
+          </div>
+          <p class="project-desc" id="kbones-desc">Jogo de dados estratégico inspirado no universo de Cult of the Lamb. Partidas P2P em tempo real sem servidor — mecânicas originais de pontuação, só abrir e jogar.</p>
         </div>
       </div>
-      <div class="project-info">
-        <div class="project-year" id="lt-year">2025 &mdash; Web App · Real-time · Full Stack</div>
-        <h3 class="project-title" style="-webkit-text-stroke:0.1px var(--accent4);color:transparent;">LT Manager</h3>
-        <p class="project-desc" id="lt-desc">Plataforma para jogar <strong>RPG de mesa online em tempo real</strong>. Canvas de mapa totalmente interativo, sistema de personagens, salas e sessões ao vivo. Projeto quase finalizado, atualmente pausado &mdash; com base sólida e arquitetura bem definida.</p>
-        <div class="skill-tags" style="margin-bottom:32px;"><span class="tag">Django</span><span class="tag">Canvas API</span><span class="tag">WebSockets</span><span class="tag">Real-time</span><span class="tag">JavaScript</span><span class="tag">Full Stack</span></div>
-        <div class="project-links-row">
-          <a href="https://github.com/gabrielleaosb/LT-Manager" target="_blank" class="project-btn btn-amber">
-            <span class="btn-icon">&#128279;</span>
-            <span class="btn-text" id="lt-btn">Ver no GitHub</span>
-            <span class="btn-arrow">&#8594;</span>
-          </a>
-          <span class="project-wip">&#9881;&#160;WIP</span>
+      <div class="project-year-col">2026</div>
+      <div class="project-actions">
+        <a href="https://kbones.xyz/" target="_blank" class="project-btn"><span id="kbones-btn">Jogar Agora</span> <span class="arr">→</span></a>
+      </div>
+      <div class="row-anim">
+        <div class="anim-dice">
+          <span>&#9860;</span><span>&#9856;</span><span>&#9861;</span><span>&#9859;</span><span>&#9858;</span>
         </div>
       </div>
     </div>
 
-    <!-- PROJECT 4: Discord Bot -->
-    <div class="project-card reveal">
-      <div class="project-visual" style="background:linear-gradient(135deg,rgba(15,18,50,0.5),rgba(88,101,242,0.08));">
-        <div class="project-visual-inner">
-          <div class="project-logo" style="color:#5865f2;text-shadow:0 0 60px rgba(88,101,242,0.7),0 0 120px rgba(88,101,242,0.15);font-size:3rem;animation:none;line-height:1.1;">DISCORD<br>BOT</div>
-          <div class="project-live-badge" style="border-color:rgba(88,101,242,0.5);color:#5865f2;">
-            <span class="live-dot" style="background:#5865f2;"></span>
-            HOBBY PROJECT
-          </div>
+    <!-- 04 LT Manager -->
+    <div class="project-row c-amber">
+      <div class="project-num">04</div>
+      <div class="project-main">
+        <div class="project-name-row">
+          <span class="project-name">LT Manager</span>
+          <span class="project-badge" style="border-color:rgba(245,158,11,.35);color:var(--accent4);"><span id="lt-badge">Em Desenvolvimento</span></span>
         </div>
-        <div class="project-visual-grid" style="background-image:linear-gradient(rgba(88,101,242,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(88,101,242,0.06) 1px,transparent 1px);background-size:26px 26px;"></div>
-        <div class="bot-decoration">
-          <div class="bot-embed"></div>
-          <span class="bot-cmd">!roll</span><span class="bot-cmd">!daily</span>
-          <span class="bot-cmd">!work</span><span class="bot-cmd">!rank</span>
+        <div class="project-meta" id="lt-year">2025 &mdash; Web App · Real-time · Full Stack</div>
+        <div class="project-swap">
+          <div class="project-tags">
+            <span class="tag">Django</span><span class="tag">Canvas API</span><span class="tag">WebSockets</span><span class="tag">Real-time</span><span class="tag">JavaScript</span>
+          </div>
+          <p class="project-desc" id="lt-desc">Plataforma para jogar RPG de mesa online em tempo real. Canvas interativo, sistema de personagens, salas e sessões ao vivo — base sólida e arquitetura bem definida.</p>
         </div>
       </div>
-      <div class="project-info">
-        <div class="project-year" id="bot-year">2025 &mdash; Discord Bot · Hobby · MongoDB</div>
-        <h3 class="project-title" style="-webkit-text-stroke:0.1px #5865f2;color:transparent;">Discord RPG Bot</h3>
-        <p class="project-desc" id="bot-desc">Bot de coleta e batalha de personagens para Discord, feito por hobby. Sistema de <strong>roll de personagens</strong> (Marvel &amp; Invencível) com raridades, estrelas e poder, economia de moedas, daily, work, ranking e perfis de usuários &mdash; tudo com <strong>MongoDB</strong> e manipulação de JSON.</p>
-        <div class="skill-tags" style="margin-bottom:32px;"><span class="tag">Python</span><span class="tag">Discord.py</span><span class="tag">MongoDB</span><span class="tag">Motor (Async)</span><span class="tag">JSON</span><span class="tag">PyTZ</span></div>
-        <div class="project-links-row">
-          <a href="https://github.com/gabrielleaosb/JubaBot" target="_blank" class="project-btn btn-discord">
-            <span class="btn-icon">&#128279;</span>
-            <span class="btn-text" id="bot-btn">Ver no GitHub</span>
-            <span class="btn-arrow">&#8594;</span>
-          </a>
+      <div class="project-year-col">2025</div>
+      <div class="project-actions">
+        <a href="https://github.com/gabrielleaosb/LT-Manager" target="_blank" class="project-btn"><span id="lt-btn">Ver no GitHub</span> <span class="arr">→</span></a>
+        <span class="wip-badge">&#9881; WIP</span>
+      </div>
+      <div class="row-anim">
+        <div class="anim-rpg">
+          <span class="rpg-num">20</span>
+          <span class="rpg-num">12</span>
+          <span class="rpg-num" style="font-size:3.5rem;top:30%;left:38%;animation-delay:1.2s;">8</span>
+          <div class="rpg-coords-new">MAP &nbsp; X:142 &nbsp; Y:089 &nbsp; Z:00</div>
         </div>
       </div>
     </div>
 
-    <!-- PROJECT 5: Da Casa Burguer -->
-    <div class="project-card reveal">
-      <div class="project-visual" style="background:linear-gradient(135deg,rgba(0,30,15,0.4),rgba(0,255,136,0.06));">
-        <div class="project-visual-inner">
-          <div class="project-logo" style="text-shadow:0 0 60px rgba(0,255,136,0.5),0 0 120px rgba(0,255,136,0.1);">BURGER</div>
-          <div class="project-live-badge">
-            <span class="live-dot" style="background:var(--accent);"></span>
-            FULLSTACK
-          </div>
+    <!-- 05 Discord RPG Bot -->
+    <div class="project-row c-discord">
+      <div class="project-num">05</div>
+      <div class="project-main">
+        <div class="project-name-row">
+          <span class="project-name">Discord RPG Bot</span>
+          <span class="project-badge">Hobby</span>
         </div>
-        <div class="project-visual-grid" style="background-image:linear-gradient(rgba(0,255,136,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,0.04) 1px,transparent 1px);background-size:30px 30px;"></div>
-        <div class="burger-decoration">
-          <span class="burger-icon">&#127828;</span><span class="burger-icon">&#127839;</span>
-          <span class="burger-icon">&#127824;</span><span class="burger-icon">&#127857;</span>
+        <div class="project-meta" id="bot-year">2025 &mdash; Discord Bot · MongoDB · Python</div>
+        <div class="project-swap">
+          <div class="project-tags">
+            <span class="tag">Python</span><span class="tag">Discord.py</span><span class="tag">MongoDB</span><span class="tag">Motor (Async)</span><span class="tag">JSON</span>
+          </div>
+          <p class="project-desc" id="bot-desc">Bot de coleta e batalha de personagens para Discord. Roll com raridades, estrelas e poder, economia de moedas, daily, work, ranking e perfis — tudo com MongoDB e Python async.</p>
         </div>
       </div>
-      <div class="project-info">
-        <div class="project-year" id="burger-year">2025 &mdash; Full Stack · Colaboração</div>
-        <h3 class="project-title" id="burger-title" style="-webkit-text-stroke:0.1px rgba(0,255,136,1);color:transparent;">Cardápio Virtual</h3>
-        <p class="project-desc" id="burger-desc">Aplicação web fullstack para gerenciamento de cardápio digital em parceria com um empreendimento familiar. Interface intuitiva para gestão de produtos, pedidos e categorias &mdash; do design ao deploy.</p>
-        <div class="skill-tags" style="margin-bottom:32px;"><span class="tag">Django</span><span class="tag">JavaScript</span><span class="tag">Tailwind CSS</span><span class="tag">PostgreSQL</span></div>
-        <div class="project-links-row">
-          <a href="https://github.com/gabrielleaosb/da-casa-burguer" target="_blank" class="project-btn btn-green">
-            <span class="btn-icon">&#128279;</span>
-            <span class="btn-text" id="burger-btn">Ver no GitHub</span>
-            <span class="btn-arrow">&#8594;</span>
-          </a>
+      <div class="project-year-col">2024</div>
+      <div class="project-actions">
+        <a href="https://github.com/gabrielleaosb/JubaBot" target="_blank" class="project-btn"><span id="bot-btn">Ver no GitHub</span> <span class="arr">→</span></a>
+      </div>
+      <div class="row-anim">
+        <div class="anim-bot">
+          <div class="bot-embed-line"></div>
+          <span class="bot-cmd">!roll</span>
+          <span class="bot-cmd">!daily</span>
+          <span class="bot-cmd">!work</span>
+          <span class="bot-cmd">!rank</span>
         </div>
       </div>
     </div>
@@ -802,23 +1124,43 @@
   <div class="education-grid">
     <div class="courses-col reveal">
       <div class="courses-subtitle" id="courses-sub">Cursos Complementares</div>
-      <div class="course-item">
-        <div class="course-platform" id="course1-platform">Udemy · Completo</div>
-        <div class="course-name">Django &amp; Django REST Framework</div>
-        <div class="course-author">por Luiz Otávio Miranda</div>
-        <span class="course-badge" id="course1-badge">&#10003; Concluído</span>
-      </div>
-      <div class="course-item">
-        <div class="course-platform" id="course2-platform">Udemy · Completo</div>
-        <div class="course-name">Flet Essentials &mdash; Interface Gráfica com Python</div>
-        <div class="course-author">por Dalton Peixoto</div>
-        <span class="course-badge" id="course2-badge">&#10003; Concluído</span>
-      </div>
-      <div class="course-item">
-        <div class="course-platform" id="course3-platform">Curso em Vídeo · Completo</div>
-        <div class="course-name">Python Mundo 1, 2 e 3</div>
-        <div class="course-author">por Gustavo Guanabara</div>
-        <span class="course-badge" id="course3-badge">&#10003; Concluído</span>
+      <div class="courses-grid">
+        <div class="course-item">
+          <div class="course-platform" id="course1-platform">Udemy · Completo</div>
+          <div class="course-name">Django &amp; Django REST Framework</div>
+          <div class="course-author">por Luiz Otávio Miranda</div>
+          <span class="course-badge" id="course1-badge">&#10003; Concluído</span>
+        </div>
+        <div class="course-item">
+          <div class="course-platform" id="course2-platform">Udemy · Completo</div>
+          <div class="course-name">Flet Essentials &mdash; Interface Gráfica com Python</div>
+          <div class="course-author">por Dalton Peixoto</div>
+          <span class="course-badge" id="course2-badge">&#10003; Concluído</span>
+        </div>
+        <div class="course-item">
+          <div class="course-platform" id="course3-platform">Curso em Vídeo · Completo</div>
+          <div class="course-name">Python Mundo 1, 2 e 3</div>
+          <div class="course-author">por Gustavo Guanabara</div>
+          <span class="course-badge" id="course3-badge">&#10003; Concluído</span>
+        </div>
+        <div class="course-item">
+          <div class="course-platform" id="course4-platform">Udemy · Completo</div>
+          <div class="course-name">Análise de Dados com Python e Pandas</div>
+          <div class="course-author">por Dalton Peixoto</div>
+          <span class="course-badge" id="course4-badge">&#10003; Concluído</span>
+        </div>
+        <div class="course-item">
+          <div class="course-platform" id="course5-platform">Udemy · Completo</div>
+          <div class="course-name">O Curso Completo de Banco de Dados e SQL</div>
+          <div class="course-author">por Catalogo Cursos Online</div>
+          <span class="course-badge" id="course5-badge">&#10003; Concluído</span>
+        </div>
+        <div class="course-item">
+          <div class="course-platform" id="course6-platform">Udemy · Em Andamento</div>
+          <div class="course-name">Certificação Amazon AWS Cloud Practitioner</div>
+          <div class="course-author">por Andre Iacono</div>
+          <span class="course-badge" id="course6-badge" style="border-color:rgba(245,158,11,0.4);color:var(--accent4);">&#9654; Em Andamento</span>
+        </div>
       </div>
     </div>
     <div class="edu-cards reveal">
@@ -941,10 +1283,10 @@
       'bot-year': '2025 — Discord Bot · Hobby · MongoDB',
       'bot-desc': 'Bot de coleta e batalha de personagens para Discord, feito por hobby. Sistema de <strong>roll de personagens</strong> (Marvel &amp; Invencível) com raridades, estrelas e poder, economia de moedas, daily, work, ranking e perfis de usuários — tudo com <strong>MongoDB</strong> e manipulação de JSON.',
       'bot-btn':  'Ver no GitHub',
-      'burger-year':  '2025 — Full Stack · Colaboração',
-      'burger-title': 'Cardápio Virtual',
-      'burger-desc':  'Aplicação web fullstack para gerenciamento de cardápio digital em parceria com um empreendimento familiar. Interface intuitiva para gestão de produtos, pedidos e categorias — do design ao deploy.',
-      'burger-btn':   'Ver no GitHub',
+      'emenu-year':  '2025 — SaaS · Multi-tenant · PHP',
+      'emenu-desc':  'Plataforma SaaS para cardápios digitais de <strong>múltiplos restaurantes</strong> em um único domínio. Cada restaurante acessa seu painel administrativo isolado com login próprio, gerencia produtos, categorias, banners e tema — o cliente final acessa via URL amigável por slug.',
+      'emenu-btn':   'Ver Cardápio Demo',
+      'emenu-btn2':  'Admin Login',
       // Education
       'edu-tag':   'Education',
       'edu-title': 'Formação &amp;<br>Cursos',
@@ -952,9 +1294,15 @@
       'course1-platform': 'Udemy · Completo',
       'course2-platform': 'Udemy · Completo',
       'course3-platform': 'Curso em Vídeo · Completo',
+      'course4-platform': 'Udemy · Completo',
+      'course5-platform': 'Udemy · Completo',
+      'course6-platform': 'Udemy · Em Andamento',
       'course1-badge': '&#10003; Concluído',
       'course2-badge': '&#10003; Concluído',
       'course3-badge': '&#10003; Concluído',
+      'course4-badge': '&#10003; Concluído',
+      'course5-badge': '&#10003; Concluído',
+      'course6-badge': '&#9654; Em Andamento',
       'formal-edu-sub': 'Formação Acadêmica',
       'edu1-badge': 'Em Andamento',
       'edu1-title': 'Sistemas de Informação',
@@ -1036,10 +1384,10 @@
       'bot-year': '2025 — Discord Bot · Hobby · MongoDB',
       'bot-desc': 'Character collection and battle bot for Discord, built as a hobby. <strong>Character roll system</strong> (Marvel &amp; Invincible) with rarities, stars and power, coin economy, daily, work, ranking and user profiles — all powered by <strong>MongoDB</strong> and JSON handling.',
       'bot-btn':  'View on GitHub',
-      'burger-year':  '2025 — Full Stack · Collaboration',
-      'burger-title': 'Virtual Menu',
-      'burger-desc':  'Full stack web application for digital menu management in partnership with a family business. Intuitive interface for product, order and category management — from design to deploy.',
-      'burger-btn':   'View on GitHub',
+      'emenu-year':  '2025 — SaaS · Multi-tenant · PHP',
+      'emenu-desc':  'SaaS platform for digital menus across <strong>multiple restaurants</strong> on a single domain. Each restaurant accesses its isolated admin panel with its own login, manages products, categories, banners and theme — customers access via friendly slug URL.',
+      'emenu-btn':   'View Demo Menu',
+      'emenu-btn2':  'Admin Login',
       // Education
       'edu-tag':   'Education',
       'edu-title': 'Education &amp;<br>Courses',
@@ -1047,9 +1395,15 @@
       'course1-platform': 'Udemy · Complete',
       'course2-platform': 'Udemy · Complete',
       'course3-platform': 'Curso em Vídeo · Complete',
+      'course4-platform': 'Udemy · Complete',
+      'course5-platform': 'Udemy · Complete',
+      'course6-platform': 'Udemy · In Progress',
       'course1-badge': '&#10003; Completed',
       'course2-badge': '&#10003; Completed',
       'course3-badge': '&#10003; Completed',
+      'course4-badge': '&#10003; Completed',
+      'course5-badge': '&#10003; Completed',
+      'course6-badge': '&#9654; In Progress',
       'formal-edu-sub': 'Academic Background',
       'edu1-badge': 'In Progress',
       'edu1-title': 'Information Systems',
