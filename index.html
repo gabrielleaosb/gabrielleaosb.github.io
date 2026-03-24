@@ -347,17 +347,13 @@
   .course-author { font-size: 0.8rem; color: var(--muted); }
   .course-badge { display: inline-flex; align-items: center; gap: 5px; font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 1px; padding: 3px 8px; margin-top: 8px; border: 1px solid rgba(0,255,136,0.25); color: var(--accent); text-transform: uppercase; }
 
-  /* ══ CONTACT ══ */
-  #contact { background: var(--surface); text-align: center; }
-  .contact-inner { max-width: 700px; margin: 0 auto; }
-  .contact-big { font-family: 'Bebas Neue', cursive; font-size: clamp(50px, 10vw, 120px); line-height: 1; letter-spacing: -2px; margin-bottom: 40px; background: linear-gradient(135deg, var(--text), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .contact-sub { font-size: 1rem; color: var(--muted); line-height: 1.8; margin-bottom: 48px; }
-  .contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-  .contact-link { display: inline-flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; padding: 14px 28px; border: 1px solid var(--border); color: var(--text); text-decoration: none; transition: border-color 0.2s, color 0.2s, background 0.2s; }
-  .contact-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,255,136,0.05); }
-
   /* ══ FOOTER ══ */
-  footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; background: var(--bg); }
+  footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 40px 48px 32px; display: flex; flex-direction: column; align-items: center; gap: 24px; background: var(--bg); }
+  .footer-links { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .footer-link { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: 4px 8px; transition: color 0.2s; }
+  .footer-link:hover { color: var(--accent); }
+  .footer-dot { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--border); }
+  .footer-meta { display: flex; justify-content: center; align-items: center; gap: 32px; width: 100%; }
   footer p { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 2px; color: var(--muted); }
   footer a { color: var(--accent); text-decoration: none; }
 
@@ -401,9 +397,8 @@
     .project-logo { font-size: 2.8rem !important; }
     .education-grid { grid-template-columns: 1fr; gap: 40px; }
     .courses-grid { grid-template-columns: 1fr; }
-    .contact-links { flex-direction: column; align-items: center; }
-    .contact-link { width: 100%; max-width: 320px; justify-content: center; }
-    footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px; }
+    footer { gap: 20px; text-align: center; padding: 32px 24px; }
+    .footer-meta { flex-direction: column; gap: 8px; }
     .skills-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 480px) {
@@ -428,8 +423,8 @@
     .edu-card { padding: 24px 20px; }
     .edu-badge { position: static; display: inline-flex; margin-bottom: 12px; }
     .course-item { padding: 16px 18px; }
-    footer { padding: 20px; }
-    footer p:nth-child(3) { display: none; }
+    footer { padding: 28px 20px; }
+    .footer-meta p:nth-child(3) { display: none; }
     .marquee-item { font-size: 0.85rem; letter-spacing: 2px; gap: 28px; }
     .marquee-track { gap: 28px; }
   }
@@ -438,19 +433,66 @@
     .project-links-row { flex-direction: column; align-items: flex-start; }
   }
 
-  /* ══ GRID OVERLAY — fundo quadriculado global ══ */
+  /* ══ GRID OVERLAY — fundo quadriculado + glitch ══ */
   .grid-overlay {
     position: fixed; inset: 0;
     background-image:
-      linear-gradient(rgba(0,255,136,0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,255,136,0.015) 1px, transparent 1px);
+      linear-gradient(rgba(0,255,136,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.018) 1px, transparent 1px);
     background-size: 48px 48px;
     animation: gridDrift 28s linear infinite;
     pointer-events: none; z-index: 0;
+    overflow: hidden;
+  }
+  .grid-overlay::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,20,60,0.11) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,20,60,0.11) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mix-blend-mode: screen; opacity: 0;
+    animation: gridDrift 28s linear infinite;
+  }
+  .grid-overlay::after {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,80,255,0.11) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,80,255,0.11) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mix-blend-mode: screen; opacity: 0;
+    animation: gridDrift 28s linear infinite;
   }
   @keyframes gridDrift {
     from { background-position: 0 0; }
     to   { background-position: 48px 48px; }
+  }
+  @keyframes gridGlitch {
+    0%   { transform: translateX(5px);  filter: brightness(2.2) saturate(0.4); }
+    20%  { transform: none;             filter: none; }
+    35%  { transform: translateX(-9px); filter: brightness(1.7); }
+    50%  { transform: translateX(4px);  filter: none; }
+    65%  { transform: translateX(-5px); filter: brightness(1.4); }
+    80%  { transform: none;             filter: none; }
+    90%  { transform: translateX(7px);  filter: brightness(1.9); }
+    100% { transform: none;             filter: none; }
+  }
+  @keyframes glitchR {
+    0%   { opacity:1; clip-path:inset(4% 0 89% 0);  transform:translateX(-16px); }
+    18%  { opacity:0; clip-path:inset(0 0 100% 0);   transform:none; }
+    35%  { opacity:1; clip-path:inset(52% 0 30% 0);  transform:translateX(18px); }
+    52%  { opacity:0; clip-path:inset(0 0 100% 0);   transform:none; }
+    65%  { opacity:1; clip-path:inset(26% 0 60% 0);  transform:translateX(-12px); }
+    80%  { opacity:1; clip-path:inset(74% 0 8% 0);   transform:translateX(9px); }
+    100% { opacity:0; clip-path:inset(0 0 100% 0);   transform:none; }
+  }
+  @keyframes glitchB {
+    0%   { opacity:1; clip-path:inset(4% 0 89% 0);  transform:translateX(20px); }
+    18%  { opacity:0; clip-path:inset(0 0 100% 0);   transform:none; }
+    35%  { opacity:1; clip-path:inset(52% 0 30% 0);  transform:translateX(-10px); }
+    52%  { opacity:0; clip-path:inset(0 0 100% 0);   transform:none; }
+    65%  { opacity:1; clip-path:inset(26% 0 60% 0);  transform:translateX(14px); }
+    80%  { opacity:1; clip-path:inset(74% 0 8% 0);   transform:translateX(-7px); }
+    100% { opacity:0; clip-path:inset(0 0 100% 0);   transform:none; }
   }
 
   /* ══ PROJECTS — novo design lista ══ */
@@ -775,7 +817,6 @@
     <a href="#skills"    id="nav-skills">Habilidades</a>
     <a href="#projects"  id="nav-projects">Projetos</a>
     <a href="#education" id="nav-education">Educação</a>
-    <a href="#contact"   id="nav-contact">Contato</a>
   </div>
   <div class="nav-right">
     <button class="lang-toggle" id="langToggle" aria-label="Toggle language">
@@ -794,7 +835,6 @@
   <a href="#skills"    onclick="closeDrawer()" id="mnav-skills">Habilidades</a>
   <a href="#projects"  onclick="closeDrawer()" id="mnav-projects">Projetos</a>
   <a href="#education" onclick="closeDrawer()" id="mnav-education">Educação</a>
-  <a href="#contact"   onclick="closeDrawer()" id="mnav-contact">Contato</a>
 </div>
 
 <!-- ══ HERO ══ -->
@@ -812,7 +852,7 @@
     </h1>
     <p class="hero-desc" id="hero-desc">
       <span id="hero-role">Desenvolvedor de Software</span> especializado em <strong>Backend &amp; IA</strong>.
-      <span id="hero-desc-text">Construo aplicações que unem o melhor do desenvolvimento web com o avanço da inteligência artificial aplicada.</span>
+      <span id="hero-desc-text">Desenvolvo sistemas web com Python e exploro IA aplicada em projetos reais.</span>
     </p>
     <div class="hero-cta">
       <a href="#projects" class="btn-primary" id="hero-cta1">Ver Projetos</a>
@@ -851,8 +891,8 @@
   <div class="about-grid">
     <div class="about-text reveal">
       <h2 class="section-title" id="about-title">Sobre<br>Mim</h2>
-        <p id="about-p1">Sou um desenvolvedor Python com foco em <span>backend e inteligência artificial</span>. Trabalho com APIs robustas, arquiteturas escaláveis e sistemas orientados a performance — do banco de dados à camada de negócio.</p>
-        <p id="about-p2">Com visão <strong>full-stack</strong>, me especializei em integrar <strong>LLMs e agentes autônomos</strong> em aplicações reais, unindo desenvolvimento web sólido com o que há de mais atual em IA aplicada.</p>
+        <p id="about-p1">Sou desenvolvedor Python com foco em <span>backend e sistemas web</span>. Gosto de construir APIs, integrar serviços e pensar em como as peças de uma aplicação se conectam — do banco de dados à lógica de negócio.</p>
+        <p id="about-p2">Tenho explorado <strong>IA aplicada</strong> dentro de projetos reais — trabalhando com LLMs, automações e agentes. É uma área que cada vez mais faz parte do que construo.</p>
         <p id="about-p3">Curso <span>Sistemas de Informação no CESMAC (7º período)</span> e estou sempre construindo algo novo. Cada projeto é uma oportunidade de resolver um problema de verdade.</p>
     </div>
 
@@ -876,7 +916,7 @@
           </div>
           <div class="profile-info-item">
             <div class="info-label" id="info-focus-label">Foco Atual</div>
-            <div class="info-value">Python · Backend · LLMs</div>
+            <div class="info-value">Python · Web · IA</div>
           </div>
           <div class="profile-info-item">
             <div class="info-label" id="info-edu-label">Formação</div>
@@ -908,8 +948,8 @@
 <!-- ══ MARQUEE ══ -->
 <div class="marquee-section">
   <div class="marquee-track">
-    <div class="marquee-item">PYTHON <span>&#10022;</span> DJANGO <span>&#10022;</span> REST FRAMEWORK <span>&#10022;</span> LANGCHAIN <span>&#10022;</span> POSTGRESQL <span>&#10022;</span> REDIS <span>&#10022;</span> CELERY <span>&#10022;</span> TAILWIND CSS <span>&#10022;</span> JAVASCRIPT <span>&#10022;</span> FLET <span>&#10022;</span> GIT / CI&middot;CD <span>&#10022;</span> PANDAS <span>&#10022;</span> NUMPY <span>&#10022;</span> PYTEST <span>&#10022;</span> SELENIUM <span>&#10022;</span> DISCORD.PY <span>&#10022;</span> MONGODB <span>&#10022;</span></div>
-    <div class="marquee-item">PYTHON <span>&#10022;</span> DJANGO <span>&#10022;</span> REST FRAMEWORK <span>&#10022;</span> LANGCHAIN <span>&#10022;</span> POSTGRESQL <span>&#10022;</span> REDIS <span>&#10022;</span> CELERY <span>&#10022;</span> TAILWIND CSS <span>&#10022;</span> JAVASCRIPT <span>&#10022;</span> FLET <span>&#10022;</span> GIT / CI&middot;CD <span>&#10022;</span> PANDAS <span>&#10022;</span> NUMPY <span>&#10022;</span> PYTEST <span>&#10022;</span> SELENIUM <span>&#10022;</span> DISCORD.PY <span>&#10022;</span> MONGODB <span>&#10022;</span></div>
+    <div class="marquee-item">PYTHON <span>&#10022;</span> DJANGO <span>&#10022;</span> FLASK <span>&#10022;</span> REST FRAMEWORK <span>&#10022;</span> LANGCHAIN <span>&#10022;</span> POSTGRESQL <span>&#10022;</span> REDIS <span>&#10022;</span> CELERY <span>&#10022;</span> BOOTSTRAP <span>&#10022;</span> TAILWIND CSS <span>&#10022;</span> JAVASCRIPT <span>&#10022;</span> FLET <span>&#10022;</span> GIT / CI&middot;CD <span>&#10022;</span> PANDAS <span>&#10022;</span> NUMPY <span>&#10022;</span> PYTEST <span>&#10022;</span> SELENIUM <span>&#10022;</span> DISCORD.PY <span>&#10022;</span> MONGODB <span>&#10022;</span></div>
+    <div class="marquee-item">PYTHON <span>&#10022;</span> DJANGO <span>&#10022;</span> FLASK <span>&#10022;</span> REST FRAMEWORK <span>&#10022;</span> LANGCHAIN <span>&#10022;</span> POSTGRESQL <span>&#10022;</span> REDIS <span>&#10022;</span> CELERY <span>&#10022;</span> BOOTSTRAP <span>&#10022;</span> TAILWIND CSS <span>&#10022;</span> JAVASCRIPT <span>&#10022;</span> FLET <span>&#10022;</span> GIT / CI&middot;CD <span>&#10022;</span> PANDAS <span>&#10022;</span> NUMPY <span>&#10022;</span> PYTEST <span>&#10022;</span> SELENIUM <span>&#10022;</span> DISCORD.PY <span>&#10022;</span> MONGODB <span>&#10022;</span></div>
   </div>
 </div>
 
@@ -922,7 +962,7 @@
       <span class="skill-icon"><img src="src/Back-End.png" alt="" style="width: 42px;"></span>
       <div class="skill-card-title" id="sk1-title">Back-End</div>
       <p class="skill-card-desc" id="sk1-desc">Arquitetura escalável com tarefas assíncronas, mensageria e design orientado a performance.</p>
-      <div class="skill-tags"><span class="tag">Python</span><span class="tag">Django</span><span class="tag">DRF</span><span class="tag">Celery</span><span class="tag">Redis</span><span class="tag">Flet</span><span class="tag">FastAPI</span></div>
+      <div class="skill-tags"><span class="tag">Python</span><span class="tag">Django</span><span class="tag">DRF</span><span class="tag">Flask</span><span class="tag">Celery</span><span class="tag">Redis</span><span class="tag">Flet</span><span class="tag">FastAPI</span></div>
     </div>
     <div class="skill-card reveal">
       <span class="skill-icon"><img src="src/IA-&-LLMs.png" alt="" style="width: 42px;"></span>
@@ -940,7 +980,7 @@
       <span class="skill-icon"><img src="src/Front-End.png" alt="" style="width: 42px;"></span>
       <div class="skill-card-title" id="sk4-title">Front-End</div>
       <p class="skill-card-desc" id="sk4-desc">Interfaces modernas, responsivas e interativas com foco em experiência do usuário. Interface gráfica nativa com Flet (Python).</p>
-      <div class="skill-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Tailwind CSS</span><span class="tag">Flet</span><span class="tag">Vue</span></div>
+      <div class="skill-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Bootstrap</span><span class="tag">Tailwind CSS</span><span class="tag">Flet</span><span class="tag">Vue</span></div>
     </div>
     <div class="skill-card reveal">
       <span class="skill-icon"><img src="src/Análise-de-Dados.png" alt="" style="width: 42px;"></span>
@@ -1181,29 +1221,21 @@
   </div>
 </section>
 
-<!-- ══ CONTACT ══ -->
-<section id="contact">
-  <div class="contact-inner reveal">
-    <div class="section-tag" style="justify-content:center;" id="contact-tag">Get in touch</div>
-    <div class="contact-big" id="contact-big">Vamos<br>Construir<br>Juntos?</div>
-    <p class="contact-sub" id="contact-sub">
-      Estou aberto a novas oportunidades, projetos freelance e colaborações.<br>
-      Se você tem uma ideia ou desafio interessante, me manda uma mensagem.
-    </p>
-    <div class="contact-links">
-      <a href="mailto:gabrielleaosb@gmail.com" class="contact-link">&#9993; Email</a>
-      <a href="https://github.com/gabrielleaosb" target="_blank" class="contact-link">&#9741; GitHub</a>
-      <a href="https://linkedin.com/in/gabriellsbagetti" target="_blank" class="contact-link">&#9634; LinkedIn</a>
-      <a href="https://wa.me/5582991487729" target="_blank" class="social-link" id="social-call">&#128172; WhatsApp</a>
-    </div>
-  </div>
-</section>
-
 <!-- ══ FOOTER ══ -->
-<footer>
-  <p>&copy; 2025 Gabriel Leão Salles Bagetti</p>
-  <p id="footer-made">Feito com <a href="https://github.com/gabrielleaosb" target="_blank">código</a> e muito café &#9749;</p>
-  <p>Maceió, Alagoas, BR</p>
+<footer id="contact">
+  <div class="footer-links">
+    <a href="mailto:gabrielleaosb@gmail.com" class="footer-link">Email</a>
+    <span class="footer-dot">·</span>
+    <a href="https://github.com/gabrielleaosb" target="_blank" class="footer-link">GitHub</a>
+    <span class="footer-dot">·</span>
+    <a href="https://linkedin.com/in/gabriellsbagetti" target="_blank" class="footer-link">LinkedIn</a>
+    <span class="footer-dot">·</span>
+    <a href="https://wa.me/5582991487729" target="_blank" class="footer-link">WhatsApp</a>
+  </div>
+  <div class="footer-meta">
+    <p>&copy; 2025 Gabriel Leão Salles Bagetti</p>
+    <p>Maceió, Alagoas, BR</p>
+  </div>
 </footer>
 
 <script>
@@ -1222,16 +1254,14 @@
       'nav-skills':     'Habilidades',
       'nav-projects':   'Projetos',
       'nav-education':  'Educação',
-      'nav-contact':    'Contato',
       'mnav-about':     'Sobre',
       'mnav-skills':    'Habilidades',
       'mnav-projects':  'Projetos',
       'mnav-education': 'Educação',
-      'mnav-contact':   'Contato',
       // Hero
       'hero-tag':       'Disponível para oportunidades',
       'hero-role':      'Desenvolvedor Python',
-      'hero-desc-text': 'Construo aplicações que unem o melhor do desenvolvimento web com o avanço da inteligência artificial aplicada.',
+      'hero-desc-text': 'Desenvolvo sistemas web com Python e exploro IA aplicada em projetos reais.',
       'hero-cta1':      'Ver Projetos',
       'hero-cta2':      'Entre em Contato',
       // Stats
@@ -1242,8 +1272,8 @@
       // About
       'about-tag':   'About me',
       'about-title': 'Sobre<br>Mim',
-      'about-p1':    'Sou um desenvolvedor Python com foco em <span>backend e inteligência artificial</span>. Trabalho com APIs robustas, arquiteturas escaláveis e sistemas orientados a performance — do banco de dados à camada de negócio.',
-      'about-p2':    'Com visão <strong>full-stack</strong>, me especializei em integrar <strong>LLMs e agentes autônomos</strong> em aplicações reais, unindo desenvolvimento web sólido com o que há de mais atual em IA aplicada.',
+      'about-p1':    'Sou desenvolvedor Python com foco em <span>backend e sistemas web</span>. Gosto de construir APIs, integrar serviços e pensar em como as peças de uma aplicação se conectam — do banco de dados à lógica de negócio.',
+      'about-p2':    'Tenho explorado <strong>IA aplicada</strong> dentro de projetos reais — trabalhando com LLMs, automações e agentes. É uma área que cada vez mais faz parte do que construo.',
       'about-p3':    'Curso <span>Sistemas de Informação no CESMAC (7º período)</span> e estou sempre construindo algo novo. Cada projeto é uma oportunidade de resolver um problema de verdade.',
       'profile-status-text': 'Disponível',
       'info-loc-label':   'Localização',
@@ -1310,12 +1340,6 @@
       'edu2-badge': 'Concluído',
       'edu2-title': 'Ensino Médio Completo',
       'edu2-sub':   'Colégio Santa Úrsula<br>Maceió, Alagoas',
-      // Contact
-      'contact-tag': 'Get in touch',
-      'contact-big': 'Vamos<br>Construir<br>Juntos?',
-      'contact-sub': 'Estou aberto a novas oportunidades, projetos freelance e colaborações.<br>Se você tem uma ideia ou desafio interessante, me manda uma mensagem.',
-      // Footer
-      'footer-made': 'Feito com <a href="https://github.com/gabrielleaosb" target="_blank">código</a> e muito café &#9749;'
     },
     en: {
       // Nav
@@ -1323,16 +1347,14 @@
       'nav-skills':     'Skills',
       'nav-projects':   'Projects',
       'nav-education':  'Education',
-      'nav-contact':    'Contact',
       'mnav-about':     'About',
       'mnav-skills':    'Skills',
       'mnav-projects':  'Projects',
       'mnav-education': 'Education',
-      'mnav-contact':   'Contact',
       // Hero
       'hero-tag':       'Available for opportunities',
       'hero-role':      'Software Developer',
-      'hero-desc-text': 'I build applications that combine the best of web development with the advancement of applied artificial intelligence.',
+      'hero-desc-text': 'I build web systems with Python and explore applied AI in real projects.',
       'hero-cta1':      'View Projects',
       'hero-cta2':      'Get in Touch',
       // Stats
@@ -1343,9 +1365,9 @@
       // About
       'about-tag':   'About me',
       'about-title': 'About<br>Me',
-      'about-p1': 'I\'m a Python developer focused on <span>backend and artificial intelligence</span>. I build robust APIs, scalable architectures and performance-oriented systems — from the database layer to business logic.',
-      'about-p2': 'With a <strong>full-stack</strong> vision, I specialize in integrating <strong>LLMs and autonomous agents</strong> into real applications, combining solid web development with the latest in applied AI.',
-      'about-p3': 'Currently studying <span>Information Systems at CESMAC (6th semester)</span> and always building something new. Every project is a chance to solve a real problem.',
+      'about-p1': 'I\'m a Python developer focused on <span>backend and web systems</span>. I enjoy building APIs, integrating services and thinking about how the parts of an application fit together — from the database to business logic.',
+      'about-p2': 'I\'ve been exploring <strong>applied AI</strong> in real projects — working with LLMs, automations and agents. It\'s an area that increasingly shapes what I build.',
+      'about-p3': 'Currently studying <span>Information Systems at CESMAC (7th semester)</span> and always building something new. Every project is a chance to solve a real problem.',
       'profile-status-text': 'Available',
       'info-loc-label':   'Location',
       'info-focus-label': 'Current Focus',
@@ -1411,12 +1433,6 @@
       'edu2-badge': 'Concluded',
       'edu2-title': 'High School Diploma',
       'edu2-sub':   'Colégio Santa Úrsula<br>Maceió, Alagoas',
-      // Contact
-      'contact-tag': 'Get in touch',
-      'contact-big': "Let's<br>Build<br>Together?",
-      'contact-sub': 'Open to new opportunities, freelance projects and collaborations.<br>If you have an interesting idea or challenge, send me a message.',
-      // Footer
-      'footer-made': 'Made with <a href="https://github.com/gabrielleaosb" target="_blank">code</a> and lots of coffee &#9749;'
     }
   };
 
@@ -1465,6 +1481,27 @@
   document.querySelectorAll('.skill-card').forEach(function(card, i) {
     card.style.transitionDelay = (i * 70) + 'ms';
   });
+
+  /* ══ RANDOM GLITCH BURST ══ */
+  (function() {
+    var overlay = document.querySelector('.grid-overlay');
+    function glitch() {
+      var dur = (0.35 + Math.random() * 0.25).toFixed(2);
+      var s = document.createElement('style');
+      s.id = 'glitch-s';
+      s.textContent =
+        '.grid-overlay{animation:gridDrift 28s linear infinite,gridGlitch ' + dur + 's steps(1) 1 forwards!important}' +
+        '.grid-overlay::before{animation:gridDrift 28s linear infinite,glitchR ' + dur + 's steps(1) 1 forwards!important}' +
+        '.grid-overlay::after{animation:gridDrift 28s linear infinite,glitchB ' + dur + 's steps(1) 1 forwards!important}';
+      document.head.appendChild(s);
+      setTimeout(function() {
+        var el = document.getElementById('glitch-s');
+        if (el) el.remove();
+      }, Math.round(dur * 1000) + 120);
+      setTimeout(glitch, 3000 + Math.random() * 9000);
+    }
+    setTimeout(glitch, 1500 + Math.random() * 3000);
+  })();
 
   /* ══ PARALLAX HERO BG TEXT ══ */
   var heroBg = document.querySelector('.hero-bg-text');
