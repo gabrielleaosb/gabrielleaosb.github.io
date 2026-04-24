@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "WebSearch"
+      "WebSearch",
+      "Bash(grep -E \"\\\\.\\(json|tsx|ts|jsx|js|css|scss|html|md|txt|svg|png|jpg|jpeg|gif|webp\\)$\")"
     ]
   }
 }
