@@ -95,7 +95,7 @@ const PORTFOLIO = {
       id: "emenu",
       n: "01",
       name: "e-Menu Virtual",
-      year: "2025",
+      year: "2026",
       meta_pt: "Multi-tenant · PHP · Hospedagem Compartilhada",
       meta_en: "Multi-tenant · PHP · Shared Hosting",
       status_pt: "SaaS",
