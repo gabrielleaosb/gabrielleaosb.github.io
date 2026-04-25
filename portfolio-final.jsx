@@ -139,7 +139,6 @@ function TerminalOverlay({ theme, lang, onClose, onToggleTheme, onToggleLang, on
     const lower = full.toLowerCase();
     const [verb, ...rest] = lower.split(/\s+/);
 
-    // goto / open sub-commands
     if (verb === "goto" && rest[0]) {
       const sec = rest[0];
       const valid = ["about", "skills", "projects", "exp", "edu", "contact"];
@@ -203,11 +202,11 @@ function TerminalOverlay({ theme, lang, onClose, onToggleTheme, onToggleLang, on
       background: T.termBg, color: T.text, border: `1px solid ${T.hair2}`,
       display: "flex", flexDirection: "column", overflow: "hidden",
       boxShadow: theme === "dark" ? "0 30px 80px rgba(0,0,0,0.6)" : "0 30px 80px rgba(0,0,0,0.15)",
-      fontFamily: "'JetBrains Mono', monospace", fontSize: 13, lineHeight: 1.65,
+      fontFamily: "'JetBrains Mono', monospace", fontSize: 14.5, lineHeight: 1.65,
     },
     termHead: {
       padding: "10px 14px", borderBottom: `1px solid ${T.hair}`,
-      display: "flex", alignItems: "center", gap: 10, fontSize: 11, color: T.muted,
+      display: "flex", alignItems: "center", gap: 10, fontSize: 12, color: T.muted,
     },
     dots: { display: "flex", gap: 6 },
     dot: (c) => ({ width: 11, height: 11, borderRadius: "50%", background: c, opacity: 0.9 }),
@@ -218,7 +217,7 @@ function TerminalOverlay({ theme, lang, onClose, onToggleTheme, onToggleLang, on
       borderTop: `1px solid ${T.hair}`,
     },
     input: { flex: 1, background: "transparent", border: "none", outline: "none",
-      color: T.text, fontFamily: "inherit", fontSize: 13 },
+      color: T.text, fontFamily: "inherit", fontSize: 14.5 },
     cursor: { display: "inline-block", width: 7, height: 14, background: T.text,
       verticalAlign: "middle", animation: "blink 1s step-end infinite" },
   };
@@ -235,7 +234,7 @@ function TerminalOverlay({ theme, lang, onClose, onToggleTheme, onToggleLang, on
           <div style={{ flex: 1, textAlign: "center", letterSpacing: 1 }}>
             {P.handle}@portfolio — zsh
           </div>
-          <div style={{ fontSize: 10, color: T.muted, letterSpacing: 1 }}>ESC ✕</div>
+          <div style={{ fontSize: 11, color: T.muted, letterSpacing: 1 }}>ESC ✕</div>
         </div>
         <div style={s.termBody} ref={scrollRef}>
           {history.map((h, i) => {
@@ -246,7 +245,7 @@ function TerminalOverlay({ theme, lang, onClose, onToggleTheme, onToggleLang, on
               </div>
             );
             return h.lines.map((l, j) => (
-              <div key={`${i}-${j}`} style={s.line}>{l || "\u00A0"}</div>
+              <div key={`${i}-${j}`} style={s.line}>{l || " "}</div>
             ));
           })}
         </div>
@@ -265,10 +264,9 @@ function TerminalOverlay({ theme, lang, onClose, onToggleTheme, onToggleLang, on
 // =================================================================
 // Project Card (redesigned — rich hover with ASCII preview)
 // =================================================================
-function ProjectCard({ p, idx, lang, T, theme, t, onOpenTerm }) {
+function ProjectCard({ p, idx, lang, T, theme, t, onOpenTerm, isMobile }) {
   const [hover, setHover] = React.useState(false);
 
-  // ASCII-ish visual per project type
   const visuals = {
     "crp-al": ["╭──────────────────────╮", "│  institutional.site  │", "│  · psicologia        │", "│  · alagoas / brasil  │", "│  · in progress...    │", "╰──────────────────────╯"],
     "menu":   ["╭──────────────────────╮", "│  $ ./menu --start    │", "│  > appetizers   [12] │", "│  > mains        [24] │", "│  > desserts     [08] │", "│  > order via whatsapp│", "╰──────────────────────╯"],
@@ -284,52 +282,52 @@ function ProjectCard({ p, idx, lang, T, theme, t, onOpenTerm }) {
       position: "relative",
       border: `1px solid ${hover ? T.hair2 : T.hair}`,
       background: hover ? T.cardBg : "transparent",
-      padding: "24px 28px",
+      padding: isMobile ? "20px 16px" : "24px 28px",
       display: "grid",
-      gridTemplateColumns: "48px 1fr 240px",
-      gap: 24,
+      gridTemplateColumns: isMobile ? "40px 1fr" : "48px 1fr 240px",
+      gap: isMobile ? 14 : 24,
       alignItems: "stretch",
       transition: "border-color 0.2s, background 0.2s",
-      marginBottom: -1, // collapse borders
+      marginBottom: -1,
       cursor: p.link ? "pointer" : "default",
       overflow: "hidden",
     },
     num: {
-      fontSize: 11, color: T.muted, letterSpacing: 2, paddingTop: 4,
+      fontSize: 12, color: T.muted, letterSpacing: 2, paddingTop: 4,
       display: "flex", flexDirection: "column", gap: 8,
     },
-    numBig: { fontSize: 24, color: T.accent, fontWeight: 500, letterSpacing: 0 },
+    numBig: { fontSize: isMobile ? 20 : 26, color: T.accent, fontWeight: 500, letterSpacing: 0 },
     main: { display: "flex", flexDirection: "column", gap: 10, minWidth: 0 },
     titleRow: { display: "flex", alignItems: "baseline", gap: 14, flexWrap: "wrap" },
-    name: { fontSize: 22, fontWeight: 500, color: T.accent, letterSpacing: "-0.01em",
+    name: { fontSize: isMobile ? 18 : 24, fontWeight: 500, color: T.accent, letterSpacing: "-0.01em",
       fontFamily: "'Geist Mono', 'JetBrains Mono', monospace" },
-    yearInline: { fontSize: 11, color: T.muted, letterSpacing: 2 },
-    statusBadge: (wip) => ({
+    yearInline: { fontSize: 12, color: T.muted, letterSpacing: 2 },
+    statusBadge: (kind) => ({
       display: "inline-flex", alignItems: "center", gap: 6,
-      fontSize: 10, letterSpacing: 1.5, textTransform: "uppercase",
+      fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase",
       padding: "3px 9px", border: `1px solid ${T.chipBd}`,
-      color: wip ? T.muted : T.accent,
+      color: kind === "wip" ? T.muted : (kind === "live" || kind === "saas" ? T.accent : T.dim),
     }),
-    statusDot: (wip) => ({
+    statusDot: (kind) => ({
       width: 5, height: 5, borderRadius: "50%",
-      background: wip ? T.muted : T.accent,
-      animation: wip ? "blink 1.4s ease-in-out infinite" : "none",
+      background: kind === "wip" ? T.muted : (kind === "live" || kind === "saas" ? T.accent : T.dim),
+      animation: kind === "wip" ? "blink 1.4s ease-in-out infinite" : "none",
     }),
-    tag: { fontSize: 12.5, color: T.muted, lineHeight: 1.65, marginTop: 2,
+    tag: { fontSize: 14, color: T.muted, lineHeight: 1.65, marginTop: 2,
       maxWidth: 520 },
     tagsRow: { display: "flex", gap: 6, flexWrap: "wrap", marginTop: 4 },
-    tag2: { fontSize: 10.5, color: T.muted, padding: "3px 8px",
+    tag2: { fontSize: 11.5, color: T.muted, padding: "3px 8px",
       border: `1px solid ${T.chipBd}`, background: T.chipBg, letterSpacing: 0.5 },
     preview: {
       background: T.bg2,
-      border: `1px solid ${T.hair}`,
+      border: `1px solid ${hover ? T.hair2 : T.hair}`,
       padding: "12px 14px",
-      fontSize: 10.5, lineHeight: 1.55, color: T.muted,
+      fontSize: 11.5, lineHeight: 1.55,
+      color: hover ? T.text : T.muted,
       fontFamily: "'JetBrains Mono', monospace",
       whiteSpace: "pre", overflow: "hidden",
       position: "relative",
       transition: "border-color 0.2s, color 0.2s",
-      ...(hover ? { borderColor: T.hair2, color: T.text } : {}),
     },
     previewScan: {
       position: "absolute", left: 0, right: 0, height: "40%",
@@ -337,7 +335,7 @@ function ProjectCard({ p, idx, lang, T, theme, t, onOpenTerm }) {
       animation: "scan 3s linear infinite",
       pointerEvents: "none",
     },
-    actions: { display: "flex", gap: 10, marginTop: 10, fontSize: 11,
+    actions: { display: "flex", gap: 10, marginTop: 10, fontSize: 12,
       color: T.muted, letterSpacing: 1.5, textTransform: "uppercase" },
     action: { cursor: "pointer", borderBottom: `1px dashed ${T.chipBd}`,
       paddingBottom: 1, transition: "color 0.2s, border-color 0.2s" },
@@ -348,8 +346,6 @@ function ProjectCard({ p, idx, lang, T, theme, t, onOpenTerm }) {
       transform: hover ? "translate(2px, -2px)" : "translate(0, 0)",
     },
   };
-
-  const wip = p.status === "wip";
 
   return (
     <div style={s.card}
@@ -364,22 +360,22 @@ function ProjectCard({ p, idx, lang, T, theme, t, onOpenTerm }) {
         <div style={s.titleRow}>
           <span style={s.name}>{p.name}</span>
           <span style={s.yearInline}>{p.year}</span>
-          <span style={s.statusBadge(wip)}>
-            <span style={s.statusDot(wip)}></span>
-            {wip ? t.in_dev : t.view_live}
+          <span style={s.statusBadge(p.statusKind)}>
+            <span style={s.statusDot(p.statusKind)}></span>
+            {lang === "pt" ? p.status_pt : p.status_en}
           </span>
         </div>
         <div style={s.tag}>{lang === "pt" ? p.tagline_pt : p.tagline_en}</div>
-        <div style={{ fontSize: 12, color: T.dim, lineHeight: 1.65, maxWidth: 520 }}>
+        <div style={{ fontSize: 13, color: T.dim, lineHeight: 1.65, maxWidth: 520 }}>
           {lang === "pt" ? p.desc_pt : p.desc_en}
         </div>
         <div style={s.tagsRow}>
           {p.tags.map((tg, i) => <span key={i} style={s.tag2}>{tg}</span>)}
         </div>
         <div style={s.actions}>
-          {p.link && (
+          {p.links && p.links[0] && (
             <span style={{...s.action, color: hover ? T.accent : T.muted}}>
-              {t.view_live} ↗
+              {lang === "pt" ? p.links[0].label_pt : p.links[0].label_en} ↗
             </span>
           )}
           <span style={s.action}
@@ -388,13 +384,28 @@ function ProjectCard({ p, idx, lang, T, theme, t, onOpenTerm }) {
           </span>
         </div>
       </div>
-      <div style={s.preview}>
-        <div style={s.previewScan}></div>
-        {art.join("\n")}
-      </div>
+      {!isMobile && (
+        <div style={s.preview}>
+          <div style={s.previewScan}></div>
+          {art.join("\n")}
+        </div>
+      )}
       <span style={s.arrow}>↗</span>
     </div>
   );
+}
+
+// =================================================================
+// Mobile hook
+// =================================================================
+function useIsMobile() {
+  const [mobile, setMobile] = React.useState(window.innerWidth < 768);
+  React.useEffect(() => {
+    const h = () => setMobile(window.innerWidth < 768);
+    window.addEventListener("resize", h);
+    return () => window.removeEventListener("resize", h);
+  }, []);
+  return mobile;
 }
 
 // =================================================================
@@ -406,12 +417,12 @@ function Portfolio() {
   const [termOpen, setTermOpen] = React.useState(false);
   const [now, setNow] = React.useState(new Date());
   const scrollRef = React.useRef(null);
+  const isMobile = useIsMobile();
 
   const T = THEMES[theme];
   const t = I18N[lang];
   const P = PORTFOLIO;
 
-  // sync html class for scrollbar
   React.useEffect(() => {
     document.documentElement.classList.toggle("light-theme", theme === "light");
   }, [theme]);
@@ -421,7 +432,6 @@ function Portfolio() {
     return () => clearInterval(id);
   }, []);
 
-  // global keybinds
   React.useEffect(() => {
     const handler = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "k") {
@@ -442,141 +452,165 @@ function Portfolio() {
 
   const scrollTo = (id) => {
     const el = scrollRef.current?.querySelector(`[data-sec="${id}"]`);
-    if (el && scrollRef.current) {
-      scrollRef.current.scrollTo({ top: el.offsetTop - 24, behavior: "smooth" });
+    const container = scrollRef.current;
+    if (el && container) {
+      const top = el.getBoundingClientRect().top - container.getBoundingClientRect().top + container.scrollTop - 24;
+      container.scrollTo({ top, behavior: "smooth" });
     }
   };
 
   const navFromTerm = (sec) => { scrollTo(sec); setTermOpen(false); };
-  const openTermWithCmd = (cmd) => { setTermOpen(true); /* cmd hint — not pre-filled, user sees how */ };
 
   const clock = now.toLocaleTimeString(lang === "pt" ? "pt-BR" : "en-US", { hour12: false });
 
   const s = {
     root: {
-      minHeight: "100vh", background: T.bg, color: T.text,
+      height: "100vh", background: T.bg, color: T.text,
       fontFamily: "'IBM Plex Mono', 'JetBrains Mono', monospace",
-      fontSize: 13.5, lineHeight: 1.7,
+      fontSize: 15, lineHeight: 1.7,
       display: "flex", flexDirection: "column",
       transition: "background 0.3s, color 0.3s",
     },
-    // Top bar
     top: {
       position: "sticky", top: 0, zIndex: 20,
-      padding: "12px 32px", borderBottom: `1px solid ${T.hair}`,
-      display: "flex", alignItems: "center", gap: 16, fontSize: 11, color: T.muted,
+      padding: isMobile ? "10px 16px" : "12px 32px",
+      borderBottom: `1px solid ${T.hair}`,
+      display: "flex", alignItems: "center", gap: 12, fontSize: 12, color: T.muted,
       letterSpacing: 1, textTransform: "uppercase", background: T.bg,
       backdropFilter: "blur(12px)",
     },
     brand: { color: T.text, letterSpacing: 1.5 },
-    navLinks: { display: "flex", gap: 22, marginLeft: "auto", marginRight: 18 },
+    navLinks: {
+      display: isMobile ? "none" : "flex",
+      gap: 22, marginLeft: "auto", marginRight: 18,
+    },
     navLink: { cursor: "pointer", color: T.muted, transition: "color 0.15s" },
-    chips: { display: "flex", gap: 6, alignItems: "center" },
+    chips: { display: "flex", gap: 6, alignItems: "center", marginLeft: isMobile ? "auto" : 0 },
     chip: { padding: "4px 10px", border: `1px solid ${T.chipBd}`, cursor: "pointer",
-      fontSize: 10, color: T.text, background: T.chipBg, letterSpacing: 1 },
+      fontSize: 11, color: T.text, background: T.chipBg, letterSpacing: 1 },
     termHint: {
       padding: "4px 10px", border: `1px solid ${T.chipBd}`, cursor: "pointer",
-      fontSize: 10, color: T.muted, background: "transparent",
-      display: "flex", alignItems: "center", gap: 8, letterSpacing: 1,
+      fontSize: 11, color: T.muted, background: "transparent",
+      display: isMobile ? "none" : "flex", alignItems: "center", gap: 8, letterSpacing: 1,
     },
     kbd: {
       padding: "1px 5px", border: `1px solid ${T.chipBd}`,
-      fontSize: 9, color: T.text, background: T.chipBg,
+      fontSize: 10, color: T.text, background: T.chipBg,
     },
 
-    // Hero
     scroll: { flex: 1, overflowY: "auto", minHeight: 0 },
-    inner: { maxWidth: 1040, margin: "0 auto", padding: "72px 32px 120px" },
-    hero: { borderBottom: `1px solid ${T.hair}`, paddingBottom: 64, marginBottom: 72 },
-    heroMeta: { display: "flex", gap: 18, fontSize: 11, color: T.muted,
-      textTransform: "uppercase", letterSpacing: 2, marginBottom: 40, alignItems: "center" },
-    heroHello: { fontSize: 12, color: T.muted, letterSpacing: 2,
+    inner: { maxWidth: 1040, margin: "0 auto", padding: isMobile ? "48px 20px 80px" : "72px 32px 120px" },
+    hero: { borderBottom: `1px solid ${T.hair}`, paddingBottom: isMobile ? 40 : 64, marginBottom: isMobile ? 48 : 72 },
+    heroMeta: { display: "flex", gap: 18, fontSize: 12, color: T.muted,
+      textTransform: "uppercase", letterSpacing: 2, marginBottom: 40, alignItems: "center",
+      flexWrap: "wrap" },
+    heroHello: { fontSize: 13, color: T.muted, letterSpacing: 2,
       textTransform: "uppercase", marginBottom: 24 },
     heroName: {
-      fontSize: "clamp(48px, 8.5vw, 104px)", fontWeight: 500, lineHeight: 1,
+      fontSize: isMobile ? "clamp(42px, 14vw, 72px)" : "clamp(52px, 8.5vw, 112px)",
+      fontWeight: 500, lineHeight: 1,
       letterSpacing: "-0.035em", color: T.accent, marginBottom: 28,
       fontFamily: "'Geist Mono', 'JetBrains Mono', monospace",
     },
     heroRole: {
-      fontSize: "clamp(18px, 2.2vw, 24px)", color: T.muted,
-      marginBottom: 40, fontWeight: 400, letterSpacing: "-0.01em",
+      fontSize: isMobile ? "clamp(16px, 4vw, 20px)" : "clamp(20px, 2.4vw, 26px)",
+      color: T.muted, marginBottom: 40, fontWeight: 400, letterSpacing: "-0.01em",
     },
     heroRoleHL: { color: T.text },
-    heroDesc: { fontSize: 14.5, lineHeight: 1.85, color: T.text, maxWidth: 640, marginBottom: 36 },
+    heroDesc: { fontSize: 16, lineHeight: 1.85, color: T.text, maxWidth: 640, marginBottom: 36 },
     heroCtaRow: { display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" },
     heroCta: {
       padding: "12px 22px", border: `1px solid ${T.accent}`, color: T.bg,
-      background: T.accent, fontSize: 11, letterSpacing: 2, textTransform: "uppercase",
+      background: T.accent, fontSize: 12, letterSpacing: 2, textTransform: "uppercase",
       cursor: "pointer", fontFamily: "inherit", transition: "opacity 0.2s",
     },
     heroCta2: {
       padding: "12px 22px", border: `1px solid ${T.chipBd}`, color: T.text,
-      fontSize: 11, letterSpacing: 2, textTransform: "uppercase",
+      fontSize: 12, letterSpacing: 2, textTransform: "uppercase",
       cursor: "pointer", background: "transparent", fontFamily: "inherit",
     },
-    heroStatus: { display: "inline-flex", alignItems: "center", gap: 10, fontSize: 11,
+    heroStatus: { display: "inline-flex", alignItems: "center", gap: 10, fontSize: 12,
       color: T.muted, letterSpacing: 2, textTransform: "uppercase" },
     statusDot: { width: 7, height: 7, borderRadius: "50%", background: T.accent,
       animation: "blink 2s ease-in-out infinite" },
 
-    // Sections
-    section: { marginBottom: 96, paddingTop: 8 },
-    secLabel: { fontSize: 10, color: T.muted, letterSpacing: 3, textTransform: "uppercase",
+    section: { marginBottom: isMobile ? 64 : 96, paddingTop: 8 },
+    secLabel: { fontSize: 11, color: T.muted, letterSpacing: 3, textTransform: "uppercase",
       marginBottom: 16, display: "flex", alignItems: "center", gap: 14 },
     secLabelNum: { color: T.accent },
     secLine: { flex: 1, height: 1, background: T.hair },
-    secTitle: { fontSize: "clamp(28px, 3.6vw, 38px)", fontWeight: 500,
-      color: T.accent, marginBottom: 40, letterSpacing: "-0.02em",
-      fontFamily: "'Geist Mono', 'JetBrains Mono', monospace" },
+    secTitle: {
+      fontSize: isMobile ? "clamp(24px, 6vw, 32px)" : "clamp(31px, 4vw, 42px)",
+      fontWeight: 500, color: T.accent, marginBottom: 40, letterSpacing: "-0.02em",
+      fontFamily: "'Geist Mono', 'JetBrains Mono', monospace",
+    },
 
-    // About
-    aboutGrid: { display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: 52 },
-    aboutPara: { fontSize: 14.5, lineHeight: 1.85, marginBottom: 20, color: T.text },
+    aboutGrid: {
+      display: "grid",
+      gridTemplateColumns: isMobile ? "1fr" : "1.4fr 1fr",
+      gap: isMobile ? 32 : 52,
+    },
+    aboutPara: { fontSize: 16, lineHeight: 1.85, marginBottom: 20, color: T.text },
     infoBox: { border: `1px solid ${T.hair}`, background: T.cardBg },
     infoRow: { display: "grid", gridTemplateColumns: "110px 1fr", padding: "14px 18px",
-      borderBottom: `1px solid ${T.hair}`, fontSize: 13 },
-    infoKey: { color: T.muted, textTransform: "uppercase", fontSize: 10.5, letterSpacing: 1.5 },
+      borderBottom: `1px solid ${T.hair}`, fontSize: 14.5 },
+    infoKey: { color: T.muted, textTransform: "uppercase", fontSize: 11.5, letterSpacing: 1.5 },
     infoVal: { color: T.text, wordBreak: "break-word" },
 
-    // Skills
-    skillRow: { display: "grid", gridTemplateColumns: "150px 1fr", gap: 24, padding: "20px 0",
-      borderBottom: `1px solid ${T.hair}`, alignItems: "start" },
-    skillGroup: { color: T.muted, fontSize: 11, textTransform: "uppercase", letterSpacing: 2, paddingTop: 4 },
+    skillRow: {
+      display: "grid",
+      gridTemplateColumns: isMobile ? "1fr" : "150px 1fr",
+      gap: isMobile ? 10 : 24,
+      padding: "20px 0",
+      borderBottom: `1px solid ${T.hair}`,
+      alignItems: "start",
+    },
+    skillGroup: { color: T.muted, fontSize: 12, textTransform: "uppercase", letterSpacing: 2, paddingTop: 4 },
     skillItems: { display: "flex", flexWrap: "wrap", gap: 8 },
-    skillChip: { padding: "5px 11px", border: `1px solid ${T.chipBd}`, fontSize: 12,
+    skillChip: { padding: "5px 11px", border: `1px solid ${T.chipBd}`, fontSize: 13.5,
       color: T.text, background: T.chipBg },
 
-    // Projects (redesigned: featured + list)
     projectsHeader: { display: "flex", justifyContent: "space-between", alignItems: "baseline",
       marginBottom: 32, flexWrap: "wrap", gap: 12 },
-    projectsHint: { fontSize: 11, color: T.muted, letterSpacing: 1.5, textTransform: "uppercase" },
+    projectsHint: { fontSize: 12, color: T.muted, letterSpacing: 1.5, textTransform: "uppercase" },
     projList: { border: `1px solid ${T.hair}`, borderBottom: "none" },
 
-    // Experience
-    expRow: { display: "grid", gridTemplateColumns: "170px 1fr", gap: 24, padding: "22px 0",
-      borderBottom: `1px solid ${T.hair}`, alignItems: "start" },
-    expPeriod: { fontSize: 11, color: T.muted, textTransform: "uppercase", letterSpacing: 1.5, paddingTop: 4 },
-    expRole: { fontSize: 16, color: T.accent, marginBottom: 6, letterSpacing: "-0.01em" },
+    expRow: {
+      display: "grid",
+      gridTemplateColumns: isMobile ? "1fr" : "170px 1fr",
+      gap: isMobile ? 8 : 24,
+      padding: "22px 0",
+      borderBottom: `1px solid ${T.hair}`,
+      alignItems: "start",
+    },
+    expPeriod: { fontSize: 12, color: T.muted, textTransform: "uppercase", letterSpacing: 1.5, paddingTop: 4 },
+    expRole: { fontSize: 17.5, color: T.accent, marginBottom: 6, letterSpacing: "-0.01em" },
     expCompany: { color: T.muted },
-    expDesc: { fontSize: 13, color: T.muted, lineHeight: 1.75, maxWidth: 580 },
+    expDesc: { fontSize: 14.5, color: T.muted, lineHeight: 1.75, maxWidth: 580 },
 
-    // Education
-    eduGrid: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 },
-    eduLabel: { fontSize: 10, color: T.muted, letterSpacing: 2, textTransform: "uppercase", marginBottom: 16 },
+    eduGrid: {
+      display: "grid",
+      gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+      gap: isMobile ? 36 : 48,
+    },
+    eduLabel: { fontSize: 11, color: T.muted, letterSpacing: 2, textTransform: "uppercase", marginBottom: 16 },
     eduItem: { padding: "14px 0", borderBottom: `1px solid ${T.hair}` },
-    eduTitle: { fontSize: 14, color: T.text, marginBottom: 3 },
-    eduSub: { fontSize: 11.5, color: T.muted },
+    eduTitle: { fontSize: 15.5, color: T.text, marginBottom: 3 },
+    eduSub: { fontSize: 12.5, color: T.muted },
 
-    // Contact
-    contactBox: { border: `1px solid ${T.hair}`, background: T.cardBg, padding: 32 },
-    contactRow: { display: "flex", gap: 16, padding: "14px 0",
-      borderBottom: `1px solid ${T.hair}`, alignItems: "baseline" },
-    contactKey: { color: T.muted, fontSize: 11, textTransform: "uppercase", letterSpacing: 2, width: 110 },
-    contactVal: { color: T.text, fontSize: 14 },
+    contactBox: { border: `1px solid ${T.hair}`, background: T.cardBg, padding: isMobile ? 20 : 32 },
+    contactRow: {
+      display: "flex", flexDirection: isMobile ? "column" : "row",
+      gap: isMobile ? 4 : 16,
+      padding: "14px 0",
+      borderBottom: `1px solid ${T.hair}`,
+      alignItems: isMobile ? "flex-start" : "baseline",
+    },
+    contactKey: { color: T.muted, fontSize: 12, textTransform: "uppercase", letterSpacing: 2, width: isMobile ? "auto" : 110 },
+    contactVal: { color: T.text, fontSize: 15.5 },
 
-    // Footer
-    footer: { marginTop: 96, paddingTop: 32, borderTop: `1px solid ${T.hair}`,
-      fontSize: 11, color: T.muted, letterSpacing: 1.5, display: "flex",
+    footer: { marginTop: isMobile ? 64 : 96, paddingTop: 32, borderTop: `1px solid ${T.hair}`,
+      fontSize: 12, color: T.muted, letterSpacing: 1.5, display: "flex",
       justifyContent: "space-between", flexWrap: "wrap", gap: 20 },
   };
 
@@ -590,7 +624,7 @@ function Portfolio() {
       <div style={s.top}>
         <span style={s.brand}>{P.handle}</span>
         <span style={{ color: T.dim }}>//</span>
-        <span>{clock}</span>
+        {!isMobile && <span>{clock}</span>}
         <div style={s.navLinks}>
           <span style={s.navLink} onClick={() => scrollTo("about")}>{t.nav_about}</span>
           <span style={s.navLink} onClick={() => scrollTo("skills")}>{t.nav_skills}</span>
@@ -618,8 +652,7 @@ function Portfolio() {
               <span>portfolio — 2026</span>
               <span style={{ color: T.dim }}>/</span>
               <span>{lang === "pt" ? P.location_pt : P.location_en}</span>
-              <span style={{ color: T.dim }}>/</span>
-              <span>v1.0</span>
+              {!isMobile && <><span style={{ color: T.dim }}>/</span><span>v1.0</span></>}
             </div>
             <div style={s.heroHello}>{t.hello}</div>
             <div style={s.heroName}>{P.name}.</div>
@@ -637,7 +670,7 @@ function Portfolio() {
               <button style={s.heroCta2} onClick={() => scrollTo("contact")}>
                 {t.cta_secondary}
               </button>
-              <span style={{...s.heroStatus, marginLeft: 12}}>
+              <span style={{...s.heroStatus, marginLeft: isMobile ? 0 : 12}}>
                 <span style={s.statusDot}></span>
                 <span>{lang === "pt" ? P.status_pt : P.status_en}</span>
               </span>
@@ -692,7 +725,7 @@ function Portfolio() {
             </div>
           </div>
 
-          {/* Projects — REDESIGNED */}
+          {/* Projects */}
           <div style={s.section} data-sec="projects">
             <div style={s.secLabel}>
               <span style={s.secLabelNum}>03</span>
@@ -701,12 +734,12 @@ function Portfolio() {
             </div>
             <div style={s.projectsHeader}>
               <h2 style={s.secTitle}>{t.projects_title}</h2>
-              <span style={s.projectsHint}>{projectsHintText}</span>
+              {!isMobile && <span style={s.projectsHint}>{projectsHintText}</span>}
             </div>
             <div style={s.projList}>
               {P.projects.map((p, i) => (
                 <ProjectCard key={p.id} p={p} idx={i} lang={lang} T={T}
-                  theme={theme} t={t} onOpenTerm={() => setTermOpen(true)} />
+                  theme={theme} t={t} onOpenTerm={() => setTermOpen(true)} isMobile={isMobile} />
               ))}
             </div>
           </div>

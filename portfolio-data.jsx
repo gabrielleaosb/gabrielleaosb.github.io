@@ -46,7 +46,7 @@ const PORTFOLIO = {
       title_en: "Back-End Development",
       desc_pt: "Arquitetura escalável com tarefas assíncronas, mensageria e design orientado a performance.",
       desc_en: "Scalable architecture with async tasks, messaging and performance-oriented design.",
-      tags: ["Python", "Django", "DRF", "Flask", "FastAPI", "Celery", "Redis"],
+      tags: ["Python", "Django", "DRF", "Flask", "FastAPI", "Celery", "Redis", "PHP"],
     },
     {
       id: "ai",
@@ -70,7 +70,7 @@ const PORTFOLIO = {
       title_en: "Front-End",
       desc_pt: "Interfaces modernas, responsivas e interativas com foco em experiência do usuário. Interface gráfica nativa com Flet (Python).",
       desc_en: "Modern, responsive and interactive interfaces focused on user experience. Native GUI with Flet (Python).",
-      tags: ["HTML", "CSS", "JavaScript", "Bootstrap", "Tailwind", "Flet", "Vue"],
+      tags: ["HTML", "CSS", "JavaScript", "Bootstrap", "Tailwind", "Flet", "Vue", "Next.js"],
     },
     {
       id: "data",
@@ -86,7 +86,7 @@ const PORTFOLIO = {
       title_en: "DevOps & Quality",
       desc_pt: "Controle de versão, CI/CD, testes automatizados unitários e de integração com foco em confiabilidade.",
       desc_en: "Version control, CI/CD, unit and integration automated tests focused on reliability.",
-      tags: ["Git", "GitHub", "CI/CD", "Pytest", "Selenium", "Bash"],
+      tags: ["Git", "GitHub", "CI/CD", "Docker", "Pytest", "Selenium", "Bash"],
     },
   ],
 
@@ -106,7 +106,7 @@ const PORTFOLIO = {
       desc_pt: "Plataforma SaaS para cardápios digitais de múltiplos restaurantes em um único domínio. Painel admin isolado por restaurante, CRUD completo e URLs amigáveis via .htaccess.",
       desc_en: "SaaS platform for digital menus of multiple restaurants on a single domain. Admin panel isolated per restaurant, full CRUD and friendly URLs via .htaccess.",
       links: [
-        { label_pt: "Ver Cardápio Demo", label_en: "View Demo Menu", url: "https://emenuvirtual.com.br/pizzabagetti" },
+        { label_pt: "Ver Site", label_en: "View Site", url: "https://emenuvirtual.com.br/site" },
         { label_pt: "Admin Login", label_en: "Admin Login", url: "https://emenuvirtual.com.br", ghost: true },
       ],
     },
@@ -157,7 +157,7 @@ const PORTFOLIO = {
       status_en: "In Development",
       statusKind: "wip",
       color: "amber",
-      tags: ["Django", "Canvas API", "WebSockets", "Real-time", "JavaScript"],
+      tags: ["Flask", "Canvas API", "WebSockets", "Real-time", "JavaScript"],
       desc_pt: "Plataforma para jogar RPG de mesa online em tempo real. Canvas interativo, sistema de personagens, salas e sessões ao vivo — base sólida e arquitetura bem definida.",
       desc_en: "Platform for playing tabletop RPG online in real time. Interactive canvas, character system, rooms and live sessions — solid base and well-defined architecture.",
       links: [
