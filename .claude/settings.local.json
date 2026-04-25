@@ -1,8 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "WebSearch",
-      "Bash(grep -E \"\\\\.\\(json|tsx|ts|jsx|js|css|scss|html|md|txt|svg|png|jpg|jpeg|gif|webp\\)$\")"
+      "Bash(git fetch *)",
+      "Bash(git reset *)",
+      "Bash(git -C /home/gabriel/Projects/projects/my-port log --all --oneline --graph)",
+      "Bash(git -C /home/gabriel/Projects/projects/my-port log --all --name-status --oneline)",
+      "Bash(git -C /home/gabriel/Projects/projects/my-port log --all --oneline --follow -- index.html)",
+      "Bash(git -C /home/gabriel/Projects/projects/my-port log --all --oneline --follow -- Portfolio.html)",
+      "Bash(git *)"
     ]
   }
 }
