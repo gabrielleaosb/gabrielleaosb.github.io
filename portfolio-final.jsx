@@ -55,7 +55,7 @@ function TerminalOverlay({ theme, lang, onClose, onToggleTheme, onToggleLang, on
     help: () => [
       `${lang === "pt" ? "Comandos" : "Commands"}:`,
       ``,
-      `  about, skills, projects, exp, edu, contact`,
+      `  about, skills, projects, edu, contact`,
       `  ls          ${lang === "pt" ? "listar seções" : "list sections"}`,
       `  goto <sec>  ${lang === "pt" ? "navegar até seção" : "scroll to section"}`,
       `  open <id>   ${lang === "pt" ? "abrir projeto" : "open project"}`,
@@ -67,7 +67,7 @@ function TerminalOverlay({ theme, lang, onClose, onToggleTheme, onToggleLang, on
       `  exit        ${lang === "pt" ? "fechar terminal" : "close terminal"}`,
       ``,
     ],
-    ls: () => [`about  skills  projects  exp  edu  contact`, ``],
+    ls: () => [`about  skills  projects  edu  contact`, ``],
     whoami: () => [`${P.name} — ${lang === "pt" ? P.role_pt : P.role_en}`, `◦ ${lang === "pt" ? P.location_pt : P.location_en}`, `◦ ${lang === "pt" ? P.status_pt : P.status_en}`, ``],
     about: () => [
       ``,
@@ -85,15 +85,6 @@ function TerminalOverlay({ theme, lang, onClose, onToggleTheme, onToggleLang, on
         const badge = p.status === "wip" ? `⟡ ${t.in_dev}` : `● ${t.view_live}`;
         out.push(`  ${String(i+1).padStart(2, "0")}. ${p.name.padEnd(22)} ${p.year}  ${badge}`);
         out.push(`      ${lang === "pt" ? p.tagline_pt : p.tagline_en}`);
-        out.push(``);
-      });
-      return out;
-    },
-    exp: () => {
-      const out = [``];
-      P.experience.forEach(e => {
-        out.push(`  [${lang === "pt" ? e.period : e.period_en}] ${lang === "pt" ? e.role_pt : e.role_en}  @  ${e.company}`);
-        out.push(`  ${lang === "pt" ? e.desc_pt : e.desc_en}`);
         out.push(``);
       });
       return out;
@@ -141,7 +132,7 @@ function TerminalOverlay({ theme, lang, onClose, onToggleTheme, onToggleLang, on
 
     if (verb === "goto" && rest[0]) {
       const sec = rest[0];
-      const valid = ["about", "skills", "projects", "exp", "edu", "contact"];
+      const valid = ["about", "skills", "projects", "edu", "contact"];
       if (valid.includes(sec)) {
         onNav(sec);
         setHistory(h => [...h, { type: "out", lines: [`→ ${sec}`, ``] }]);
@@ -268,14 +259,13 @@ function ProjectCard({ p, idx, lang, T, theme, t, onOpenTerm, isMobile }) {
   const [hover, setHover] = React.useState(false);
 
   const visuals = {
-    "crp-al": ["╭──────────────────────╮", "│  institutional.site  │", "│  · psicologia        │", "│  · alagoas / brasil  │", "│  · in progress...    │", "╰──────────────────────╯"],
-    "menu":   ["╭──────────────────────╮", "│  $ ./menu --start    │", "│  > appetizers   [12] │", "│  > mains        [24] │", "│  > desserts     [08] │", "│  > order via whatsapp│", "╰──────────────────────╯"],
-    "dice":   ["       ┌───┐   ┌───┐", "       │ ⚄ │   │ ⚅ │", "       └───┘   └───┘", "   roll d20: 17 + 3", "   → crit near-miss ✓"],
-    "ai-analysis": ["  import pandas as pd", "  from openai import *", "", "  df = read_csv(...)", "  insight = gpt(df)", "  → plot.show()"],
+    "emenu":       ["╭──────────────────────╮", "│  $ ./menu --start    │", "│  > appetizers   [12] │", "│  > mains        [24] │", "│  > desserts     [08] │", "│  > order via whatsapp│", "╰──────────────────────╯"],
+    "ai-analyst":  ["  import pandas as pd", "  from langchain import *", "", "  df = read_csv(...)", "  insight = llm(df)", "  → plot.show()"],
+    "knucklebones":["       ┌───┐   ┌───┐", "       │ ⚄ │   │ ⚅ │", "       └───┘   └───┘", "   roll d20: 17 + 3", "   → crit near-miss ✓"],
+    "lt-manager":  ["  ┌─ character ─────┐", "  │ name:  aranel   │", "  │ class: ranger   │", "  │ hp:    34/40    │", "  │ ac:    16       │", "  └─────────────────┘"],
     "discord-bot": ["  > /ping",  "  ← pong 42ms", "  > /play lofi", "  ← ♪ now playing...", "  > /moderate @user", "  ← ✓ action logged"],
-    "rpg-sheet": ["  ┌─ character ─────┐", "  │ name:  aranel   │", "  │ class: ranger   │", "  │ hp:    34/40    │", "  │ ac:    16       │", "  └─────────────────┘"],
   };
-  const art = visuals[p.id] || visuals["menu"];
+  const art = visuals[p.id] || visuals["emenu"];
 
   const s = {
     card: {
@@ -575,18 +565,6 @@ function Portfolio() {
     projectsHint: { fontSize: 12, color: T.muted, letterSpacing: 1.5, textTransform: "uppercase" },
     projList: { border: `1px solid ${T.hair}`, borderBottom: "none" },
 
-    expRow: {
-      display: "grid",
-      gridTemplateColumns: isMobile ? "1fr" : "170px 1fr",
-      gap: isMobile ? 8 : 24,
-      padding: "22px 0",
-      borderBottom: `1px solid ${T.hair}`,
-      alignItems: "start",
-    },
-    expPeriod: { fontSize: 12, color: T.muted, textTransform: "uppercase", letterSpacing: 1.5, paddingTop: 4 },
-    expRole: { fontSize: 17.5, color: T.accent, marginBottom: 6, letterSpacing: "-0.01em" },
-    expCompany: { color: T.muted },
-    expDesc: { fontSize: 14.5, color: T.muted, lineHeight: 1.75, maxWidth: 580 },
 
     eduGrid: {
       display: "grid",
@@ -629,7 +607,6 @@ function Portfolio() {
           <span style={s.navLink} onClick={() => scrollTo("about")}>{t.nav_about}</span>
           <span style={s.navLink} onClick={() => scrollTo("skills")}>{t.nav_skills}</span>
           <span style={s.navLink} onClick={() => scrollTo("projects")}>{t.nav_projects}</span>
-          <span style={s.navLink} onClick={() => scrollTo("exp")}>{t.nav_exp}</span>
           <span style={s.navLink} onClick={() => scrollTo("edu")}>{t.nav_edu}</span>
           <span style={s.navLink} onClick={() => scrollTo("contact")}>{t.nav_contact}</span>
         </div>
@@ -744,33 +721,10 @@ function Portfolio() {
             </div>
           </div>
 
-          {/* Experience */}
-          <div style={s.section} data-sec="exp">
-            <div style={s.secLabel}>
-              <span style={s.secLabelNum}>04</span>
-              <span>— {t.exp_title}</span>
-              <span style={s.secLine}></span>
-            </div>
-            <div>
-              {P.experience.map((e, i) => (
-                <div key={i} style={s.expRow}>
-                  <div style={s.expPeriod}>{lang === "pt" ? e.period : e.period_en}</div>
-                  <div>
-                    <div style={s.expRole}>
-                      {lang === "pt" ? e.role_pt : e.role_en}
-                      <span style={s.expCompany}> @ {e.company}</span>
-                    </div>
-                    <div style={s.expDesc}>{lang === "pt" ? e.desc_pt : e.desc_en}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* Education */}
           <div style={s.section} data-sec="edu">
             <div style={s.secLabel}>
-              <span style={s.secLabelNum}>05</span>
+              <span style={s.secLabelNum}>04</span>
               <span>— {t.edu_title}</span>
               <span style={s.secLine}></span>
             </div>
@@ -799,7 +753,7 @@ function Portfolio() {
           {/* Contact */}
           <div style={s.section} data-sec="contact">
             <div style={s.secLabel}>
-              <span style={s.secLabelNum}>06</span>
+              <span style={s.secLabelNum}>05</span>
               <span>— {t.contact_title}</span>
               <span style={s.secLine}></span>
             </div>
