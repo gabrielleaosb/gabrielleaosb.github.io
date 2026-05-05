@@ -1282,6 +1282,9 @@ function Portfolio() {
               <button style={s.heroCta2} onClick={() => scrollTo("contact")}>
                 {t.cta_secondary}
               </button>
+              <a href="src/curriculo_GABRIEL_LEÃO.pdf" download style={s.heroCta2}>
+                {t.cta_cv} ↓
+              </a>
               <span style={{...s.heroStatus, marginLeft: isMobile ? 0 : 12}}>
                 <span style={s.statusDot}></span>
                 <span>{lang === "pt" ? P.status_pt : P.status_en}</span>
