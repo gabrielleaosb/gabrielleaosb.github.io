@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Originais de trabalho: nao precisam ser indexados
+Disallow: /Imagem-projetos/
+Disallow: /src/
+
+Sitemap: https://gabrielleaosb.github.io/sitemap.xml
