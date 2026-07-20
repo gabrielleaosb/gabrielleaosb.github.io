@@ -1,54 +1,622 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gabriel Leão | Backend Python, Sistemas Web e IA Aplicada</title>
-<meta name="description" content="Portfolio de Gabriel Leão, desenvolvedor de software com foco em backend Python, sistemas web, APIs, automações e IA aplicada.">
-<meta name="author" content="Gabriel Leão">
-<meta name="robots" content="index, follow">
-<meta name="theme-color" content="#0e0e0f">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="Gabriel Leão | Backend Python, Sistemas Web e IA Aplicada">
-<meta property="og:description" content="Desenvolvedor de software com foco em backend Python, sistemas web, APIs, automações e IA aplicada.">
-<meta property="og:image" content="src/gabriel_leao.png">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gabriel Leão | Backend Python, Sistemas Web e IA Aplicada">
-<meta name="twitter:description" content="Portfolio com projetos reais em backend Python, sistemas web, APIs e IA aplicada.">
-<link rel="icon" type="image/png" href="src/gabriel_leao.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Geist+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: #0e0e0f; color: #ededed; font-family: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace; }
-  a { color: inherit; text-decoration: none; }
-  ::selection { background: rgba(255,255,255,0.18); }
-  @keyframes blink { 50% { opacity: 0; } }
-  @keyframes scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
-  @keyframes glitchIn {
-    0% { opacity: 0; transform: translateX(-4px); }
-    40% { opacity: 1; transform: translateX(2px); }
-    60% { transform: translateX(-1px); }
-    100% { opacity: 1; transform: translateX(0); }
-  }
-  ::-webkit-scrollbar { width: 8px; height: 8px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.16); }
-  html.light-theme ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); }
-</style>
-
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
 </head>
 <body>
-<div id="root"></div>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior: smooth; }
+  /* O header é sticky: sem isso a âncora para o título embaixo dele.
+     Altura real: 87px no mobile (duas linhas) e 69px acima de 760px. */
+  section[id], #top { scroll-margin-top: 106px; }
+  @media (min-width: 761px) { section[id], #top { scroll-margin-top: 90px; } }
+  body { margin: 0; background: #0E0E11; }
+  /* Barra de rolagem no tom do site (a padrão do Windows é clara e destoa). */
+  html { color-scheme: dark; scrollbar-width: thin; scrollbar-color: #2E2E36 transparent; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: #0A0A0D; }
+  ::-webkit-scrollbar-thumb { background: #2E2E36; border-radius: 8px; border: 2px solid #0A0A0D; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+  :root { --bg: #0E0E11; --surface: #15151A; --border: #232329; --text: #F2F2F0; --muted: #8A8A93; --accent: #05F283; --ink: #0E0E11; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--text); }
+  ::selection { background: var(--accent); color: var(--ink); }
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  @keyframes modalIn { from { opacity: 0; transform: translateY(24px) scale(0.98); } to { opacity: 1; transform: none; } }
+  @keyframes caseIn { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-<script type="text/babel" src="portfolio-data.jsx"></script>
-<script type="text/babel" src="portfolio-final.jsx"></script>
+  /* ---- Case study: página que rola. Base = mobile; telas maiores só ganham respiro ---- */
+  @media (min-width: 760px) {
+    [data-case-bar] { padding: 13px 32px !important; }
+    [data-case-head] { padding: 64px 32px 52px !important; }
+    /* Acima de 760px sobra espaço: a ficha fica sempre aberta e o botão some.
+       O CTA volta para dentro dela (no mobile ele já está na linha de ações). */
+    [data-case-acts] { display: none !important; }
+    [data-case-access] { display: flex !important; }
+    [data-case-cols] { display: grid !important; margin-top: 8px !important; animation: none !important;
+                       grid-template-columns: 1.55fr 1fr !important; gap: 64px !important; }
+    [data-case-foot] { padding: 52px 32px 72px !important; }
+  }
+  /* Tiles de projeto — base (mobile/touch): legenda embaixo da imagem, um card
+     por projeto. Sem hover não há como revelar nada, então a info fica sempre à
+     vista, mas nunca por cima da imagem.
+     Telas largas com hover: a legenda vira overlay e surge no cursor. */
+  /* No mobile a barra traz só o nome — stack e status ficam para o hover. */
+  [data-tile-sub] { display: none; }
+  @media (min-width: 861px) and (hover: hover) {
+    [data-tile-sub] { display: block; }
+    [data-tile-name] { font-size: clamp(19px, 2.1vw, 25px) !important; letter-spacing: -0.01em !important; }
+    [data-tile-grid] { grid-template-columns: 1fr 1fr !important; gap: 1px !important;
+                       background: var(--border); border: 1px solid var(--border);
+                       border-radius: 16px; overflow: hidden; }
+    [data-tile] { border: 0 !important; border-radius: 0 !important; }
+    [data-tile-img] { transition: transform 0.6s ease; }
+    [data-tile]:hover [data-tile-img] { transform: scale(1.04); }
+    [data-tile-info] { position: absolute; inset: 0; z-index: 1;
+                       background: rgba(8,8,11,0.88); border-top: 0 !important;
+                       align-items: center; justify-content: center; text-align: center;
+                       gap: 13px !important; padding: 26px 30px !important;
+                       opacity: 0; transition: opacity 0.45s ease; }
+    [data-tile]:hover [data-tile-info] { opacity: 1; }
+    [data-tile-info] > * { opacity: 0; transform: translateY(12px); transition: opacity 0.4s 0.12s, transform 0.4s 0.12s; }
+    [data-tile-info] > *:nth-child(2) { transition-delay: 0.2s; }
+    [data-tile-info] > *:nth-child(3) { transition-delay: 0.28s; }
+    [data-tile]:hover [data-tile-info] > * { opacity: 1; transform: none; }
+  }
+  /* Open source: índice de repositórios — a linha inteira é o link. */
+  [data-repo] { transition: background-color 0.3s ease; }
+  [data-repo]:hover { background-color: color-mix(in srgb, var(--accent) 5%, transparent); }
+  [data-repo] [data-repo-name], [data-repo] [data-repo-arrow] { transition: color 0.25s ease, transform 0.3s ease; }
+  [data-repo]:hover [data-repo-name], [data-repo]:hover [data-repo-arrow] { color: var(--accent); }
+  [data-repo]:hover [data-repo-arrow] { transform: translateX(7px); }
+  /* Empilha: conteúdo em cima, status/ano/seta numa faixa embaixo.
+     O !important é obrigatório — estes elementos têm style inline. */
+  @media (max-width: 760px) {
+    [data-repo] { grid-template-columns: 1fr !important; gap: 14px !important; padding: 24px 4px !important; }
+    [data-repo] [data-repo-num] { display: none; }
+    [data-repo] > div:last-child { width: 100%; justify-content: space-between; gap: 12px !important; }
+    [data-repo] [data-repo-meta] { flex-direction: row !important; align-items: center !important; gap: 12px !important; }
+  }
+  [data-modal-scroll] { scrollbar-width: thin; scrollbar-color: #2E2E36 transparent; }
+  [data-modal-scroll]::-webkit-scrollbar { width: 8px; }
+  [data-modal-scroll]::-webkit-scrollbar-track { background: transparent; }
+  [data-modal-scroll]::-webkit-scrollbar-thumb { background: #2E2E36; border-radius: 8px; }
+  [data-modal-scroll]::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  /* ---- Site mobile-first: abaixo de 760px nada pode transbordar ---- */
+  @media (max-width: 760px) {
+    [data-navbar] { height: auto !important; flex-wrap: wrap; padding: 9px 16px 10px !important; gap: 9px !important; }
+    [data-navbar] > a img { height: 26px !important; }
+    [data-nav] { order: 3; width: 100%; justify-content: space-between; gap: 6px !important; font-size: 10.5px !important; }
+    [data-nav] a { letter-spacing: 0.05em !important; }
+    /* Cards do skills: no celular a caixa larga fica vazia — aperta tudo. */
+    [data-col3] { gap: 12px !important; }
+    [data-skill] { padding: 14px 15px 16px !important; gap: 11px !important; border-radius: 12px !important; }
+    [data-skill] [data-skill-num] { font-size: 40px !important; top: -6px !important; right: 8px !important; }
+    [data-skill] span[data-chip] { font-size: 11.5px !important; padding: 5px 9px !important; }
+    [data-wrap] { padding-left: 18px !important; padding-right: 18px !important; }
+    [data-wrap] { padding-top: 64px !important; padding-bottom: 64px !important; }
+    /* Vira texto corrido: como flex, cada trecho virava item e o gap abria buracos. */
+    [data-avail] { display: block !important; font-size: 11px !important; letter-spacing: 0.1em !important; line-height: 1.7; }
+    [data-avail] > span:first-child { margin-right: 8px; vertical-align: middle; }
+    [data-hero-grid] { grid-template-columns: 1fr !important; gap: 28px !important; }
+    [data-hero-cta] { justify-content: flex-start !important; }
+    [data-hero-cta] > a { flex: 1 1 auto; text-align: center; }
+    [data-stats] { flex-wrap: wrap; gap: 22px 34px !important; margin-top: 40px !important; }
+    [data-col3] { grid-template-columns: 1fr !important; }
+    [data-ghost] { display: none; }
+    /* Rodapé: cada informação na sua linha, em vez de uma frase corrida que quebra torto. */
+    [data-foot] { flex-direction: column; align-items: flex-start !important; gap: 16px !important;
+                  margin-top: 48px !important; padding-top: 22px !important; }
+    [data-foot-info] { flex-direction: column; align-items: flex-start !important;
+                       gap: 8px !important; letter-spacing: 0.06em !important; line-height: 1.4; }
+    [data-foot-info] a { font-size: 13px; color: var(--text) !important; }
+  }
+</style>
+</helmet>
+<div id="top" style="--accent:{{ accent }};min-height:100vh;background:var(--bg);color:var(--text);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased">
+
+  <header style="position:sticky;top:0;z-index:50;border-bottom:1px solid var(--border);background:color-mix(in srgb, var(--bg) 85%, transparent);backdrop-filter:blur(12px)">
+    <div data-navbar="true" style="max-width:1180px;margin:0 auto;padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <a href="#top" style="display:flex;align-items:center;gap:12px"><img src="uploads/gabriel_leao.png" alt="GL" style="height:30px;display:block"><span style="font-weight:700;font-size:14px;letter-spacing:0.06em;color:var(--text);text-transform:uppercase">Gabriel Leão</span></a>
+      <nav data-nav="true" style="display:flex;align-items:center;gap:22px;font-size:12.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase">
+        <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="4">
+          <a href="{{ l.href }}" style="{{ l.style }}" style-hover="color:var(--accent)">{{ l.label }}</a>
+        </sc-for>
+      </nav>
+      <div style="display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;font-size:11.5px;font-weight:600">
+        <button onClick="{{ setPt }}" style="{{ ptBtnStyle }}">PT</button>
+        <button onClick="{{ setEn }}" style="{{ enBtnStyle }}">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <section style="border-bottom:1px solid var(--border);background-color:#0B0B0E;background-image:radial-gradient(ellipse 55% 45% at 75% 12%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 70%),linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);background-size:auto,58px 58px,58px 58px">
+    <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:100px 28px 0;animation:rise 0.7s ease both">
+      <div data-avail="true" style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:26px">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block"></span>
+        {{ t.available }} · Maceió, AL — {{ t.country }}
+      </div>
+      <h1 style="margin:0;font-size:clamp(54px,8.6vw,118px);font-weight:800;line-height:0.94;letter-spacing:-0.03em;text-transform:uppercase;font-stretch:110%">Gabriel<br><span style="color:var(--accent)">Leão</span></h1>
+      <p style="margin:24px 0 0;font-size:15px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)">Backend · APIs · <span style="color:var(--accent)">IA aplicada</span></p>
+      <div data-hero-grid="true" style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:48px;align-items:end;margin-top:32px">
+        <p style="margin:0;max-width:600px;font-size:17px;line-height:1.7;color:var(--muted);text-wrap:pretty">{{ t.profile }}</p>
+        <div data-hero-cta="true" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end;font-size:13px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase">
+          <a href="#projetos" style="background:var(--accent);color:var(--ink);padding:14px 26px;border-radius:999px" style-hover="opacity:0.85;color:var(--ink)">{{ t.ctaProjects }}</a>
+          <a href="https://github.com/gabrielleaosb" target="_blank" style="border:1px solid var(--border);color:var(--text);padding:14px 26px;border-radius:999px" style-hover="border-color:var(--accent);color:var(--accent)">GitHub ↗</a>
+          <a href="uploads/cv-gabriel-leao.pdf" download="CV-Gabriel-Leao.pdf" style="border:1px solid var(--accent);color:var(--accent);padding:14px 26px;border-radius:999px" style-hover="background:var(--accent);color:var(--ink)">{{ t.cv }} ↓</a>
+        </div>
+      </div>
+      <div data-stats="true" style="display:flex;gap:56px;margin-top:56px;padding:26px 0;border-top:1px solid var(--border)">
+        <div><p style="margin:0;font-size:32px;font-weight:800">3+</p><p style="margin:2px 0 0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">{{ t.statYears }}</p></div>
+        <div><p style="margin:0;font-size:32px;font-weight:800">2</p><p style="margin:2px 0 0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">{{ t.statProd }}</p></div>
+        <div><p style="margin:0;font-size:32px;font-weight:800">5</p><p style="margin:2px 0 0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">{{ t.statPublic }}</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projetos" style="background-color:#16161D;background-image:radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);background-size:26px 26px">
+    <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:96px 28px">
+      <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:44px">
+        <span style="font-size:14px;font-weight:700;color:var(--accent)">01</span>
+        <h2 style="margin:0;font-size:clamp(34px,5vw,56px);font-weight:800;letter-spacing:-0.02em;text-transform:uppercase">{{ t.projectsTitle }}</h2>
+      </div>
+      <div data-tile-grid="true" style="display:grid;grid-template-columns:1fr;gap:18px">
+        <sc-for list="{{ featured }}" as="p" hint-placeholder-count="4">
+          <article data-tile="true" onClick="{{ p.open }}" style="position:relative;overflow:hidden;cursor:pointer;background:var(--surface);border:1px solid var(--border);border-radius:14px;display:flex;flex-direction:column">
+            <div data-tile-box="true" style="position:relative;aspect-ratio:2 / 1">
+              <div data-tile-img="true" style="position:absolute;inset:0;pointer-events:none">
+                <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ p.slotId }}" shape="rect" src="{{ p.img }}" placeholder="{{ p.placeholder }}" hint-size="560px,280px"></x-import>
+              </div>
+            </div>
+            <div data-tile-info="true" style="display:flex;flex-direction:column;gap:9px;padding:11px 14px 12px;border-top:1px solid var(--border);pointer-events:none">
+              <h3 data-tile-name="true" style="margin:0;font-size:14px;font-weight:800;letter-spacing:0.02em;text-transform:uppercase;color:var(--text)">{{ p.name }}</h3>
+              <p data-tile-sub="true" style="margin:0;font-size:11.5px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--accent);text-wrap:balance">{{ p.stackLine }}</p>
+              <span data-tile-sub="true" style="font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted)">{{ p.status }} · {{ p.year }} · {{ t.openModal }} +</span>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;align-items:baseline;gap:18px;margin:88px 0 40px">
+        <span style="font-size:14px;font-weight:700;color:var(--accent)">02</span>
+        <h2 style="margin:0;font-size:clamp(26px,3.6vw,40px);font-weight:800;letter-spacing:-0.02em;text-transform:uppercase">{{ t.ossTitle }}</h2>
+      </div>
+      <div style="border-bottom:1px solid var(--border)">
+        <sc-for list="{{ oss }}" as="p" hint-placeholder-count="3">
+          <a href="{{ p.href }}" target="_blank" aria-label="{{ p.aria }}" data-repo="true" style="display:grid;grid-template-columns:46px 1fr auto;gap:24px;align-items:center;padding:26px 18px;border-top:1px solid var(--border);color:var(--text)">
+            <span data-repo-num="true" style="font-size:12px;font-weight:700;letter-spacing:0.05em;color:var(--accent)">{{ p.num }}</span>
+            <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+              <div style="display:flex;align-items:baseline;gap:13px;flex-wrap:wrap">
+                <h3 data-repo-name="true" style="margin:0;font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:-0.01em">{{ p.name }}</h3>
+                <span style="font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--muted)">{{ p.repo }}</span>
+              </div>
+              <p style="margin:0;max-width:700px;font-size:14px;line-height:1.6;color:var(--muted);text-wrap:pretty">{{ p.desc }}</p>
+              <p style="margin:0;font-size:11.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted)">{{ p.stackLine }}</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:22px;flex:none">
+              <div data-repo-meta="true" style="display:flex;flex-direction:column;align-items:flex-end;gap:7px">
+                <span style="font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--border);border-radius:999px;padding:5px 12px;white-space:nowrap">{{ p.status }}</span>
+                <span style="font-size:12.5px;font-weight:600;color:var(--muted)">{{ p.year }}</span>
+              </div>
+              <span data-repo-arrow="true" style="font-size:21px;line-height:1;color:var(--muted)">→</span>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" style="border-top:1px solid var(--border);background-color:#0B0B0E;background-image:repeating-linear-gradient(-45deg, color-mix(in srgb, var(--accent) 5%, transparent) 0 1px, transparent 1px 22px)">
+    <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:96px 28px">
+      <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:44px">
+        <span style="font-size:14px;font-weight:700;color:var(--accent)">03</span>
+        <h2 style="margin:0;font-size:clamp(34px,5vw,56px);font-weight:800;letter-spacing:-0.02em;text-transform:uppercase">{{ t.skillsTitle }}</h2>
+      </div>
+      <div data-col3="true" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
+        <sc-for list="{{ skills }}" as="g" hint-placeholder-count="6">
+          <div data-skill="true" style="position:relative;overflow:hidden;background:color-mix(in srgb, var(--surface) 88%, transparent);border:1px solid var(--border);border-radius:16px;padding:26px 26px 28px;display:flex;flex-direction:column;gap:16px;transition:transform 0.25s ease, border-color 0.25s ease" style-hover="border-color:var(--accent);transform:translateY(-4px)">
+            <span data-skill-num="true" style="position:absolute;top:-14px;right:10px;font-size:76px;font-weight:800;color:transparent;-webkit-text-stroke:1px var(--border);line-height:1;pointer-events:none">{{ g.num }}</span>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="width:22px;height:3px;background:var(--accent);border-radius:2px;display:inline-block"></span>
+              <h3 style="margin:0;font-size:15px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase">{{ g.label }}</h3>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:7px">
+              <sc-for list="{{ g.items }}" as="s" hint-placeholder-count="6">
+                <span data-chip="true" style="font-size:12.5px;font-weight:500;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:6px 11px">{{ s }}</span>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="exp" style="position:relative;overflow:hidden;border-top:1px solid var(--border);background-color:#16161D;background-image:radial-gradient(ellipse 50% 60% at 8% 50%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 70%)">
+    <span data-ghost="true" style="position:absolute;top:34px;right:-20px;font-size:clamp(90px,14vw,190px);font-weight:800;letter-spacing:-0.02em;text-transform:uppercase;color:transparent;-webkit-text-stroke:1px #222228;line-height:1;pointer-events:none;user-select:none">{{ t.expGhost }}</span>
+    <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:96px 28px;position:relative">
+      <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:56px">
+        <span style="font-size:14px;font-weight:700;color:var(--accent)">04</span>
+        <h2 style="margin:0;font-size:clamp(34px,5vw,56px);font-weight:800;letter-spacing:-0.02em;text-transform:uppercase">{{ t.expTitle }}</h2>
+      </div>
+      <div data-col3="true" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
+        <sc-for list="{{ timeline }}" as="e" hint-placeholder-count="3">
+          <div style="background:#0C0C10;border:1px solid var(--border);border-radius:16px;padding:28px 26px;display:flex;flex-direction:column;gap:14px;transition:transform 0.25s ease, border-color 0.25s ease" style-hover="border-color:var(--accent);transform:translateY(-4px)">
+            <span style="align-self:flex-start;background:color-mix(in srgb, var(--accent) 14%, transparent);color:var(--accent);font-size:12px;font-weight:800;letter-spacing:0.04em;padding:6px 12px;border-radius:999px">{{ e.period }}</span>
+            <h3 style="margin:0;font-size:19px;font-weight:800;text-transform:uppercase;letter-spacing:-0.01em">{{ e.title }}</h3>
+            <p style="margin:-8px 0 0;font-size:12px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted)">{{ e.org }}</p>
+            <p style="margin:0;font-size:14px;line-height:1.65;color:var(--muted);text-wrap:pretty">{{ e.desc }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato" style="border-top:1px solid var(--border);background-color:#0B0B0E;background-image:radial-gradient(ellipse 60% 55% at 50% 115%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%)">
+    <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:110px 28px 60px">
+      <p style="margin:0 0 14px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)">05 — {{ t.contactKicker }}</p>
+      <h2 style="margin:0 0 22px;font-size:clamp(44px,7.5vw,96px);font-weight:800;letter-spacing:-0.03em;line-height:0.96;text-transform:uppercase">{{ t.contactTitle1 }}<br><span style="color:var(--accent)">{{ t.contactTitle2 }}</span></h2>
+      <p style="margin:0 0 40px;max-width:520px;font-size:16px;line-height:1.7;color:var(--muted);text-wrap:pretty">{{ t.contactSub }}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;font-size:13px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase">
+        <a href="mailto:gabriellsbagetti@gmail.com" style="background:var(--accent);color:var(--ink);padding:16px 30px;border-radius:999px" style-hover="opacity:0.85;color:var(--ink)">gabriellsbagetti@gmail.com</a>
+        <a href="{{ waHref }}" target="_blank" rel="noopener" style="border:1px solid var(--accent);color:var(--accent);padding:16px 30px;border-radius:999px" style-hover="background:var(--accent);color:var(--ink)">{{ t.waLabel }} ↗</a>
+        <a href="https://github.com/gabrielleaosb" target="_blank" style="border:1px solid var(--border);color:var(--text);padding:16px 30px;border-radius:999px" style-hover="border-color:var(--accent);color:var(--accent)">GitHub ↗</a>
+        <a href="https://linkedin.com/in/gabriellsbagetti" target="_blank" style="border:1px solid var(--border);color:var(--text);padding:16px 30px;border-radius:999px" style-hover="border-color:var(--accent);color:var(--accent)">LinkedIn ↗</a>
+      </div>
+      <div data-foot="true" style="display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:72px;padding-top:24px;border-top:1px solid var(--border)">
+        <img src="uploads/gabriel_leao.png" alt="GL" style="height:26px;opacity:0.9">
+        <div data-foot-info="true" style="display:flex;align-items:center;flex-wrap:wrap;gap:6px 18px;font-size:11.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">
+          <span>© 2026 Gabriel Leão Salles Bagetti</span>
+          <span>Maceió, AL — {{ t.country }}</span>
+          <a href="tel:+5582991487729" style="color:var(--muted)" style-hover="color:var(--accent)">(82) 99148-7729</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+    <div data-case-scroll="true" data-modal-scroll="true" style="position:fixed;inset:0;z-index:100;overflow-y:auto;overflow-x:hidden;background:var(--bg);animation:caseIn 0.35s cubic-bezier(0.16,1,0.3,1) both">
+
+      <div data-case-bar="true" style="position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--border);background:color-mix(in srgb, var(--bg) 88%, transparent);backdrop-filter:blur(12px)">
+        <button onClick="{{ close }}" style="display:flex;align-items:center;gap:8px;border:1px solid var(--border);background:transparent;color:var(--text);font-family:inherit;font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;padding:9px 15px;border-radius:999px;cursor:pointer" style-hover="border-color:var(--accent);color:var(--accent)">&#8592; {{ t.backLabel }}</button>
+        <span style="margin-left:auto;font-size:10.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)">{{ t.caseStudy }}</span>
+      </div>
+
+      <div data-case-head="true" style="max-width:1180px;margin:0 auto;padding:40px 18px 36px">
+        <div style="display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:20px">
+          <span style="background:var(--accent);color:var(--ink);font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:6px 12px;border-radius:999px">{{ mp.status }}</span>
+          <span style="font-size:12.5px;font-weight:600;color:var(--muted)">{{ mp.year }}</span>
+        </div>
+        <h1 style="margin:0 0 22px;font-size:clamp(34px,7.2vw,66px);font-weight:800;line-height:0.96;letter-spacing:-0.03em;text-transform:uppercase">{{ mp.name }}</h1>
+        <div data-case-acts="true" style="display:flex;flex-wrap:wrap;gap:9px">
+          <button onClick="{{ toggleDet }}" style="{{ mp.detBtnStyle }}">{{ t.details }} {{ mp.detCaret }}</button>
+          <a href="{{ mp.href }}" target="_blank" style="background:var(--accent);color:var(--ink);font-size:12px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:12px 20px;border-radius:999px" style-hover="opacity:0.85;color:var(--ink)">{{ mp.linkLabel }} &#8599;</a>
+        </div>
+        <div data-case-cols="true" style="{{ mp.detStyle }}">
+          <div style="display:flex;flex-direction:column;gap:22px">
+            <p style="margin:0;font-size:16px;line-height:1.7;color:var(--muted);text-wrap:pretty">{{ mp.summary }}</p>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ mp.points }}" as="pt" hint-placeholder-count="3">
+                <div style="display:flex;gap:12px;align-items:flex-start">
+                  <span style="flex:none;margin-top:8px;width:6px;height:6px;border-radius:50%;background:var(--accent)"></span>
+                  <p style="margin:0;font-size:14px;line-height:1.65;color:var(--muted);text-wrap:pretty">{{ pt }}</p>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)">{{ t.stackLabel }}</span>
+              <div style="display:flex;flex-wrap:wrap;gap:7px">
+                <sc-for list="{{ mp.stack }}" as="s" hint-placeholder-count="4">
+                  <span style="font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text);border:1px solid var(--border);border-radius:999px;padding:6px 12px">{{ s }}</span>
+                </sc-for>
+              </div>
+            </div>
+            <div data-case-access="true" style="display:none;flex-direction:column;gap:9px">
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)">{{ t.linkLabelTitle }}</span>
+              <a href="{{ mp.href }}" target="_blank" style="align-self:flex-start;background:var(--accent);color:var(--ink);font-size:12.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:14px 26px;border-radius:999px" style-hover="opacity:0.85;color:var(--ink)">{{ mp.linkLabel }} &#8599;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-shots="true" style="max-width:1600px;margin:0 auto;display:flex;flex-direction:column;gap:1px;background:var(--border);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+        <sc-for list="{{ mp.shots }}" as="s" hint-placeholder-count="4">
+          <div style="position:relative;aspect-ratio:2 / 1;background:#0A0A0D">
+            <div style="position:absolute;inset:0">
+              <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ s.id }}" shape="rect" fit="contain" src="{{ s.src }}" placeholder="{{ t.dropMain }}" hint-size="100%,400px"></x-import>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div data-case-foot="true" style="max-width:1180px;margin:0 auto;padding:40px 18px 56px;display:flex;flex-wrap:wrap;gap:12px">
+        <a href="{{ mp.href }}" target="_blank" style="background:var(--accent);color:var(--ink);font-size:12.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:15px 28px;border-radius:999px" style-hover="opacity:0.85;color:var(--ink)">{{ mp.linkLabel }} &#8599;</a>
+        <button onClick="{{ close }}" style="border:1px solid var(--border);background:transparent;color:var(--text);font-family:inherit;font-size:12.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:15px 28px;border-radius:999px;cursor:pointer" style-hover="border-color:var(--accent);color:var(--accent)">&#8592; {{ t.backLabel }}</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#05F283&quot;,&quot;#D9FF3D&quot;,&quot;#7EE7C7&quot;,&quot;#8AB4FF&quot;],&quot;default&quot;:&quot;#05F283&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;}}">
+class Component extends DCLogic {
+  state = { lang: 'pt', open: null, active: '', det: false };
+  NAV_IDS = ['projetos', 'skills', 'exp', 'contato'];
+  // Screenshots de cada projeto, na mesma ordem de FEATURED.
+  IMGS = [
+    ['uploads/nucleozero-1.jpg', 'uploads/nucleozero-2.jpg', 'uploads/nucleozero-3.jpg',
+     'uploads/nucleozero-4.jpg', 'uploads/nucleozero-5.jpg', 'uploads/nucleozero-6.jpg',
+     'uploads/nucleozero-7.jpg', 'uploads/nucleozero-8.jpg', 'uploads/nucleozero-9.jpg',
+     'uploads/nucleozero-10.jpg'],
+    // Vitrine → cardápio que o cliente final vê → painel do restaurante.
+    ['uploads/emenu-1.jpg', 'uploads/emenu-2.jpg', 'uploads/emenu-3.jpg', 'uploads/emenu-4.jpg',
+     'uploads/emenu-5.jpg', 'uploads/emenu-6.jpg', 'uploads/emenu-7.jpg', 'uploads/emenu-8.jpg',
+     'uploads/emenu-9.jpg', 'uploads/emenu-10.jpg', 'uploads/emenu-11.jpg', 'uploads/emenu-12.jpg',
+     'uploads/emenu-13.jpg'],
+    ['uploads/kbones-1.jpg', 'uploads/kbones-2.jpg', 'uploads/kbones-3.jpg',
+     'uploads/kbones-4.jpg', 'uploads/kbones-5.jpg'],
+    ['uploads/underpressure-1.jpg', 'uploads/underpressure-2.jpg'],
+  ];
+  componentDidMount() {
+    this._esc = (e) => {
+      if (this.state.open != null && e.key === 'Escape') this.setState({ open: null });
+    };
+    window.addEventListener('keydown', this._esc);
+    // Marca no menu a seção que está sendo lida (a última que cruzou 1/3 da tela).
+    this._spy = () => {
+      const doc = document.documentElement;
+      let cur;
+      // A última seção pode ser mais curta que a tela: ao chegar no fim da página
+      // o topo dela nunca cruza a linha de corte, e o menu ficaria preso na anterior.
+      if (window.scrollY + window.innerHeight >= doc.scrollHeight - 48) {
+        cur = this.NAV_IDS[this.NAV_IDS.length - 1];
+      } else {
+        const line = window.innerHeight * 0.34;
+        cur = '';
+        for (const id of this.NAV_IDS) {
+          const el = document.getElementById(id);
+          if (el && el.getBoundingClientRect().top <= line) cur = id;
+        }
+      }
+      if (cur !== this.state.active) this.setState({ active: cur });
+    };
+    window.addEventListener('scroll', this._spy, { passive: true });
+    this._spy();
+    // Swipe no palco da imagem — navegação principal no toque.
+    this._tStart = null;
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this._esc);
+    window.removeEventListener('scroll', this._spy);
+    document.body.style.overflow = '';
+  }
+  componentDidUpdate() {
+    document.body.style.overflow = this.state.open != null ? 'hidden' : '';
+    // Trocar de projeto tem de começar do topo, não da rolagem do anterior.
+    if (this._lastOpen !== this.state.open) {
+      this._lastOpen = this.state.open;
+      const el = document.querySelector('[data-case-scroll]');
+      if (el) el.scrollTop = 0;
+    }
+  }
+  renderVals() {
+    const lang = this.state.lang;
+    const btn = (act) => 'border:none;cursor:pointer;padding:8px 13px;font-family:inherit;font-size:inherit;font-weight:600;' +
+      (act ? 'background:var(--accent);color:var(--ink)' : 'background:transparent;color:var(--muted)');
+    const T = {
+      pt: {
+        navProjects: 'Projetos', navSkills: 'Skills', navExp: 'Experiência', navContact: 'Contato',
+        available: 'Disponível para projetos', country: 'Brasil',
+        profile: 'Desenvolvedor Python com mais de 3 anos de experiência, focado em backend, APIs REST, automações e sistemas web que resolvem operação real. Sistemas em produção, open source publicado e IA aplicada ao produto.',
+        ctaProjects: 'Ver projetos', cv: 'Baixar CV',
+        statYears: 'anos de experiência', statProd: 'sistemas em produção', statPublic: 'projetos publicados',
+        projectsTitle: 'Projetos em destaque',
+        openModal: 'Ver detalhes', ossTitle: 'Open source', viewCode: 'Ver código',
+        skillsTitle: 'Habilidades', expTitle: 'Experiência & formação', expGhost: 'Trajetória',
+        contactKicker: 'contato', contactTitle1: 'Vamos', contactTitle2: 'conversar?',
+        contactSub: 'Aberto a oportunidades, freelas e projetos. Respondo rápido no WhatsApp, e-mail ou LinkedIn.',
+        waLabel: 'Chamar no WhatsApp', waMsg: 'Olá, Gabriel! Vi seu portfólio e gostaria de conversar.',
+        dropMain: 'Arraste a imagem principal do projeto', dropMore: 'Arraste outra imagem',
+        caseStudy: 'Estudo de caso', highlights: 'Destaques', stackLabel: 'Tecnologias',
+        backLabel: 'Voltar', linkLabelTitle: 'Acesso', details: 'Detalhes',
+      },
+      en: {
+        navProjects: 'Projects', navSkills: 'Skills', navExp: 'Experience', navContact: 'Contact',
+        available: 'Open to work', country: 'Brazil',
+        profile: 'Python developer with 3+ years of experience, focused on backend, REST APIs, automation and web systems that solve real operations. Production systems, published open source and AI applied to product.',
+        ctaProjects: 'View projects', cv: 'Download CV',
+        statYears: 'years of experience', statProd: 'systems in production', statPublic: 'published projects',
+        projectsTitle: 'Featured projects',
+        openModal: 'View details', ossTitle: 'Open source', viewCode: 'View code',
+        skillsTitle: 'Skills', expTitle: 'Experience & education', expGhost: 'Journey',
+        contactKicker: 'contact', contactTitle1: "Let's", contactTitle2: 'talk',
+        contactSub: 'Open to opportunities, freelance and projects. Fast replies via WhatsApp, email or LinkedIn.',
+        waLabel: 'Chat on WhatsApp', waMsg: 'Hi Gabriel! I saw your portfolio and I would like to talk.',
+        dropMain: 'Drop the main project image', dropMore: 'Drop another image',
+        caseStudy: 'Case study', highlights: 'Highlights', stackLabel: 'Tech stack',
+        backLabel: 'Back', linkLabelTitle: 'Access', details: 'Details',
+      }
+    };
+    const FEATURED = [
+      { slotId: 'nucleozero', name: 'Núcleo Zero Gestão', year: '2026', href: 'https://gestao.nucleozero.com.br',
+        img: 'uploads/nucleozero-1.jpg',
+        placeholder: 'Screenshot — Núcleo Zero Gestão',
+        status: { pt: 'Em Produção', en: 'In Production' },
+        stack: ['FastAPI', 'PostgreSQL', 'SQLAlchemy Async', 'JWT', 'Docker', 'React 18'],
+        linkLabel: { pt: 'Ver em produção', en: 'View live' },
+        summary: { pt: 'Sistema de gestão para empresa real: projetos, tarefas, kanban, agenda, orçamento, Gantt, EAP, fórum, notificações e chatbot com IA.',
+                   en: 'Management system for a real company: projects, tasks, kanban, calendar, budget, Gantt, WBS, forum, notifications and an AI chatbot.' },
+        points: {
+          pt: ['Arquitetura FastAPI + PostgreSQL com SQLAlchemy assíncrono e Alembic para migrations.',
+               'Auth JWT (access + refresh), deploy em VPS via Docker Compose + Caddy.',
+               'Chatbot com IA integrado via API da Anthropic, com interações inteligentes dentro da plataforma.'],
+          en: ['FastAPI + PostgreSQL architecture with async SQLAlchemy and Alembic migrations.',
+               'JWT auth (access + refresh), VPS deploy with Docker Compose + Caddy.',
+               'AI chatbot integrated via the Anthropic API, enabling smart interactions inside the platform.'] } },
+      { slotId: 'emenu', name: 'e-Menu Virtual', year: '2026', href: 'https://emenuvirtual.com.br',
+        img: 'uploads/emenu-1.jpg',
+        placeholder: 'Screenshot — e-Menu Virtual',
+        status: { pt: 'SaaS em Produção', en: 'SaaS in Production' },
+        stack: ['PHP', 'MySQL', 'Bootstrap 5', 'jQuery', 'Multi-tenant'],
+        linkLabel: { pt: 'Ver em produção', en: 'View live' },
+        summary: { pt: 'Plataforma SaaS multi-tenant para cardápios digitais: múltiplos restaurantes no mesmo domínio com isolamento completo de dados.',
+                   en: 'Multi-tenant SaaS platform for digital menus: multiple restaurants on the same domain with full data isolation.' },
+        points: {
+          pt: ['Painel administrativo com CRUD completo, categorias, itens e rotas amigáveis via .htaccess.',
+               'Isolamento de dados por tenant em hospedagem compartilhada.',
+               'Modelagem relacional MySQL e sistema web real em produção.'],
+          en: ['Admin panel with full CRUD, categories, items and friendly routes via .htaccess.',
+               'Per-tenant data isolation on shared hosting.',
+               'Relational MySQL modeling and a real web system in production.'] } },
+      { slotId: 'knucklebones', name: 'Knucklebones', year: '2026', href: 'https://kbones.xyz',
+        img: 'uploads/kbones-1.jpg',
+        placeholder: 'Screenshot — Knucklebones',
+        status: { pt: 'Web Game', en: 'Web Game' },
+        stack: ['JavaScript', 'HTML5', 'CSS3', 'Minimax AI', 'WebSockets P2P'],
+        linkLabel: { pt: 'Jogar agora', en: 'Play now' },
+        summary: { pt: 'Recriação web fiel do minigame Knucklebones (Cult of the Lamb): role dados, ocupe colunas e multiplique valores coincidentes direto no navegador.',
+                   en: 'Faithful web recreation of the Knucklebones minigame from Cult of the Lamb: roll dice, fill columns and multiply matching values right in the browser.' },
+        points: {
+          pt: ['Campanha contra bot com 3 níveis, multiplayer P2P e torneio "King of the Table".',
+               'IA do modo difícil usa minimax com 2-ply para jogadas mais desafiadoras.',
+               'HTML, CSS e JavaScript puros — sem framework e sem etapa de build.'],
+          en: ['Bot campaign with 3 difficulty levels, P2P multiplayer and a "King of the Table" tournament.',
+               'Hard-mode AI uses 2-ply minimax for tougher plays.',
+               'Vanilla HTML, CSS and JavaScript — no framework, no build step.'] } },
+      { slotId: 'underpressure', name: 'Under Pressure', year: '2026', href: 'https://under-pressure-wb.vercel.app',
+        img: 'uploads/underpressure-1.jpg',
+        placeholder: 'Screenshot — Under Pressure',
+        status: { pt: 'Web Game · Alpha', en: 'Web Game · Alpha' },
+        stack: ['React 18', 'Vite', 'Firebase Realtime DB'],
+        linkLabel: { pt: 'Jogar agora', en: 'Play now' },
+        summary: { pt: 'Jogo multiplayer de festa sobre calibragem, blefe leve e caos social numa nave sob pressão, sincronizado em tempo real sem backend dedicado.',
+                   en: 'Party multiplayer game about calibration, light bluffing and social chaos aboard a ship under pressure, synced in real time with no dedicated backend.' },
+        points: {
+          pt: ['Salas online, seleção cosmética de nave, modo competitivo FFA e votação de calibradores.',
+               'Sincronização em tempo real via Firebase Realtime Database, sem servidor próprio.',
+               'Engine autoritativa rodando no navegador do host da sala.'],
+          en: ['Online rooms, cosmetic ship selection, competitive FFA mode and calibrator voting.',
+               'Real-time sync via Firebase Realtime Database, no dedicated server.',
+               'Host-authoritative engine running in the room host\'s browser.'] } },
+    ];
+    const OSS = [
+      { name: 'AI Analyst', year: '2025', href: 'https://github.com/gabrielleaosb/ai_analyst',
+        status: { pt: 'Open Source', en: 'Open Source' },
+        stackLine: 'Django · LangChain · Llama 3 · Ollama · Celery · Pandas',
+        desc: { pt: 'Análise automatizada de datasets CSV com IA local: ingestão → fila assíncrona → Pandas → insights com Llama 3 via Ollama, com privacidade por design.',
+                en: 'Automated CSV dataset analysis with local AI: ingestion → async queue → Pandas → insights with Llama 3 via Ollama, privacy by design.' } },
+      { name: 'JubaBot — Discord RPG', year: '2024', href: 'https://github.com/gabrielleaosb/JubaBot',
+        status: { pt: 'Open Source', en: 'Open Source' },
+        stackLine: 'Python · discord.py · MongoDB · Motor (async)',
+        desc: { pt: 'Bot assíncrono com economia, progressão de personagens e combate — gerenciamento de estado complexo e concorrência nativa com asyncio.',
+                en: 'Async bot with economy, character progression and combat — complex state management and native asyncio concurrency.' } },
+      { name: 'LT Manager', year: '2025', href: 'https://github.com/gabrielleaosb/LT-Manager',
+        status: { pt: 'Em Desenvolvimento', en: 'In Development' },
+        stackLine: 'Flask · WebSockets · Canvas API · JavaScript',
+        desc: { pt: 'Plataforma para RPG de mesa online: comunicação em tempo real via WebSockets, canvas interativo e salas colaborativas.',
+                en: 'Online tabletop RPG platform: real-time communication over WebSockets, interactive canvas and collaborative rooms.' } },
+    ];
+    const SKILLS = [
+      { label: { pt: 'Back-End', en: 'Back-End' }, items: ['Python', 'FastAPI', 'Django', 'DRF', 'Flask', 'asyncio', 'Celery', 'REST APIs', 'JWT'] },
+      { label: { pt: 'Banco de Dados', en: 'Databases' }, items: ['PostgreSQL', 'MySQL', 'MongoDB', 'SQLAlchemy Async', 'Alembic', 'Redis', 'SQLite'] },
+      { label: { pt: 'DevOps', en: 'DevOps' }, items: ['Docker', 'Docker Compose', 'Caddy', 'Git', 'CI/CD', 'Bash', 'Linux'] },
+      { label: { pt: 'Testes', en: 'Testing' }, items: ['Pytest', 'Testes unitários', 'Testes de integração', 'TDD'] },
+      { label: { pt: 'IA Aplicada', en: 'Applied AI' }, items: ['LangChain', 'LLMs', 'Ollama', 'Llama 3', 'Anthropic API', 'Agents', 'Automação'] },
+      { label: { pt: 'Front-End', en: 'Front-End' }, items: ['React 18', 'Vite', 'TailwindCSS', 'JavaScript', 'HTML', 'CSS'] },
+    ];
+    const TIMELINE = [
+      { period: '2022 — ' + (lang === 'pt' ? 'atual' : 'now'),
+        title: { pt: 'Desenvolvedor Freelancer / Projetos Próprios', en: 'Freelance Developer / Own Products' },
+        org: 'Núcleo Zero Gestão · e-Menu Virtual',
+        desc: { pt: 'Desenvolvimento e manutenção de sistemas web em produção para clientes reais. APIs REST com autenticação, deploy e operação em VPS (Docker Compose + Caddy) e integração de LLMs em produtos reais com LangChain, Ollama e API da Anthropic.',
+                en: 'Development and maintenance of production web systems for real clients. REST APIs with auth, VPS deploy and operations (Docker Compose + Caddy) and LLM integration in real products with LangChain, Ollama and the Anthropic API.' } },
+      { period: '2022 — 2026',
+        title: { pt: 'Sistemas de Informação', en: 'Information Systems (B.Sc.)' },
+        org: 'CESMAC — Maceió, AL',
+        desc: { pt: '7º período · noturno · conclusão prevista para 2026.',
+                en: '7th semester · evening classes · expected graduation in 2026.' } },
+      { period: '2023 — ' + (lang === 'pt' ? 'atual' : 'now'),
+        title: { pt: 'Cursos & Certificações', en: 'Courses & Certificates' },
+        org: 'Udemy',
+        desc: { pt: 'Django & Django REST Framework · Análise de Dados com Python e Pandas · Banco de Dados e SQL Completo · FastAPI na Prática · Docker para Desenvolvedores · LangChain e Agentes de IA com LLMs.',
+                en: 'Django & Django REST Framework · Data Analysis with Python and Pandas · Complete Databases & SQL · FastAPI in Practice · Docker for Developers · LangChain and AI Agents with LLMs.' } },
+    ];
+    const loc = (v) => (v && typeof v === 'object' && !Array.isArray(v)) ? v[lang] : v;
+    const featured = FEATURED.map((p, i) => ({
+      ...p, status: loc(p.status), points: p.points[lang], summary: loc(p.summary), linkLabel: loc(p.linkLabel),
+      stackLine: p.stack.slice(0, 4).join(' · '),
+      open: () => this.setState({ open: i, det: false }),
+    }));
+    const oi = this.state.open;
+    const mpSrc = oi == null ? featured[0] : featured[oi];
+    const shots = oi == null ? [] : (this.IMGS[oi] || []);
+    const mp = mpSrc ? {
+      ...mpSrc,
+      // Sem imagens ainda: um slot vazio para arrastar a primeira.
+      shots: (shots.length ? shots : ['']).map((src, i) => ({
+        src, id: mpSrc.slotId + '-g' + (i + 1),
+      })),
+      // No mobile a ficha é opcional, para as imagens começarem mais cedo.
+      detCaret: this.state.det ? '▴' : '▾',
+      detStyle: this.state.det
+        ? 'display:grid;gap:30px;margin-top:26px;animation:rise 0.35s ease both'
+        : 'display:none',
+      detBtnStyle: 'border:1px solid ' + (this.state.det ? 'var(--accent)' : 'var(--border)') +
+        ';background:transparent;color:' + (this.state.det ? 'var(--accent)' : 'var(--text)') +
+        ';font-family:inherit;font-size:12px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;' +
+        'padding:12px 20px;border-radius:999px;cursor:pointer;transition:border-color 0.2s ease, color 0.2s ease',
+    } : {};
+    return {
+      accent: this.props.accent ?? '#05F283',
+      t: T[lang],
+      toggleDet: () => this.setState({ det: !this.state.det }),
+      waHref: 'https://wa.me/5582991487729?text=' + encodeURIComponent(T[lang].waMsg),
+      // Contato é CTA (pílula); os demais ganham um traço accent quando ativos.
+      navLinks: [
+        { id: 'projetos', label: T[lang].navProjects },
+        { id: 'skills', label: T[lang].navSkills },
+        { id: 'exp', label: T[lang].navExp },
+        { id: 'contato', label: T[lang].navContact + ' →', cta: true },
+      ].map((l) => {
+        const on = this.state.active === l.id;
+        return { href: '#' + l.id, label: l.label, style: l.cta
+          ? 'flex:none;white-space:nowrap;color:var(--accent);padding:7px 14px;border-radius:999px;' +
+            'border:1px solid ' + (on ? 'var(--accent)' : 'var(--border)') +
+            (on ? ';background:color-mix(in srgb, var(--accent) 13%, transparent)' : '') +
+            ';transition:border-color 0.25s ease, background-color 0.25s ease'
+          : 'white-space:nowrap;padding:5px 0;color:' + (on ? 'var(--text)' : 'var(--muted)') +
+            ';border-bottom:2px solid ' + (on ? 'var(--accent)' : 'transparent') +
+            ';transition:color 0.25s ease, border-color 0.25s ease' };
+      }),
+      setPt: () => this.setState({ lang: 'pt' }),
+      setEn: () => this.setState({ lang: 'en' }),
+      ptBtnStyle: btn(lang === 'pt'),
+      enBtnStyle: btn(lang === 'en'),
+      featured,
+      oss: OSS.map((p, i) => ({
+        ...p, status: loc(p.status), desc: loc(p.desc),
+        num: String(i + 1).padStart(2, '0'),
+        repo: p.href.replace(/^https:\/\/github\.com\//, ''),
+        aria: T[lang].viewCode + ' — ' + p.name,
+      })),
+      skills: SKILLS.map((g, i) => ({ ...g, label: loc(g.label), num: String(i + 1).padStart(2, '0') })),
+      timeline: TIMELINE.map(e => ({ ...e, period: loc(e.period), title: loc(e.title), desc: loc(e.desc) })),
+      modalOpen: oi != null,
+      mp,
+      close: () => this.setState({ open: null }),
+    };
+  }
+}
+</script>
 </body>
 </html>

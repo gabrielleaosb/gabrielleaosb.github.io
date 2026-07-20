@@ -1,14 +1,28 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git fetch *)",
-      "Bash(git reset *)",
-      "Bash(git -C /home/gabriel/Projects/projects/my-port log --all --oneline --graph)",
-      "Bash(git -C /home/gabriel/Projects/projects/my-port log --all --name-status --oneline)",
-      "Bash(git -C /home/gabriel/Projects/projects/my-port log --all --oneline --follow -- index.html)",
-      "Bash(git -C /home/gabriel/Projects/projects/my-port log --all --oneline --follow -- Portfolio.html)",
-      "Bash(git *)",
-      "Bash(grep -E \"\\\\.\\(json|yml|yaml|ts|tsx|js\\)$\")"
+      "Bash(python3 -c ' *)",
+      "Bash(node -e \"console.log\\(encodeURI\\('curriculo_GABRIEL_LEÃO.pdf'\\)\\)\")",
+      "Bash(python3 -)",
+      "Bash(node -e ' *)",
+      "mcp__plugin_playwright_playwright__browser_resize",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "Read(//c//**)",
+      "Read(//c/Users/gabri/**)",
+      "mcp__plugin_playwright_playwright__browser_snapshot",
+      "Bash(awk 'NR==402{print length\\($0\\)}' index.html)",
+      "Bash(git checkout *)",
+      "Bash(python3 -c \"import datetime; print\\(datetime.datetime.fromtimestamp\\(1773940398\\)\\)\")",
+      "WebFetch(domain:github.com)",
+      "Bash(python -c ' *)",
+      "WebFetch(domain:wbagetti.com.br)",
+      "mcp__plugin_playwright_playwright__browser_evaluate",
+      "Bash(python -m http.server 8765 --bind 127.0.0.1)",
+      "mcp__plugin_playwright_playwright__browser_hover",
+      "Bash(rm -f case3.jpeg)",
+      "Bash(rm -rf .playwright-mcp)",
+      "Bash(python -)"
     ]
   }
 }
