@@ -29,7 +29,12 @@
       "Bash(rm -rf \"C:/Users/gabri/Projects/projects/my-portfolio/.playwright-mcp\")",
       "mcp__plugin_playwright_playwright__browser_network_requests",
       "Bash(git check-ignore *)",
-      "Bash(echo \"ignored=$?\")"
+      "Bash(echo \"ignored=$?\")",
+      "Bash(python -c \"import PIL; print\\(PIL.__version__\\)\")",
+      "Skill(artifact-design)",
+      "Bash(python *)",
+      "Artifact",
+      "mcp__plugin_playwright_playwright__browser_click"
     ]
   }
 }

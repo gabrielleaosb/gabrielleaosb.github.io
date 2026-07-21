@@ -30,7 +30,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="uploads/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="uploads/favicon-64.png">
 <link rel="apple-touch-icon" href="uploads/apple-touch-icon.png">
-<meta name="theme-color" content="#0E0E11">
+<meta name="theme-color" content="#0E1518">
 
 <script type="application/ld+json">
 {
@@ -77,14 +77,35 @@
      Altura real: 87px no mobile (duas linhas) e 69px acima de 760px. */
   section[id], #top { scroll-margin-top: 106px; }
   @media (min-width: 761px) { section[id], #top { scroll-margin-top: 90px; } }
-  body { margin: 0; background: #0E0E11; }
+  body { margin: 0; background: #0E1518; }
   /* Barra de rolagem no tom do site (a padrão do Windows é clara e destoa). */
-  html { color-scheme: dark; scrollbar-width: thin; scrollbar-color: #2E2E36 transparent; }
+  html { color-scheme: dark; scrollbar-width: thin; scrollbar-color: #2F3F45 transparent; }
   ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-track { background: #0A0A0D; }
-  ::-webkit-scrollbar-thumb { background: #2E2E36; border-radius: 8px; border: 2px solid #0A0A0D; }
+  ::-webkit-scrollbar-track { background: #0B1114; }
+  ::-webkit-scrollbar-thumb { background: #2F3F45; border-radius: 8px; border: 2px solid #0B1114; }
   ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-  :root { --bg: #0E0E11; --surface: #15151A; --border: #232329; --text: #F2F2F0; --muted: #8A8A93; --accent: #05F283; --ink: #0E0E11; }
+  /* ---- Paleta: escala tonal de tinta, não preto puro ----
+     Os cinzas antigos eram neutros absolutos (#0E0E11, #F2F2F0), o que deixava
+     o verde como única coisa cromática da tela — daí a sensação de "escuro
+     demais": não era falta de luz, era falta de matiz. Toda a escala agora
+     carrega o mesmo viés frio esverdeado do accent, e o piso subiu de
+     L* 4,0 para L* 6,3.
+     Cinco degraus, usados por elevação: as seções alternam deep ↔ raised
+     (11 pontos de L*, contra os 4 de antes) e os cards sobem mais um degrau
+     a partir da faixa em que estão. */
+  :root {
+    --bg-deep: #0E1518;      /* hero, skills, contato — o piso */
+    --bg: #141C20;           /* base do documento e do case study */
+    --bg-raised: #202C30;    /* projetos, experiência — a faixa elevada */
+    --surface: #27353A;      /* cards sobre faixa elevada */
+    --surface-deep: #182126; /* cards sobre faixa profunda */
+    --border: #2F3F45;
+    --text: #E8EFEE;         /* branco quebrado: #F2F2F0 puro vibrava no escuro */
+    --muted: #97A6A5;
+    --accent: #3EDD9A;       /* mesmo verde, saturação contida */
+    --ink: #071013;          /* texto sobre o accent */
+    --ghost: #1C282C;        /* marca d'água da Experiência */
+  }
   a { color: var(--accent); text-decoration: none; }
   a:hover { color: var(--text); }
   ::selection { background: var(--accent); color: var(--ink); }
@@ -120,8 +141,8 @@
     [data-tile] { border: 0 !important; border-radius: 0 !important; }
     [data-tile-img] { transition: transform 0.6s ease; }
     [data-tile]:hover [data-tile-img] { transform: scale(1.04); }
-    [data-tile-info] { position: absolute; inset: 0; z-index: 1;
-                       background: rgba(8,8,11,0.88); border-top: 0 !important;
+    [data-tile-info] { position: absolute; inset: 0; z-index: 1; color: var(--text);
+                       background: rgba(10,16,18,0.9); border-top: 0 !important;
                        align-items: center; justify-content: center; text-align: center;
                        gap: 13px !important; padding: 26px 30px !important;
                        opacity: 0; transition: opacity 0.45s ease; }
@@ -145,10 +166,10 @@
     [data-repo] > div:last-child { width: 100%; justify-content: space-between; gap: 12px !important; }
     [data-repo] [data-repo-meta] { flex-direction: row !important; align-items: center !important; gap: 12px !important; }
   }
-  [data-modal-scroll] { scrollbar-width: thin; scrollbar-color: #2E2E36 transparent; }
+  [data-modal-scroll] { scrollbar-width: thin; scrollbar-color: #2F3F45 transparent; }
   [data-modal-scroll]::-webkit-scrollbar { width: 8px; }
   [data-modal-scroll]::-webkit-scrollbar-track { background: transparent; }
-  [data-modal-scroll]::-webkit-scrollbar-thumb { background: #2E2E36; border-radius: 8px; }
+  [data-modal-scroll]::-webkit-scrollbar-thumb { background: var(--border); border-radius: 8px; }
   [data-modal-scroll]::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
   /* ---- Site mobile-first: abaixo de 760px nada pode transbordar ---- */
@@ -199,7 +220,7 @@
     </div>
   </header>
 
-  <section style="border-bottom:1px solid var(--border);background-color:#0B0B0E;background-image:radial-gradient(ellipse 55% 45% at 75% 12%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 70%),linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);background-size:auto,58px 58px,58px 58px">
+  <section style="border-bottom:1px solid var(--border);background-color:var(--bg-deep);background-image:radial-gradient(ellipse 55% 45% at 75% 12%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 70%),linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);background-size:auto,58px 58px,58px 58px">
     <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:100px 28px 0;animation:rise 0.7s ease both">
       <div data-avail="true" style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:26px">
         <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block"></span>
@@ -223,7 +244,7 @@
     </div>
   </section>
 
-  <section id="projetos" style="background-color:#16161D;background-image:radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);background-size:26px 26px">
+  <section id="projetos" style="background-color:var(--bg-raised);background-image:radial-gradient(ellipse 45% 55% at 88% 8%, color-mix(in srgb, var(--accent) 6%, transparent), transparent 70%),radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);background-size:auto,26px 26px">
     <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:96px 28px">
       <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:44px">
         <span style="font-size:14px;font-weight:700;color:var(--accent)">01</span>
@@ -275,7 +296,7 @@
     </div>
   </section>
 
-  <section id="skills" style="border-top:1px solid var(--border);background-color:#0B0B0E;background-image:repeating-linear-gradient(-45deg, color-mix(in srgb, var(--accent) 5%, transparent) 0 1px, transparent 1px 22px)">
+  <section id="skills" style="border-top:1px solid var(--border);background-color:var(--bg-deep);background-image:repeating-linear-gradient(-45deg, color-mix(in srgb, var(--accent) 5%, transparent) 0 1px, transparent 1px 22px)">
     <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:96px 28px">
       <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:44px">
         <span style="font-size:14px;font-weight:700;color:var(--accent)">03</span>
@@ -283,7 +304,7 @@
       </div>
       <div data-col3="true" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
         <sc-for list="{{ skills }}" as="g" hint-placeholder-count="6">
-          <div data-skill="true" style="position:relative;overflow:hidden;background:color-mix(in srgb, var(--surface) 88%, transparent);border:1px solid var(--border);border-radius:16px;padding:26px 26px 28px;display:flex;flex-direction:column;gap:16px;transition:transform 0.25s ease, border-color 0.25s ease" style-hover="border-color:var(--accent);transform:translateY(-4px)">
+          <div data-skill="true" style="position:relative;overflow:hidden;background:var(--surface-deep);border:1px solid var(--border);border-radius:16px;padding:26px 26px 28px;display:flex;flex-direction:column;gap:16px;transition:transform 0.25s ease, border-color 0.25s ease" style-hover="border-color:var(--accent);transform:translateY(-4px)">
             <span data-skill-num="true" style="position:absolute;top:-14px;right:10px;font-size:76px;font-weight:800;color:transparent;-webkit-text-stroke:1px var(--border);line-height:1;pointer-events:none">{{ g.num }}</span>
             <div style="display:flex;align-items:center;gap:10px">
               <span style="width:22px;height:3px;background:var(--accent);border-radius:2px;display:inline-block"></span>
@@ -300,8 +321,8 @@
     </div>
   </section>
 
-  <section id="exp" style="position:relative;overflow:hidden;border-top:1px solid var(--border);background-color:#16161D;background-image:radial-gradient(ellipse 50% 60% at 8% 50%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 70%)">
-    <span data-ghost="true" style="position:absolute;top:34px;right:-20px;font-size:clamp(90px,14vw,190px);font-weight:800;letter-spacing:-0.02em;text-transform:uppercase;color:transparent;-webkit-text-stroke:1px #222228;line-height:1;pointer-events:none;user-select:none">{{ t.expGhost }}</span>
+  <section id="exp" style="position:relative;overflow:hidden;border-top:1px solid var(--border);background-color:var(--bg-raised);background-image:radial-gradient(ellipse 50% 60% at 8% 50%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 70%)">
+    <span data-ghost="true" style="position:absolute;top:34px;right:-20px;font-size:clamp(90px,14vw,190px);font-weight:800;letter-spacing:-0.02em;text-transform:uppercase;color:transparent;-webkit-text-stroke:1px var(--ghost);line-height:1;pointer-events:none;user-select:none">{{ t.expGhost }}</span>
     <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:96px 28px;position:relative">
       <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:56px">
         <span style="font-size:14px;font-weight:700;color:var(--accent)">04</span>
@@ -309,7 +330,7 @@
       </div>
       <div data-col3="true" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
         <sc-for list="{{ timeline }}" as="e" hint-placeholder-count="3">
-          <div style="background:#0C0C10;border:1px solid var(--border);border-radius:16px;padding:28px 26px;display:flex;flex-direction:column;gap:14px;transition:transform 0.25s ease, border-color 0.25s ease" style-hover="border-color:var(--accent);transform:translateY(-4px)">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 26px;display:flex;flex-direction:column;gap:14px;transition:transform 0.25s ease, border-color 0.25s ease" style-hover="border-color:var(--accent);transform:translateY(-4px)">
             <span style="align-self:flex-start;background:color-mix(in srgb, var(--accent) 14%, transparent);color:var(--accent);font-size:12px;font-weight:800;letter-spacing:0.04em;padding:6px 12px;border-radius:999px">{{ e.period }}</span>
             <h3 style="margin:0;font-size:19px;font-weight:800;text-transform:uppercase;letter-spacing:-0.01em">{{ e.title }}</h3>
             <p style="margin:-8px 0 0;font-size:12px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted)">{{ e.org }}</p>
@@ -320,7 +341,7 @@
     </div>
   </section>
 
-  <section id="contato" style="border-top:1px solid var(--border);background-color:#0B0B0E;background-image:radial-gradient(ellipse 60% 55% at 50% 115%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%)">
+  <section id="contato" style="border-top:1px solid var(--border);background-color:var(--bg-deep);background-image:radial-gradient(ellipse 60% 55% at 50% 115%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%)">
     <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:110px 28px 60px">
       <p style="margin:0 0 14px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)">05 — {{ t.contactKicker }}</p>
       <h2 style="margin:0 0 22px;font-size:clamp(44px,7.5vw,96px);font-weight:800;letter-spacing:-0.03em;line-height:0.96;text-transform:uppercase">{{ t.contactTitle1 }}<br><span style="color:var(--accent)">{{ t.contactTitle2 }}</span></h2>
@@ -391,7 +412,7 @@
 
       <div data-shots="true" style="max-width:1600px;margin:0 auto;display:flex;flex-direction:column;gap:1px;background:var(--border);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
         <sc-for list="{{ mp.shots }}" as="s" hint-placeholder-count="4">
-          <div style="position:relative;aspect-ratio:2 / 1;background:#0A0A0D">
+          <div style="position:relative;aspect-ratio:2 / 1;background:var(--bg-deep)">
             <!-- pointer-events:none é essencial: a imagem dentro do image-slot usa
                  touch-action:none (shadow DOM, inalcançável pelo CSS daqui), o que
                  impedia a página de rolar quando o dedo caía sobre uma screenshot. -->
@@ -410,7 +431,7 @@
   </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#05F283&quot;,&quot;#D9FF3D&quot;,&quot;#7EE7C7&quot;,&quot;#8AB4FF&quot;],&quot;default&quot;:&quot;#05F283&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#3EDD9A&quot;,&quot;#05F283&quot;,&quot;#7EE7C7&quot;,&quot;#8AB4FF&quot;],&quot;default&quot;:&quot;#3EDD9A&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;}}">
 class Component extends DCLogic {
   state = { lang: 'pt', open: null, active: '', det: false };
   NAV_IDS = ['projetos', 'skills', 'exp', 'contato'];
@@ -641,7 +662,7 @@ class Component extends DCLogic {
         'padding:12px 20px;border-radius:999px;cursor:pointer;transition:border-color 0.2s ease, color 0.2s ease',
     } : {};
     return {
-      accent: this.props.accent ?? '#05F283',
+      accent: this.props.accent ?? '#3EDD9A',
       t: T[lang],
       toggleDet: () => this.setState({ det: !this.state.det }),
       waHref: 'https://wa.me/5582991487729?text=' + encodeURIComponent(T[lang].waMsg),
