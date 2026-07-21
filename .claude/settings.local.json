@@ -35,7 +35,9 @@
       "Bash(python *)",
       "Artifact",
       "mcp__plugin_playwright_playwright__browser_click",
-      "Bash(gh pr *)"
+      "Bash(gh pr *)",
+      "Bash(git fetch *)",
+      "Bash(git merge *)"
     ]
   }
 }

@@ -139,6 +139,12 @@
                        background: var(--border); border: 1px solid var(--border);
                        border-radius: 16px; overflow: hidden; }
     [data-tile] { border: 0 !important; border-radius: 0 !important; }
+    /* O primeiro projeto abre a seção em largura total. Com 5 tiles num grid de
+       2 colunas sobraria um órfão na última linha; em largura dupla a conta
+       fecha (1 + 2 + 2) e o destaque cai em quem merece. Mantém 2:1 como os
+       demais: a arte do museu é 1.67:1 e cortes mais largos comiam o título
+       da tela. */
+    [data-tile]:first-child { grid-column: 1 / -1; }
     [data-tile-img] { transition: transform 0.6s ease; }
     [data-tile]:hover [data-tile-img] { transform: scale(1.04); }
     [data-tile-info] { position: absolute; inset: 0; z-index: 1; color: var(--text);
@@ -165,6 +171,9 @@
   @media (min-width: 1000px) {
     [data-hero-grid] { grid-template-columns: 1fr auto !important; gap: 32px !important; }
   }
+  /* Tile sem imagem: a proporção 2:1 existe para emoldurar screenshot. Um painel
+     de texto nela vira um vazio enorme — aqui a caixa passa a medir o conteúdo. */
+  [data-tile-box]:has([data-tile-soon]) { aspect-ratio: auto !important; }
   /* Open source: índice de repositórios — a linha inteira é o link. */
   [data-repo] { transition: background-color 0.3s ease; }
   [data-repo]:hover { background-color: color-mix(in srgb, var(--accent) 5%, transparent); }
@@ -246,7 +255,7 @@
         <div data-hero-cta="true" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end;font-size:13px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase">
           <a href="#projetos" style="background:var(--accent);color:var(--ink);padding:14px 26px;border-radius:999px" style-hover="opacity:0.85;color:var(--ink)">{{ t.ctaProjects }}</a>
           <a href="https://github.com/gabrielleaosb" target="_blank" style="border:1px solid var(--border);color:var(--text);padding:14px 26px;border-radius:999px" style-hover="border-color:var(--accent);color:var(--accent)">GitHub ↗</a>
-          <a href="uploads/curriculo-gabriel-leao.pdf" download="CV-Gabriel-Leao.pdf" style="border:1px solid var(--accent);color:var(--accent);padding:14px 26px;border-radius:999px" style-hover="background:var(--accent);color:var(--ink)">{{ t.cv }} ↓</a>
+          <a href="uploads/curriculo-gabriel-leao.pdf" download="CV-Gabriel-Leao.pdf" style="border:1px solid var(--accent);color:var(--accent);padding:14px 26px;border-radius:999px" style-hover="background:var(--accent);color:var(--ink)">{{ t.cv }}</a>
         </div>
       </div>
       <div data-stats="true" style="display:flex;gap:56px;margin-top:56px;padding:26px 0;border-top:1px solid var(--border)">
@@ -267,9 +276,20 @@
         <sc-for list="{{ featured }}" as="p" hint-placeholder-count="4">
           <article data-tile="true" onClick="{{ p.open }}" style="position:relative;overflow:hidden;cursor:pointer;background:var(--surface);border:1px solid var(--border);border-radius:14px;display:flex;flex-direction:column">
             <div data-tile-box="true" style="position:relative;aspect-ratio:2 / 1">
-              <div data-tile-img="true" style="position:absolute;inset:0;pointer-events:none">
-                <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ p.slotId }}" shape="rect" src="{{ p.img }}" placeholder="{{ p.placeholder }}" hint-size="560px,280px"></x-import>
-              </div>
+              <sc-if value="{{ p.hasImg }}" hint-placeholder-val="{{ true }}">
+                <div data-tile-img="true" style="position:absolute;inset:0;pointer-events:none">
+                  <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ p.slotId }}" shape="rect" src="{{ p.img }}" placeholder="{{ p.placeholder }}" hint-size="560px,280px"></x-import>
+                </div>
+              </sc-if>
+              <!-- Projeto ainda sem registro fotográfico: em vez de uma caixa vazia
+                   (ou da arte do cliente, que é trabalho de outra pessoa), um painel
+                   que assume a espera. -->
+              <sc-if value="{{ p.soon }}" hint-placeholder-val="{{ false }}">
+                <div data-tile-soon="true" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:52px 28px;pointer-events:none;background:var(--surface);background-image:repeating-linear-gradient(-45deg, color-mix(in srgb, var(--accent) 6%, transparent) 0 1px, transparent 1px 16px)">
+                  <span style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);border:1px solid color-mix(in srgb, var(--accent) 45%, transparent);border-radius:999px;padding:7px 16px">{{ t.soonBadge }}</span>
+                  <p style="margin:0;max-width:34ch;font-size:13.5px;line-height:1.6;color:var(--muted);text-wrap:pretty">{{ t.soonTile }}</p>
+                </div>
+              </sc-if>
             </div>
             <div data-tile-info="true" style="display:flex;flex-direction:column;gap:9px;padding:11px 14px 12px;border-top:1px solid var(--border);pointer-events:none">
               <h3 data-tile-name="true" style="margin:0;font-size:14px;font-weight:800;letter-spacing:0.02em;text-transform:uppercase;color:var(--text)">{{ p.name }}</h3>
@@ -392,7 +412,9 @@
         <h1 style="margin:0 0 22px;font-size:clamp(34px,7.2vw,66px);font-weight:800;line-height:0.96;letter-spacing:-0.03em;text-transform:uppercase">{{ mp.name }}</h1>
         <div data-case-acts="true" style="display:flex;flex-wrap:wrap;gap:9px">
           <button onClick="{{ toggleDet }}" style="{{ mp.detBtnStyle }}">{{ t.details }} {{ mp.detCaret }}</button>
-          <a href="{{ mp.href }}" target="_blank" style="background:var(--accent);color:var(--ink);font-size:12px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:12px 20px;border-radius:999px" style-hover="opacity:0.85;color:var(--ink)">{{ mp.linkLabel }} &#8599;</a>
+          <sc-if value="{{ mp.hasLink }}" hint-placeholder-val="{{ true }}">
+            <a href="{{ mp.href }}" target="_blank" style="background:var(--accent);color:var(--ink);font-size:12px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:12px 20px;border-radius:999px" style-hover="opacity:0.85;color:var(--ink)">{{ mp.linkLabel }} &#8599;</a>
+          </sc-if>
         </div>
         <div data-case-cols="true" style="{{ mp.detStyle }}">
           <div style="display:flex;flex-direction:column;gap:22px">
@@ -415,15 +437,25 @@
                 </sc-for>
               </div>
             </div>
-            <div data-case-access="true" style="display:none;flex-direction:column;gap:9px">
-              <span style="font-size:10.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)">{{ t.linkLabelTitle }}</span>
-              <a href="{{ mp.href }}" target="_blank" style="align-self:flex-start;background:var(--accent);color:var(--ink);font-size:12.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:14px 26px;border-radius:999px" style-hover="opacity:0.85;color:var(--ink)">{{ mp.linkLabel }} &#8599;</a>
-            </div>
+            <sc-if value="{{ mp.hasLink }}" hint-placeholder-val="{{ true }}">
+              <div data-case-access="true" style="display:none;flex-direction:column;gap:9px">
+                <span style="font-size:10.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)">{{ t.linkLabelTitle }}</span>
+                <a href="{{ mp.href }}" target="_blank" style="align-self:flex-start;background:var(--accent);color:var(--ink);font-size:12.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:14px 26px;border-radius:999px" style-hover="opacity:0.85;color:var(--ink)">{{ mp.linkLabel }} &#8599;</a>
+              </div>
+            </sc-if>
           </div>
         </div>
       </div>
 
-      <div data-shots="true" style="max-width:1600px;margin:0 auto;display:flex;flex-direction:column;gap:1px;background:var(--border);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+      <sc-if value="{{ mp.soon }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:1180px;margin:0 auto;padding:8px 18px 0">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:64px 30px;border:1px solid var(--border);border-radius:16px;background:var(--surface);background-image:repeating-linear-gradient(-45deg, color-mix(in srgb, var(--accent) 6%, transparent) 0 1px, transparent 1px 16px)">
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);border:1px solid color-mix(in srgb, var(--accent) 45%, transparent);border-radius:999px;padding:8px 18px">{{ t.soonBadge }}</span>
+            <p style="margin:0;max-width:56ch;font-size:15px;line-height:1.7;color:var(--muted);text-wrap:pretty">{{ t.soonShots }}</p>
+          </div>
+        </div>
+      </sc-if>
+      <div data-shots="true" style="{{ mp.shotsStyle }}">
         <sc-for list="{{ mp.shots }}" as="s" hint-placeholder-count="4">
           <div style="position:relative;aspect-ratio:2 / 1;background:var(--bg-deep)">
             <!-- pointer-events:none é essencial: a imagem dentro do image-slot usa
@@ -437,7 +469,9 @@
       </div>
 
       <div data-case-foot="true" style="max-width:1180px;margin:0 auto;padding:40px 18px 56px;display:flex;flex-wrap:wrap;gap:12px">
-        <a href="{{ mp.href }}" target="_blank" style="background:var(--accent);color:var(--ink);font-size:12.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:15px 28px;border-radius:999px" style-hover="opacity:0.85;color:var(--ink)">{{ mp.linkLabel }} &#8599;</a>
+        <sc-if value="{{ mp.hasLink }}" hint-placeholder-val="{{ true }}">
+          <a href="{{ mp.href }}" target="_blank" style="background:var(--accent);color:var(--ink);font-size:12.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:15px 28px;border-radius:999px" style-hover="opacity:0.85;color:var(--ink)">{{ mp.linkLabel }} &#8599;</a>
+        </sc-if>
         <button onClick="{{ close }}" style="border:1px solid var(--border);background:transparent;color:var(--text);font-family:inherit;font-size:12.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:15px 28px;border-radius:999px;cursor:pointer" style-hover="border-color:var(--accent);color:var(--accent)">&#8592; {{ t.backLabel }}</button>
       </div>
     </div>
@@ -450,6 +484,10 @@ class Component extends DCLogic {
   NAV_IDS = ['projetos', 'skills', 'exp', 'contato'];
   // Screenshots de cada projeto, na mesma ordem de FEATURED.
   IMGS = [
+    // Museu: sem registro ainda. As telas do sistema são arte do designer do
+    // museu, não do trabalho de engenharia — as fotos certas são da instalação
+    // montada e rodando no local, depois da inauguração.
+    [],
     ['uploads/nucleozero-1.jpg', 'uploads/nucleozero-2.jpg', 'uploads/nucleozero-3.jpg',
      'uploads/nucleozero-4.jpg', 'uploads/nucleozero-5.jpg', 'uploads/nucleozero-6.jpg',
      'uploads/nucleozero-7.jpg', 'uploads/nucleozero-8.jpg', 'uploads/nucleozero-9.jpg',
@@ -527,6 +565,9 @@ class Component extends DCLogic {
         dropMain: 'Arraste a imagem principal do projeto', dropMore: 'Arraste outra imagem',
         caseStudy: 'Estudo de caso', highlights: 'Destaques', stackLabel: 'Tecnologias',
         backLabel: 'Voltar', linkLabelTitle: 'Acesso', details: 'Detalhes',
+        soonBadge: 'Registro em breve',
+        soonTile: 'As fotos da instalação montada e em funcionamento no museu entram aqui depois da inauguração.',
+        soonShots: 'O sistema roda nos dispositivos do próprio museu — tablet, TV e projetor. O registro fotográfico da instalação em funcionamento entra aqui depois da inauguração.',
       },
       en: {
         navProjects: 'Projects', navSkills: 'Skills', navExp: 'Experience', navContact: 'Contact',
@@ -543,9 +584,31 @@ class Component extends DCLogic {
         dropMain: 'Drop the main project image', dropMore: 'Drop another image',
         caseStudy: 'Case study', highlights: 'Highlights', stackLabel: 'Tech stack',
         backLabel: 'Back', linkLabelTitle: 'Access', details: 'Details',
+        soonBadge: 'Photos coming soon',
+        soonTile: 'Photos of the installation running on site go here once the museum opens.',
+        soonShots: 'The system runs on the museum’s own devices — tablet, TV and projector. Photos of the installation in operation go here once the museum opens.',
       }
     };
     const FEATURED = [
+      // Sem href: roda nos dispositivos do museu, não tem URL pública. O botão
+      // de acesso some sozinho (ver hasLink).
+      { slotId: 'museu', name: 'Museu do Sertão — Piranhas', year: '2026', href: '',
+        img: '',
+        placeholder: 'Foto — Museu do Sertão',
+        status: { pt: 'Em Desenvolvimento', en: 'In Development' },
+        stack: ['Next.js 16', 'React 19', 'TypeScript', 'Socket.IO', 'PostgreSQL', 'Drizzle', 'Docker', 'OSC'],
+        linkLabel: { pt: 'Ver em produção', en: 'View live' },
+        summary: { pt: 'Sistemas interativos para o Museu do Sertão de Piranhas (AL): kiosk com projeção mapeada sobre uma maquete física, cabine de depoimentos e painel de exibição em tempo real.',
+                   en: 'Interactive systems for the Museu do Sertão in Piranhas, Brazil: a kiosk driving mapped projection onto a physical scale model, a visitor testimonial booth and a real-time display panel.' },
+        points: {
+          pt: ['Servidor autoritativo por WebSocket sincroniza três saídas físicas — tablet, TV e projetor — com a máquina de estados no servidor: o tablet nunca decide sozinho o que a TV mostra.',
+               'Agente local em Node escuta o estado da sala e dispara cues no MadMapper via OSC, mapeando a projeção sobre a maquete.',
+               'Cabine de depoimentos com captura por webcam: HTTPS via Caddy (getUserMedia exige contexto seguro), teclado virtual embutido e timeout de inatividade para operação desassistida em monitor touch.',
+               'Deploy em Docker Compose (app + PostgreSQL + proxy), rodando localmente nos dispositivos do museu.'],
+          en: ['An authoritative WebSocket server keeps three physical outputs in sync — tablet, TV and projector — with the state machine living on the server: the tablet never decides on its own what the TV shows.',
+               'A local Node agent listens to room state and fires cues into MadMapper over OSC, driving the projection mapped onto the scale model.',
+               'Testimonial booth with webcam capture: HTTPS via Caddy (getUserMedia requires a secure context), built-in on-screen keyboard and inactivity timeout for unattended touch-monitor operation.',
+               'Docker Compose deploy (app + PostgreSQL + proxy), running locally on the museum devices.'] } },
       { slotId: 'nucleozero', name: 'Núcleo Zero Gestão', year: '2026', href: 'https://gestao.nucleozero.com.br',
         img: 'uploads/nucleozero-1.jpg',
         placeholder: 'Screenshot — Núcleo Zero Gestão',
@@ -653,6 +716,8 @@ class Component extends DCLogic {
     const featured = FEATURED.map((p, i) => ({
       ...p, status: loc(p.status), points: p.points[lang], summary: loc(p.summary), linkLabel: loc(p.linkLabel),
       stackLine: p.stack.slice(0, 4).join(' · '),
+      // Sem imagem o tile mostra o painel de "em breve" no lugar do image-slot.
+      hasImg: !!p.img, soon: !p.img,
       open: () => this.setState({ open: i, det: false }),
     }));
     const oi = this.state.open;
@@ -660,6 +725,15 @@ class Component extends DCLogic {
     const shots = oi == null ? [] : (this.IMGS[oi] || []);
     const mp = mpSrc ? {
       ...mpSrc,
+      // Projeto sem URL pública (roda só nos dispositivos do cliente): em vez de
+      // um botão que não leva a lugar nenhum, a linha de acesso não é renderizada.
+      hasLink: !!mpSrc.href,
+      soon: !shots.length,
+      // Sem screenshots a faixa não some sozinha: ela tem borda e fundo próprios
+      // e deixaria duas linhas soltas na página.
+      shotsStyle: shots.length
+        ? 'max-width:1600px;margin:0 auto;display:flex;flex-direction:column;gap:1px;background:var(--border);border-top:1px solid var(--border);border-bottom:1px solid var(--border)'
+        : 'display:none',
       // Sem imagens ainda: um slot vazio para arrastar a primeira.
       shots: (shots.length ? shots : ['']).map((src, i) => ({
         src, id: mpSrc.slotId + '-g' + (i + 1),
