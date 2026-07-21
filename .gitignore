@@ -1,0 +1,8 @@
+# Configurações locais do Claude Code (por máquina, não versionar)
+.claude/settings.local.json
+
+# Artefatos temporários de screenshot do Playwright
+.playwright-mcp/
+
+# Nota: .image-slots.state.json é versionado de propósito — sem ele o
+# GitHub Pages devolve 404 no fetch do image-slot.js. Não ignorar.
