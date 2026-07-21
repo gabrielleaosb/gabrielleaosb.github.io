@@ -152,6 +152,19 @@
     [data-tile-info] > *:nth-child(3) { transition-delay: 0.28s; }
     [data-tile]:hover [data-tile-info] > * { opacity: 1; transform: none; }
   }
+  /* ---- Os três CTAs do hero ----
+     A altura da pílula não pode depender do glifo que está dentro dela: ↗ e ↓
+     esticam a caixa de linha e deixavam o botão sem seta 3px mais baixo. Em PT
+     isso não aparecia porque os três dividem a mesma linha do flex e o stretch
+     igualava tudo; em EN os rótulos são maiores, a terceira pílula quebra para
+     a linha de baixo, que passa a ter altura própria — e a diferença aparece. */
+  [data-hero-cta] > a { display: inline-flex; align-items: center; line-height: 1; }
+  /* Os rótulos em EN somam ~482px e não cabem nos 452px que 0.8fr dá na largura
+     de projeto. Onde sobra espaço, a coluna passa a medir o conteúdo; abaixo
+     disso quebrar é legítimo, e agora quebra alinhado. */
+  @media (min-width: 1000px) {
+    [data-hero-grid] { grid-template-columns: 1fr auto !important; gap: 32px !important; }
+  }
   /* Open source: índice de repositórios — a linha inteira é o link. */
   [data-repo] { transition: background-color 0.3s ease; }
   [data-repo]:hover { background-color: color-mix(in srgb, var(--accent) 5%, transparent); }
@@ -190,7 +203,7 @@
     [data-avail] > span:first-child { margin-right: 8px; vertical-align: middle; }
     [data-hero-grid] { grid-template-columns: 1fr !important; gap: 28px !important; }
     [data-hero-cta] { justify-content: flex-start !important; }
-    [data-hero-cta] > a { flex: 1 1 auto; text-align: center; }
+    [data-hero-cta] > a { flex: 1 1 auto; justify-content: center; }
     [data-stats] { flex-wrap: wrap; gap: 22px 34px !important; margin-top: 40px !important; }
     [data-col3] { grid-template-columns: 1fr !important; }
     [data-ghost] { display: none; }
