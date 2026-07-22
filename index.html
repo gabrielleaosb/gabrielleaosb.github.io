@@ -674,7 +674,10 @@ class Component extends DCLogic {
                'A local Node agent listens to room state and fires cues into MadMapper over OSC, driving the projection mapped onto the scale model.',
                'Testimonial booth with webcam capture: HTTPS via Caddy (getUserMedia requires a secure context), built-in on-screen keyboard and inactivity timeout for unattended touch-monitor operation.',
                'Docker Compose deploy (app + PostgreSQL + proxy), running locally on the museum devices.'] } },
-      { slotId: 'nucleozero', name: 'Núcleo Zero Gestão', year: '2026', href: 'https://gestao.nucleozero.com.br',
+      // Sem href: é sistema interno da empresa. O link levaria a uma tela de
+      // login em que ninguém aqui tem conta — as capturas já mostram o produto.
+      // O botão de acesso some sozinho (ver hasLink).
+      { slotId: 'nucleozero', name: 'Núcleo Zero Gestão', year: '2026', href: '',
         img: 'uploads/nucleozero-1.jpg',
         placeholder: 'Screenshot — Núcleo Zero Gestão',
         status: { pt: 'Em Produção', en: 'In Production' },
