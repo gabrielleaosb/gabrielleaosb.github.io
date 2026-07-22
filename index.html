@@ -77,34 +77,92 @@
      Altura real: 87px no mobile (duas linhas) e 69px acima de 760px. */
   section[id], #top { scroll-margin-top: 106px; }
   @media (min-width: 761px) { section[id], #top { scroll-margin-top: 90px; } }
-  body { margin: 0; background: #0E1518; }
+  body { margin: 0; background: var(--bg-deep); }
   /* Barra de rolagem no tom do site (a padrão do Windows é clara e destoa). */
-  html { color-scheme: dark; scrollbar-width: thin; scrollbar-color: #2F3F45 transparent; }
+  html { color-scheme: dark; scrollbar-width: thin; scrollbar-color: var(--thumb) transparent; }
+  :root[data-theme="light"] { color-scheme: light; }
   ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-track { background: #0B1114; }
-  ::-webkit-scrollbar-thumb { background: #2F3F45; border-radius: 8px; border: 2px solid #0B1114; }
+  ::-webkit-scrollbar-track { background: var(--track); }
+  ::-webkit-scrollbar-thumb { background: var(--thumb); border-radius: 8px; border: 2px solid var(--track); }
   ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-  /* ---- Paleta: escala tonal de tinta, não preto puro ----
+  /* ---- Paleta base: escala tonal de tinta, não preto puro ----
      Os cinzas antigos eram neutros absolutos (#0E0E11, #F2F2F0), o que deixava
      o verde como única coisa cromática da tela — daí a sensação de "escuro
-     demais": não era falta de luz, era falta de matiz. Toda a escala agora
-     carrega o mesmo viés frio esverdeado do accent, e o piso subiu de
-     L* 4,0 para L* 6,3.
-     Cinco degraus, usados por elevação: as seções alternam deep ↔ raised
-     (11 pontos de L*, contra os 4 de antes) e os cards sobem mais um degrau
-     a partir da faixa em que estão. */
+     demais": não era falta de luz, era falta de matiz. Toda a escala carrega o
+     mesmo viés frio esverdeado do accent, e o piso está em L* 6,3.
+     Este é o conjunto de tinta: vale para o que atravessa a página inteira
+     (header, modal, barra de rolagem) e para as faixas [data-band="ink"].
+     As outras faixas reescrevem estes mesmos nomes mais abaixo. */
   :root {
-    --bg-deep: #0E1518;      /* hero, skills, contato — o piso */
+    --bg-deep: #0E1518;      /* o piso — hero e contato */
     --bg: #141C20;           /* base do documento e do case study */
-    --bg-raised: #202C30;    /* projetos, experiência — a faixa elevada */
-    --surface: #27353A;      /* cards sobre faixa elevada */
-    --surface-deep: #182126; /* cards sobre faixa profunda */
+    --surface: #27353A;      /* cards */
     --border: #2F3F45;
     --text: #E8EFEE;         /* branco quebrado: #F2F2F0 puro vibrava no escuro */
     --muted: #97A6A5;
     --accent: #3EDD9A;       /* mesmo verde, saturação contida */
     --ink: #071013;          /* texto sobre o accent */
     --ghost: #1C282C;        /* marca d'água da Experiência */
+    --chip: #141C20;         /* fundo das etiquetas de tecnologia */
+    --grid: rgba(255,255,255,0.028);  /* malha do hero */
+    --grid-dot: rgba(255,255,255,0.05); /* pontilhado de projetos */
+    --overlay: rgba(10,16,18,0.9);    /* legenda sobre o screenshot no hover */
+    --track: #0B1114;        /* barra de rolagem */
+    --thumb: #2F3F45;
+  }
+  /* ---- As faixas ----
+     A página é lida como estratos: cada seção tem o seu papel e a sua textura,
+     e a troca de fundo é o que separa um assunto do outro — não mais um degrau
+     de elevação dentro da mesma escala.
+     São só quatro estoques, dois de tinta e dois de papel, alternados; hero e
+     contato fecham as pontas em tinta. Cada faixa reescreve os mesmos tokens,
+     então nenhum componente sabe em que faixa está: card, chip, borda e texto
+     continuam lendo --surface, --border e --text.
+     O que fica fora de [data-band] — header, modal, barra de rolagem — segue
+     na escala escura do :root. */
+  #top { --accent: var(--accent-src, #3EDD9A); }
+  [data-band] { background-color: var(--band); color: var(--text); }
+
+  [data-band="ink"] { --band: var(--bg-deep); }
+
+  /* Papel. O accent neon foi desenhado para tinta e tem 1,6:1 sobre bege; o
+     color-mix com preto é a mesma conta do brightness(), preserva o matiz e
+     mantém a cor derivada da prop — trocar o accent no editor continua valendo
+     nas seis faixas. 50% e não 55% porque ele aparece em texto de 12px. */
+  [data-band="paper"], [data-band="paper-deep"] {
+    --accent: color-mix(in srgb, var(--accent-src, #3EDD9A) 50%, #000);
+    --ink: #FBFAF6;          /* sobre o accent escuro o texto inverte */
+    --text: #16211D;
+    --muted: #525C55;        /* o texto corrido de 14px cai sobre o papel mais escuro; 4,5 sem folga era pouco */
+    /* O antialiasing fino foi calibrado para texto claro sobre fundo escuro;
+       sobre papel ele afina demais o Archivo 400. */
+    -webkit-font-smoothing: auto;
+  }
+  [data-band="paper"] {
+    --band: #F0EDE3;         /* bege quase branco — os projetos */
+    --surface: #FFFDF8;
+    --chip: #FFFDF8;
+    --border: #D8D2C1;
+    --grid-dot: rgba(22,33,29,0.14);
+    --overlay: rgba(240,237,227,0.95);
+  }
+  [data-band="paper-deep"] {
+    --band: #E5E0D2;         /* mesmo papel, um tom abaixo — open source e experiência */
+    --surface: #F4F1E8;
+    --chip: #F4F1E8;
+    --border: #CBC3AE;
+    --ghost: #DED8C6;        /* sobre papel a marca d'água lê muito mais que sobre tinta */
+  }
+  /* A faixa colorida: o verde da marca virando campo, não detalhe. É o único
+     lugar em que ele ocupa a tela inteira, e por isso vem sozinho — as faixas
+     vizinhas são papel liso. */
+  [data-band="forest"] {
+    --band: #0E3D2C;
+    --surface: #134C36;
+    --chip: rgba(255,255,255,0.07);
+    --border: #27664C;
+    --text: #E6F2EB;
+    --muted: #9CBCAB;
   }
   a { color: var(--accent); text-decoration: none; }
   a:hover { color: var(--text); }
@@ -148,7 +206,7 @@
     [data-tile-img] { transition: transform 0.6s ease; }
     [data-tile]:hover [data-tile-img] { transform: scale(1.04); }
     [data-tile-info] { position: absolute; inset: 0; z-index: 1; color: var(--text);
-                       background: rgba(10,16,18,0.9); border-top: 0 !important;
+                       background: var(--overlay); border-top: 0 !important;
                        align-items: center; justify-content: center; text-align: center;
                        gap: 13px !important; padding: 26px 30px !important;
                        opacity: 0; transition: opacity 0.45s ease; }
@@ -188,7 +246,7 @@
     [data-repo] > div:last-child { width: 100%; justify-content: space-between; gap: 12px !important; }
     [data-repo] [data-repo-meta] { flex-direction: row !important; align-items: center !important; gap: 12px !important; }
   }
-  [data-modal-scroll] { scrollbar-width: thin; scrollbar-color: #2F3F45 transparent; }
+  [data-modal-scroll] { scrollbar-width: thin; scrollbar-color: var(--thumb) transparent; }
   [data-modal-scroll]::-webkit-scrollbar { width: 8px; }
   [data-modal-scroll]::-webkit-scrollbar-track { background: transparent; }
   [data-modal-scroll]::-webkit-scrollbar-thumb { background: var(--border); border-radius: 8px; }
@@ -225,7 +283,7 @@
   }
 </style>
 </helmet>
-<div id="top" style="--accent:{{ accent }};min-height:100vh;background:var(--bg);color:var(--text);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased">
+<div id="top" style="--accent-src:{{ accent }};min-height:100vh;background:var(--bg);color:var(--text);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased">
 
   <header style="position:sticky;top:0;z-index:50;border-bottom:1px solid var(--border);background:color-mix(in srgb, var(--bg) 85%, transparent);backdrop-filter:blur(12px)">
     <div data-navbar="true" style="max-width:1180px;margin:0 auto;padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:24px">
@@ -242,7 +300,7 @@
     </div>
   </header>
 
-  <section style="border-bottom:1px solid var(--border);background-color:var(--bg-deep);background-image:radial-gradient(ellipse 55% 45% at 75% 12%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 70%),linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);background-size:auto,58px 58px,58px 58px">
+  <section data-band="ink" style="border-bottom:1px solid var(--border);background-image:radial-gradient(ellipse 55% 45% at 75% 12%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 70%),linear-gradient(var(--grid) 1px, transparent 1px),linear-gradient(90deg, var(--grid) 1px, transparent 1px);background-size:auto,58px 58px,58px 58px">
     <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:100px 28px 0;animation:rise 0.7s ease both">
       <div data-avail="true" style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:26px">
         <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block"></span>
@@ -266,7 +324,7 @@
     </div>
   </section>
 
-  <section id="projetos" style="background-color:var(--bg-raised);background-image:radial-gradient(ellipse 45% 55% at 88% 8%, color-mix(in srgb, var(--accent) 6%, transparent), transparent 70%),radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);background-size:auto,26px 26px">
+  <section id="projetos" data-band="paper" style="background-image:radial-gradient(var(--grid-dot) 1px, transparent 1px);background-size:26px 26px">
     <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:96px 28px">
       <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:44px">
         <span style="font-size:14px;font-weight:700;color:var(--accent)">01</span>
@@ -299,8 +357,15 @@
           </article>
         </sc-for>
       </div>
+    </div>
+  </section>
 
-      <div style="display:flex;align-items:baseline;gap:18px;margin:88px 0 40px">
+  <!-- Open source ganhou faixa própria: os projetos acima são produto entregue,
+       aqui é código público. São coisas diferentes e o papel diz isso antes do
+       título. Sem textura — a lista já é toda feita de fios horizontais. -->
+  <section data-band="paper-deep" style="border-top:1px solid var(--border)">
+    <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:96px 28px">
+      <div style="display:flex;align-items:baseline;gap:18px;margin:0 0 40px">
         <span style="font-size:14px;font-weight:700;color:var(--accent)">02</span>
         <h2 style="margin:0;font-size:clamp(26px,3.6vw,40px);font-weight:800;letter-spacing:-0.02em;text-transform:uppercase">{{ t.ossTitle }}</h2>
       </div>
@@ -329,7 +394,7 @@
     </div>
   </section>
 
-  <section id="skills" style="border-top:1px solid var(--border);background-color:var(--bg-deep);background-image:repeating-linear-gradient(-45deg, color-mix(in srgb, var(--accent) 5%, transparent) 0 1px, transparent 1px 22px)">
+  <section id="skills" data-band="forest" style="border-top:1px solid var(--border);background-image:repeating-linear-gradient(-45deg, rgba(255,255,255,0.045) 0 1px, transparent 1px 22px)">
     <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:96px 28px">
       <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:44px">
         <span style="font-size:14px;font-weight:700;color:var(--accent)">03</span>
@@ -337,7 +402,7 @@
       </div>
       <div data-col3="true" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
         <sc-for list="{{ skills }}" as="g" hint-placeholder-count="6">
-          <div data-skill="true" style="position:relative;overflow:hidden;background:var(--surface-deep);border:1px solid var(--border);border-radius:16px;padding:26px 26px 28px;display:flex;flex-direction:column;gap:16px;transition:transform 0.25s ease, border-color 0.25s ease" style-hover="border-color:var(--accent);transform:translateY(-4px)">
+          <div data-skill="true" style="position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px 26px 28px;display:flex;flex-direction:column;gap:16px;transition:transform 0.25s ease, border-color 0.25s ease" style-hover="border-color:var(--accent);transform:translateY(-4px)">
             <span data-skill-num="true" style="position:absolute;top:-14px;right:10px;font-size:76px;font-weight:800;color:transparent;-webkit-text-stroke:1px var(--border);line-height:1;pointer-events:none">{{ g.num }}</span>
             <div style="display:flex;align-items:center;gap:10px">
               <span style="width:22px;height:3px;background:var(--accent);border-radius:2px;display:inline-block"></span>
@@ -345,7 +410,7 @@
             </div>
             <div style="display:flex;flex-wrap:wrap;gap:7px">
               <sc-for list="{{ g.items }}" as="s" hint-placeholder-count="6">
-                <span data-chip="true" style="font-size:12.5px;font-weight:500;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:6px 11px">{{ s }}</span>
+                <span data-chip="true" style="font-size:12.5px;font-weight:500;color:var(--text);background:var(--chip);border:1px solid var(--border);border-radius:7px;padding:6px 11px">{{ s }}</span>
               </sc-for>
             </div>
           </div>
@@ -354,7 +419,7 @@
     </div>
   </section>
 
-  <section id="exp" style="position:relative;overflow:hidden;border-top:1px solid var(--border);background-color:var(--bg-raised);background-image:radial-gradient(ellipse 50% 60% at 8% 50%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 70%)">
+  <section id="exp" data-band="paper-deep" style="position:relative;overflow:hidden;border-top:1px solid var(--border)">
     <span data-ghost="true" style="position:absolute;top:34px;right:-20px;font-size:clamp(90px,14vw,190px);font-weight:800;letter-spacing:-0.02em;text-transform:uppercase;color:transparent;-webkit-text-stroke:1px var(--ghost);line-height:1;pointer-events:none;user-select:none">{{ t.expGhost }}</span>
     <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:96px 28px;position:relative">
       <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:56px">
@@ -374,7 +439,7 @@
     </div>
   </section>
 
-  <section id="contato" style="border-top:1px solid var(--border);background-color:var(--bg-deep);background-image:radial-gradient(ellipse 60% 55% at 50% 115%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%)">
+  <section id="contato" data-band="ink" style="border-top:1px solid var(--border);background-image:radial-gradient(ellipse 60% 55% at 50% 115%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%)">
     <div data-wrap="true" style="max-width:1180px;margin:0 auto;padding:110px 28px 60px">
       <p style="margin:0 0 14px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)">05 — {{ t.contactKicker }}</p>
       <h2 style="margin:0 0 22px;font-size:clamp(44px,7.5vw,96px);font-weight:800;letter-spacing:-0.03em;line-height:0.96;text-transform:uppercase">{{ t.contactTitle1 }}<br><span style="color:var(--accent)">{{ t.contactTitle2 }}</span></h2>
